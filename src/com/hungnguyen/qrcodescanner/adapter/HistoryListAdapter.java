@@ -13,19 +13,24 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.example.qrcodescanner.R;
+import com.hungnguyen.qrcodescanner.database.Database;
 import com.hungnguyen.qrcodescanner.model.HistoryEntryItemObject;
 import com.hungnguyen.qrcodescanner.model.HistoryItemObject;
 import com.hungnguyen.qrcodescanner.model.HistorySectionItemObject;
 
-public class HistoryListAdapter extends ArrayAdapter<HistoryItemObject> implements OnClickListener{
+public class HistoryListAdapter extends ArrayAdapter<HistoryItemObject>
+		implements OnClickListener {
 	Activity mContext;
 	ArrayList<HistoryItemObject> mList;
 	LayoutInflater mInflater;
 	LinearLayout llShare;
-	public HistoryListAdapter(Activity context, ArrayList<HistoryItemObject> list) {
-		super(context,0,list);
+	ImageButton ibDelete;
+	HistoryEntryItemObject entryItem;
+	public HistoryListAdapter(Activity context,
+			ArrayList<HistoryItemObject> list) {
+		super(context, 0, list);
 		this.mContext = context;
-		this.mList  = list;
+		this.mList = list;
 		this.mInflater = LayoutInflater.from(context);
 	}
 
@@ -33,28 +38,41 @@ public class HistoryListAdapter extends ArrayAdapter<HistoryItemObject> implemen
 	public View getView(int position, View convertView, ViewGroup parent) {
 		View view = convertView;
 		HistoryItemObject item = mList.get(position);
-		if (item!=null) {
+		if (item != null) {
 			if (item.isSection()) {
 				HistorySectionItemObject sectionItem = (HistorySectionItemObject) item;
-				view = mInflater.inflate(R.layout.item_historylistview_section, null);
+				view = mInflater.inflate(R.layout.item_historylistview_section,
+						null);
 				view.setOnClickListener(null);
 				view.setOnLongClickListener(null);
 				view.setLongClickable(false);
-				TextView sectionTvTitle = (TextView)view.findViewById(R.id.history_listview_section_text);
+				TextView sectionTvTitle = (TextView) view
+						.findViewById(R.id.history_listview_section_text);
 				sectionTvTitle.setText("" + sectionItem.getTitle());
 			} else {
-				HistoryEntryItemObject entryItem = (HistoryEntryItemObject)item;
-				view = mInflater.inflate(R.layout.item_historylistview_entry, null);
-				llShare = (LinearLayout)view.findViewById(R.id.historylistview_entry_layout_sharebutton);
-				ImageButton ibMessage = (ImageButton)view.findViewById(R.id.historylistview_entry_ib_message);
-				ImageButton ibEmail = (ImageButton)view.findViewById(R.id.historylistview_entry_ib_email);
-				ImageButton ibTwitter = (ImageButton)view.findViewById(R.id.historylistview_entry_ib_twitter);
-				ImageButton ibFacebook = (ImageButton)view.findViewById(R.id.historylistview_entry_ib_facebook);
-				ImageButton ibLeftSliding = (ImageButton)view.findViewById(R.id.historylistview_entry_ib_sliding_left);
-				ImageButton ibRightSliding= (ImageButton)view.findViewById(R.id.historylistview_entry_ib_sliding_right);
-				ImageButton	ibDelete = (ImageButton)view.findViewById(R.id.historylistview_entry_ib_delete);
-				TextView tvTitle = (TextView)view.findViewById(R.id.historylistview_entry_tv_name);
-				TextView tvId =(TextView)view.findViewById(R.id.historylistview_entry_tv_id);
+				entryItem = (HistoryEntryItemObject) item;
+				view = mInflater.inflate(R.layout.item_historylistview_entry,
+						null);
+				llShare = (LinearLayout) view
+						.findViewById(R.id.historylistview_entry_layout_sharebutton);
+				ImageButton ibMessage = (ImageButton) view
+						.findViewById(R.id.historylistview_entry_ib_message);
+				ImageButton ibEmail = (ImageButton) view
+						.findViewById(R.id.historylistview_entry_ib_email);
+				ImageButton ibTwitter = (ImageButton) view
+						.findViewById(R.id.historylistview_entry_ib_twitter);
+				ImageButton ibFacebook = (ImageButton) view
+						.findViewById(R.id.historylistview_entry_ib_facebook);
+				ImageButton ibLeftSliding = (ImageButton) view
+						.findViewById(R.id.historylistview_entry_ib_sliding_left);
+				ImageButton ibRightSliding = (ImageButton) view
+						.findViewById(R.id.historylistview_entry_ib_sliding_right);
+				ibDelete = (ImageButton) view
+						.findViewById(R.id.historylistview_entry_ib_delete);
+				TextView tvTitle = (TextView) view
+						.findViewById(R.id.historylistview_entry_tv_name);
+				TextView tvId = (TextView) view
+						.findViewById(R.id.historylistview_entry_tv_id);
 				ibMessage.setOnClickListener(this);
 				ibEmail.setOnClickListener(this);
 				ibTwitter.setOnClickListener(this);
@@ -71,24 +89,57 @@ public class HistoryListAdapter extends ArrayAdapter<HistoryItemObject> implemen
 
 	@Override
 	public void onClick(View v) {
-		switch(v.getId()){
+		switch (v.getId()) {
 		case R.id.historylistview_entry_ib_sliding_left:
-			llShare.setVisibility(View.VISIBLE);
+			boolean openLayout = llShare.isShown();
+			if (openLayout) {
+				llShare.setVisibility(View.GONE);
+			} else
+				llShare.setVisibility(View.VISIBLE);
 			break;
 		case R.id.historylistview_entry_ib_message:
+			shareViaMessage();
 			break;
 		case R.id.historylistview_entry_ib_email:
+			shareViaEmail();
 			break;
 		case R.id.historylistview_entry_ib_twitter:
+			shareViaTwitter();
 			break;
 		case R.id.historylistview_entry_ib_facebook:
+			shareViewFacebook();
 			break;
 		case R.id.historylistview_entry_ib_sliding_right:
+			boolean openButton = ibDelete.isShown();
+			if (openButton) {
+				ibDelete.setVisibility(View.GONE);
+			} else
+				ibDelete.setVisibility(View.VISIBLE);
 			break;
 		case R.id.historylistview_entry_ib_delete:
+			Database db = new Database(mContext);
+			db.delete(""+ entryItem.getId());
 			break;
-			
+
 		}
 	}
-	
+
+	private void shareViewFacebook() {
+		// TODO Auto-generated method stub
+		
+	}
+
+	private void shareViaTwitter() {
+		// TODO Auto-generated method stub
+		
+	}
+
+	private void shareViaEmail() {
+		// TODO Auto-generated method stub
+		
+	}
+
+	private void shareViaMessage() {
+		
+	}
 }
