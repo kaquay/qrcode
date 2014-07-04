@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="horizontal" >
+	<TextView android:id="@+id/historylistview_entry_tv_id"
+	    android:layout_width="wrap_content"
+	    android:layout_height="wrap_content"
+	    android:visibility="gone"/>
+    <LinearLayout
+        android:id="@+id/historylistview_entry_layout_sharebutton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:visibility="gone" >
+
+        <ImageButton
+            android:id="@+id/historylistview_entry_ib_message"
+            android:layout_width="80dp"
+            android:layout_height="80dp"
+            android:src="@drawable/message" />
+
+        <ImageButton
+            android:id="@+id/historylistview_entry_ib_email"
+            android:layout_width="80dp"
+            android:layout_height="80dp"
+            android:src="@drawable/email" />
+
+        <ImageButton
+            android:id="@+id/historylistview_entry_ib_twitter"
+            android:layout_width="80dp"
+            android:layout_height="80dp"
+            android:src="@drawable/twitter" />
+
+        <ImageButton
+            android:id="@+id/historylistview_entry_ib_facebook"
+            android:layout_width="80dp"
+            android:layout_height="80dp"
+            android:src="@drawable/facebook" />
+    </LinearLayout>
+
+    <RelativeLayout
+        android:id="@+id/historylistview_entry_layout_showlayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" >
+
+        <ImageButton
+            android:id="@+id/historylistview_entry_ib_sliding_left"
+            android:layout_width="80dp"
+            android:layout_height="80dp"
+            android:layout_alignParentLeft="true"
+            android:src="@drawable/openslide" />
+
+        <TextView
+            android:id="@+id/historylistview_entry_tv_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_toRightOf="@id/historylistview_entry_ib_sliding_left"
+            android:text="xxxxxxxxxxxxxxxxx" />
+
+        <ImageButton
+            android:id="@+id/historylistview_entry_ib_sliding_right"
+            android:layout_width="80dp"
+            android:layout_height="80dp"
+            android:layout_alignParentRight="true"
+            android:src="@drawable/slidingright" />
+    </RelativeLayout>
+
+    <ImageButton
+        android:id="@+id/historylistview_entry_ib_delete"
+        android:layout_width="80dp"
+        android:layout_height="80dp"
+        android:src="@drawable/delete"
+        android:visibility="gone" />
+
+</LinearLayout>

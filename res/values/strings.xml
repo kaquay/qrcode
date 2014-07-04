@@ -1,0 +1,8 @@
+<resources>
+
+    <string name="app_name">QRCodeScanner</string>
+	<string name="setting_scanner">SCANNER</string>
+	<string name="setting_share">SHARE</string>
+	<string name="menu_title_open">Menu</string>
+	<string name="menu_title_close"></string>
+</resources>
