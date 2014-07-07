@@ -125,17 +125,14 @@ public class HistoryListAdapter extends ArrayAdapter<HistoryItemObject>
 	}
 
 	private void shareViewFacebook() {
-		// TODO Auto-generated method stub
 		
 	}
 
 	private void shareViaTwitter() {
-		// TODO Auto-generated method stub
 		
 	}
 
 	private void shareViaEmail() {
-		// TODO Auto-generated method stub
 		
 	}
 

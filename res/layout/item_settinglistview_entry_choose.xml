@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent" >
+
+    <TextView
+        android:id="@+id/settinglistview_entry_tv_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentTop="true"
+        android:text="zzzz" />
+
+    <TextView
+        android:id="@+id/settinglistview_entry_tv_status"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_toLeftOf="@+id/settinglistview_entry_iv_choose"
+        android:text="status" />
+
+    <ImageView
+        android:id="@+id/settinglistview_entry_iv_choose"
+        android:layout_width="80sp"
+        android:layout_height="80sp"
+        android:layout_alignParentRight="true"
+        android:src="@drawable/slidingright" />
+
+</RelativeLayout>
