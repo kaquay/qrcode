@@ -57,8 +57,8 @@ public class IntroduceFragment extends Fragment {
 	@Override
 	public void onStart() {
 		super.onStart();
-		String url = "http://google.com";
-		mWebView.loadUrl(url);
+		String html = getActivity().getResources().getString(R.string.about);
+		mWebView.loadDataWithBaseURL("", html, "text/html", "utf-8", "");
 
 	}
 

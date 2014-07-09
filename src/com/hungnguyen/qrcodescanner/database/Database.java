@@ -2,7 +2,7 @@ package com.hungnguyen.qrcodescanner.database;
 
 import java.util.ArrayList;
 
-import com.hungnguyen.qrcodescanner.model.HistoryEntryItemObject;
+import com.hungnguyen.qrcodescanner.model.HistoryItemObject;
 
 import android.content.ContentValues;
 import android.content.Context;
@@ -13,12 +13,13 @@ import android.database.sqlite.SQLiteOpenHelper;
 public class Database extends SQLiteOpenHelper {
 	static int VERSION = 1;
 	static String DATABASE_NAME = "qrcodedb.db";
-	static String TABLE_NAME = "qrcode";
-	static String COLUMN_1 = "Id";
-	static String COLUMN_2 = "Name";
-	static String COLUMN_3 = "Date";
+	static String TABLE_NAME = "qrcodes";
+	static String COLUMN_1 = "id";
+	static String COLUMN_2 = "name";
+	static String COLUMN_3 = "date";
 	static String CREATE_TABLE = "CREATE TABLE " + TABLE_NAME + "( " + COLUMN_1
-			+ " INTEGER PRIMARY KEY ";
+			+ " INTEGER PRIMARY KEY, " + COLUMN_2 + " TEXT, " + COLUMN_3
+			+ " DATETIME )";
 
 	public Database(Context context) {
 		super(context, DATABASE_NAME, null, VERSION);
@@ -26,7 +27,7 @@ public class Database extends SQLiteOpenHelper {
 
 	@Override
 	public void onCreate(SQLiteDatabase db) {
-
+		db.execSQL(CREATE_TABLE);
 	}
 
 	@Override
@@ -34,9 +35,17 @@ public class Database extends SQLiteOpenHelper {
 
 	}
 
+	/**
+	 * insert to sqlite
+	 * 
+	 * @param name
+	 *            : value
+	 * @param date
+	 *            : format DD/MM/YYYY
+	 */
 	public void insert(String name, String date) {
-//		String query = "INSERT INTO " + TABLE_NAME + "(" + COLUMN_2 + ","
-//				+ COLUMN_3 + ") VALUES(" + name + ", DATE(NOW())";
+		// String query = "INSERT INTO " + TABLE_NAME + "(" + COLUMN_2 + ","
+		// + COLUMN_3 + ") VALUES(" + name + ", DATE(NOW())";
 		SQLiteDatabase db = this.getWritableDatabase();
 		ContentValues values = new ContentValues();
 		values.put(COLUMN_2, name);
@@ -56,8 +65,7 @@ public class Database extends SQLiteOpenHelper {
 	public ArrayList<String> getAllDate() {
 		ArrayList<String> listValues = new ArrayList<String>();
 		SQLiteDatabase db = this.getReadableDatabase();
-		String query = "SELECT DISTINCT DATE(" + COLUMN_3 + ") FROM "
-				+ TABLE_NAME;
+		String query = "SELECT * FROM " + TABLE_NAME;
 		Cursor cursor = db.rawQuery(query, null);
 		if (cursor.moveToFirst()) {
 			do {
@@ -69,20 +77,17 @@ public class Database extends SQLiteOpenHelper {
 		return listValues;
 	}
 
-	public ArrayList<HistoryEntryItemObject> getValueByDate(String day,
-			String month, String year) {
-		ArrayList<HistoryEntryItemObject> listValues = new ArrayList<HistoryEntryItemObject>();
+	public ArrayList<HistoryItemObject> getValueByDate(String date) {
+		ArrayList<HistoryItemObject> listValues = new ArrayList<HistoryItemObject>();
 		SQLiteDatabase db = this.getReadableDatabase();
 		String query = "SELECT " + COLUMN_1 + ", " + COLUMN_2 + " FROM "
-				+ TABLE_NAME + " WHERE DAY(" + COLUMN_3 + ")=" + day
-				+ " AND MONTH(" + COLUMN_3 + ")=" + month + " AND YEAR("
-				+ COLUMN_3 + ")=" + year;
+				+ TABLE_NAME + " WHERE " + COLUMN_3 + "='" + date + "'";
 		Cursor cursor = db.rawQuery(query, null);
 		if (cursor.moveToFirst()) {
 			do {
 				String id = cursor.getString(0);
 				String name = cursor.getString(1);
-				listValues.add(new HistoryEntryItemObject(id, name));
+				listValues.add(new HistoryItemObject(id, name));
 			} while (cursor.moveToNext());
 		}
 		db.close();

@@ -1,8 +1,8 @@
 package com.hungnguyen.qrcodescanner.model;
 
-import com.hungnguyen.qrcodescanner.ulty.Constants;
+import com.hungnguyen.qrcodescanner.utility.Constants;
 
-public class SettingSectionItemObject implements SettingItemObject, Constants {
+public class SettingSectionItemObject implements SettingItemEntity, Constants {
 	private String title;
 
 	public SettingSectionItemObject(String title) {

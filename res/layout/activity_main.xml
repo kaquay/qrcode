@@ -7,18 +7,19 @@
 
     <FrameLayout
         android:id="@+id/main_frame_container"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent" />
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent" />
 
     <!-- Listview to display slider menu -->
 
     <ListView
         android:id="@+id/main_lv_sliding_menu"
         android:layout_width="wrap_content"
-        android:layout_height="match_parent"
+        android:layout_height="fill_parent"
         android:layout_gravity="start"
         android:choiceMode="singleChoice"
         android:dividerHeight="1dp"
-        android:listSelector="@drawable/list_selector" />
+        android:listSelector="@drawable/listview_selector"
+        android:background="@drawable/background_raised" />
 
 </android.support.v4.widget.DrawerLayout>

@@ -1,6 +1,6 @@
 package com.hungnguyen.qrcodescanner.model;
 
-public class HistorySectionItemObject implements HistoryItemObject {
+public class HistorySectionItemObject implements HistoryItemEnity {
 	private String title;
 
 	public HistorySectionItemObject(String title) {

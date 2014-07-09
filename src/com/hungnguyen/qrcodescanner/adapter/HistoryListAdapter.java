@@ -10,24 +10,21 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.example.qrcodescanner.R;
-import com.hungnguyen.qrcodescanner.database.Database;
-import com.hungnguyen.qrcodescanner.model.HistoryEntryItemObject;
+import com.hungnguyen.qrcodescanner.model.HistoryItemEnity;
 import com.hungnguyen.qrcodescanner.model.HistoryItemObject;
 import com.hungnguyen.qrcodescanner.model.HistorySectionItemObject;
 
-public class HistoryListAdapter extends ArrayAdapter<HistoryItemObject>
+public class HistoryListAdapter extends ArrayAdapter<HistoryItemEnity>
 		implements OnClickListener {
 	Activity mContext;
-	ArrayList<HistoryItemObject> mList;
+	ArrayList<HistoryItemEnity> mList;
 	LayoutInflater mInflater;
-	LinearLayout llShare;
-	ImageButton ibDelete;
-	HistoryEntryItemObject entryItem;
-	public HistoryListAdapter(Activity context,
-			ArrayList<HistoryItemObject> list) {
+
+	public HistoryListAdapter(Activity context, ArrayList<HistoryItemEnity> list) {
 		super(context, 0, list);
 		this.mContext = context;
 		this.mList = list;
@@ -36,67 +33,185 @@ public class HistoryListAdapter extends ArrayAdapter<HistoryItemObject>
 
 	@Override
 	public View getView(int position, View convertView, ViewGroup parent) {
-		View view = convertView;
-		HistoryItemObject item = mList.get(position);
-		if (item != null) {
-			if (item.isSection()) {
-				HistorySectionItemObject sectionItem = (HistorySectionItemObject) item;
-				view = mInflater.inflate(R.layout.item_historylistview_section,
-						null);
-				view.setOnClickListener(null);
-				view.setOnLongClickListener(null);
-				view.setLongClickable(false);
-				TextView sectionTvTitle = (TextView) view
-						.findViewById(R.id.history_listview_section_text);
-				sectionTvTitle.setText("" + sectionItem.getTitle());
-			} else {
-				entryItem = (HistoryEntryItemObject) item;
-				view = mInflater.inflate(R.layout.item_historylistview_entry,
-						null);
-				llShare = (LinearLayout) view
-						.findViewById(R.id.historylistview_entry_layout_sharebutton);
-				ImageButton ibMessage = (ImageButton) view
-						.findViewById(R.id.historylistview_entry_ib_message);
-				ImageButton ibEmail = (ImageButton) view
-						.findViewById(R.id.historylistview_entry_ib_email);
-				ImageButton ibTwitter = (ImageButton) view
-						.findViewById(R.id.historylistview_entry_ib_twitter);
-				ImageButton ibFacebook = (ImageButton) view
-						.findViewById(R.id.historylistview_entry_ib_facebook);
-				ImageButton ibLeftSliding = (ImageButton) view
-						.findViewById(R.id.historylistview_entry_ib_sliding_left);
-				ImageButton ibRightSliding = (ImageButton) view
-						.findViewById(R.id.historylistview_entry_ib_sliding_right);
-				ibDelete = (ImageButton) view
-						.findViewById(R.id.historylistview_entry_ib_delete);
-				TextView tvTitle = (TextView) view
-						.findViewById(R.id.historylistview_entry_tv_name);
-				TextView tvId = (TextView) view
-						.findViewById(R.id.historylistview_entry_tv_id);
-				ibMessage.setOnClickListener(this);
-				ibEmail.setOnClickListener(this);
-				ibTwitter.setOnClickListener(this);
-				ibFacebook.setOnClickListener(this);
-				ibLeftSliding.setOnClickListener(this);
-				ibRightSliding.setOnClickListener(this);
-				ibDelete.setOnClickListener(this);
-				tvTitle.setText("" + entryItem.getTitle());
-				tvId.setText("" + entryItem.getId());
+		final Holder holder;
+		HistoryItemEnity item = mList.get(position);
+		if (convertView == null) {
+			if (item != null) {
+				if (item.isSection()) {
+					holder = new Holder();
+					convertView = mInflater.inflate(
+							R.layout.item_historylistview_section, null);
+					convertView.setOnClickListener(null);
+					convertView.setOnLongClickListener(null);
+					convertView.setLongClickable(false);
+					holder.tvTitle = (TextView) convertView
+							.findViewById(R.id.history_listview_section_text);
+					HistorySectionItemObject sectionItem = (HistorySectionItemObject) item;
+					holder.tvTitle.setText("" + sectionItem.getTitle());
+					convertView.setTag(holder);
+				} else { // isSection
+					convertView = mInflater.inflate(
+							R.layout.item_historylistview_entry, null);
+					holder = new Holder();
+					holder.llShareLayout = (LinearLayout) convertView
+							.findViewById(R.id.historylistview_entry_layout_sharebutton);
+					holder.ibMessage = (ImageButton) convertView
+							.findViewById(R.id.historylistview_entry_ib_message);
+					holder.ibEmail = (ImageButton) convertView
+							.findViewById(R.id.historylistview_entry_ib_email);
+					holder.ibTwitter = (ImageButton) convertView
+							.findViewById(R.id.historylistview_entry_ib_twitter);
+					holder.ibFacebook = (ImageButton) convertView
+							.findViewById(R.id.historylistview_entry_ib_facebook);
+					holder.ibSlideLeft = (ImageButton) convertView
+							.findViewById(R.id.historylistview_entry_ib_sliding_left);
+					holder.ibSlideRight = (ImageButton) convertView
+							.findViewById(R.id.historylistview_entry_ib_sliding_right);
+					holder.ibDelete = (ImageButton) convertView
+							.findViewById(R.id.historylistview_entry_ib_delete);
+					holder.tvTitle = (TextView) convertView
+							.findViewById(R.id.historylistview_entry_tv_name);
+					holder.tvId = (TextView) convertView
+							.findViewById(R.id.historylistview_entry_tv_id);
+					final HistoryItemObject entryItem = (HistoryItemObject) item;
+					holder.ibSlideLeft
+							.setOnClickListener(new OnClickListener() {
+
+								@Override
+								public void onClick(View v) {
+									boolean statusLeft = entryItem.isShowLeft();
+									entryItem.setShowLeft(!statusLeft);
+									if (entryItem.isShowLeft()) {
+										holder.llShareLayout
+												.setVisibility(View.VISIBLE);
+									} else {
+										holder.llShareLayout
+												.setVisibility(View.GONE);
+									}
+								}
+							});
+					holder.ibSlideRight
+							.setOnClickListener(new OnClickListener() {
+
+								@Override
+								public void onClick(View v) {
+									boolean statusRight = entryItem
+											.isShowRight();
+									entryItem.setShowRight(!statusRight);
+									if (entryItem.isShowRight()) {
+										holder.ibDelete
+												.setVisibility(View.VISIBLE);
+									} else {
+										holder.ibDelete
+												.setVisibility(View.GONE);
+									}
+								}
+							});
+					holder.ibMessage.setOnClickListener(this);
+					holder.ibEmail.setOnClickListener(this);
+					holder.ibTwitter.setOnClickListener(this);
+					holder.ibFacebook.setOnClickListener(this);
+					holder.ibDelete.setOnClickListener(this);
+					holder.tvTitle.setText("" + entryItem.getTitle());
+					holder.tvId.setText("" + entryItem.getId());
+					if (entryItem.isShowLeft()) {
+						holder.llShareLayout.setVisibility(View.VISIBLE);
+					} else {
+						holder.llShareLayout.setVisibility(View.GONE);
+					}
+					if (entryItem.isShowRight()) {
+						holder.ibDelete.setVisibility(View.VISIBLE);
+					} else {
+						holder.ibDelete.setVisibility(View.GONE);
+					}
+					convertView.setTag(holder);
+				}
 			}
+		} else {
+			holder = (Holder) convertView.getTag();
 		}
-		return view;
+		// if (item != null) {
+		// if (item.isSection()) {
+		// HistorySectionItemObject sectionItem = (HistorySectionItemObject)
+		// item;
+		// if (convertView == null) {
+		// holder = new Holder();
+		// convertView = mInflater.inflate(
+		// R.layout.item_historylistview_section, null);
+		// convertView.setOnClickListener(null);
+		// convertView.setOnLongClickListener(null);
+		// convertView.setLongClickable(false);
+		// holder.tvTitle = (TextView) convertView
+		// .findViewById(R.id.history_listview_section_text);
+		//
+		// convertView.setTag(holder);
+		// } else {
+		// holder = (Holder) convertView.getTag();
+		// }
+		// holder.tvTitle.setText("" + sectionItem.getTitle());
+		// } else {
+		// HistoryItemObject entryItem = (HistoryItemObject) item;
+		// if (convertView == null) {
+		// convertView = mInflater.inflate(
+		// R.layout.item_historylistview_entry, null);
+		// holder = new Holder();
+		// holder.llShareLayout = (LinearLayout) convertView
+		// .findViewById(R.id.historylistview_entry_layout_sharebutton);
+		// holder.ibMessage = (ImageButton) convertView
+		// .findViewById(R.id.historylistview_entry_ib_message);
+		// holder.ibEmail = (ImageButton) convertView
+		// .findViewById(R.id.historylistview_entry_ib_email);
+		// holder.ibTwitter = (ImageButton) convertView
+		// .findViewById(R.id.historylistview_entry_ib_twitter);
+		// holder.ibFacebook = (ImageButton) convertView
+		// .findViewById(R.id.historylistview_entry_ib_facebook);
+		// holder.ibSlideLeft = (ImageButton) convertView
+		// .findViewById(R.id.historylistview_entry_ib_sliding_left);
+		// holder.ibSlideRight = (ImageButton) convertView
+		// .findViewById(R.id.historylistview_entry_ib_sliding_right);
+		// holder.ibDelete = (ImageButton) convertView
+		// .findViewById(R.id.historylistview_entry_ib_delete);
+		// holder.tvTitle = (TextView) convertView
+		// .findViewById(R.id.historylistview_entry_tv_name);
+		// holder.tvId = (TextView) convertView
+		// .findViewById(R.id.historylistview_entry_tv_id);
+		// holder.ibSlideLeft.setOnClickListener(this);
+		// holder.ibSlideRight.setOnClickListener(this);
+		// holder.ibMessage.setOnClickListener(this);
+		// holder.ibEmail.setOnClickListener(this);
+		// holder.ibTwitter.setOnClickListener(this);
+		// holder.ibFacebook.setOnClickListener(this);
+		// holder.ibDelete.setOnClickListener(this);
+		// holder.tvTitle.setText("" + entryItem.getTitle());
+		// holder.tvId.setText("" + entryItem.getId());
+		// if (entryItem.isShowLeft()) {
+		// holder.llShareLayout.setVisibility(View.VISIBLE);
+		// } else {
+		// holder.llShareLayout.setVisibility(View.GONE);
+		// }
+		// if (entryItem.isShowRight()) {
+		// holder.ibDelete.setVisibility(View.VISIBLE);
+		// } else {
+		// holder.ibDelete.setVisibility(View.GONE);
+		// }
+		// convertView.setTag(holder);
+		// } else {
+		// holder = (Holder) convertView.getTag();
+		// }
+		// }
+		// }
+		return convertView;
 	}
 
 	@Override
 	public void onClick(View v) {
+		// Integer index = (Integer) v.getTag();
+		// HistoryItemEnity item = mList.get(index);
+		// HistoryItemObject entryItem = (HistoryItemObject) item;
 		switch (v.getId()) {
-		case R.id.historylistview_entry_ib_sliding_left:
-			boolean openLayout = llShare.isShown();
-			if (openLayout) {
-				llShare.setVisibility(View.GONE);
-			} else
-				llShare.setVisibility(View.VISIBLE);
-			break;
+		// case R.id.historylistview_entry_ib_sliding_left:
+		// boolean statusLeft = entryItem.isShowLeft();
+		// entryItem.setShowLeft(!statusLeft);
 		case R.id.historylistview_entry_ib_message:
 			shareViaMessage();
 			break;
@@ -109,34 +224,58 @@ public class HistoryListAdapter extends ArrayAdapter<HistoryItemObject>
 		case R.id.historylistview_entry_ib_facebook:
 			shareViewFacebook();
 			break;
-		case R.id.historylistview_entry_ib_sliding_right:
-			boolean openButton = ibDelete.isShown();
-			if (openButton) {
-				ibDelete.setVisibility(View.GONE);
-			} else
-				ibDelete.setVisibility(View.VISIBLE);
-			break;
+		// case R.id.historylistview_entry_ib_sliding_right:
+		// boolean statusRight = entryItem.isShowRight();
+		// entryItem.setShowRight(!statusRight);
+		// break;
 		case R.id.historylistview_entry_ib_delete:
-			Database db = new Database(mContext);
-			db.delete(""+ entryItem.getId());
+			// Database db = new Database(mContext);
+			// db.delete("" + entryItem.getId());
 			break;
 
 		}
 	}
 
 	private void shareViewFacebook() {
-		
+
 	}
 
 	private void shareViaTwitter() {
-		
+
 	}
 
 	private void shareViaEmail() {
-		
+
 	}
 
 	private void shareViaMessage() {
-		
+
+	}
+
+	@Override
+	public int getViewTypeCount() {
+
+		return getCount();
+	}
+
+	@Override
+	public int getItemViewType(int position) {
+
+		return position;
+	}
+
+	public class Holder {
+		TextView tvTitle;
+		TextView tvId;
+		LinearLayout llShareLayout;
+		ImageButton ibMessage;
+		ImageButton ibEmail;
+		ImageButton ibTwitter;
+		ImageButton ibFacebook;
+		RelativeLayout rlShow;
+		ImageButton ibSlideLeft;
+		TextView tvName;
+		ImageButton ibSlideRight;
+		ImageButton ibDelete;
 	}
 }
