@@ -23,6 +23,7 @@ import android.widget.Toast;
 import com.dm.zbar.android.scanner.CameraPreview;
 import com.example.qrcodescanner.R;
 import com.hungnguyen.qrcodescanner.activity.ResultActivity;
+import com.hungnguyen.qrcodescanner.utility.Util;
 
 @TargetApi(Build.VERSION_CODES.HONEYCOMB)
 public class ScannerFragment extends Fragment implements Camera.PreviewCallback {
@@ -96,6 +97,7 @@ public class ScannerFragment extends Fragment implements Camera.PreviewCallback 
 		try {
 			// Open the default i.e. the first rear facing camera.
 			mCamera = Camera.open();
+			mCamera.setDisplayOrientation(90);
 			if (mCamera == null) {
 				// Cancel request if mCamera is null.
 				cancelRequest();
@@ -183,7 +185,7 @@ public class ScannerFragment extends Fragment implements Camera.PreviewCallback 
 					break;
 				}
 			}
-			if (isURL(symData)) {
+			if (Util.isURI(symData)) {
 				Intent intent = new Intent(getActivity(), ResultActivity.class);
 				Bundle extras = new Bundle();
 				extras.putString("url", symData);
@@ -195,9 +197,5 @@ public class ScannerFragment extends Fragment implements Camera.PreviewCallback 
 
 		}
 
-	}
-
-	private boolean isURL(String symData) {
-		return false;
 	}
 }

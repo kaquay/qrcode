@@ -6,7 +6,7 @@
     <string name="menu_title_open">Menu</string>
     <string name="menu_title_close"></string>
     <string name="dialog_insert_bt_cancel">Cancel</string>
-    <string name="dialog_insert_bt_ok">Ok</string>
+    <string name="dialog_insert_bt_ok">OK</string>
     <string name="dialog_insert_tv_title_urlprofile">URL Profile</string>
     <string name="dialog_insert_tv_decription_urlprofile">User *var* to indicate where to inject the code value http://cptr.it/*var*</string>
     <string name="dialog_insert_tv_title_shortcut">Shortcut URL</string>

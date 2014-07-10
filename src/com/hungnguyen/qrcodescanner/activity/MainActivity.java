@@ -4,82 +4,71 @@ import java.util.ArrayList;
 
 import android.annotation.SuppressLint;
 import android.app.Activity;
-import android.app.AlertDialog;
 import android.app.Fragment;
 import android.app.FragmentManager;
 import android.app.FragmentTransaction;
-import android.content.DialogInterface;
-import android.content.DialogInterface.OnClickListener;
+import android.content.Context;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.Editor;
-import android.content.res.Configuration;
-import android.graphics.Color;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.os.Bundle;
-import android.support.v4.app.ActionBarDrawerToggle;
-import android.support.v4.widget.DrawerLayout;
+import android.view.Display;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.ViewParent;
+import android.view.View.OnClickListener;
+import android.view.Window;
+import android.view.WindowManager;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
+import android.widget.ImageButton;
 import android.widget.ListView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.qrcodescanner.R;
 import com.hungnguyen.qrcodescanner.adapter.SlidingListAdapter;
-import com.hungnguyen.qrcodescanner.database.Database;
 import com.hungnguyen.qrcodescanner.fragment.HistoryFragment;
 import com.hungnguyen.qrcodescanner.fragment.IntroduceFragment;
 import com.hungnguyen.qrcodescanner.fragment.ScannerFragment;
 import com.hungnguyen.qrcodescanner.fragment.SettingsFragment;
 import com.hungnguyen.qrcodescanner.model.SlidingListItemObject;
 import com.hungnguyen.qrcodescanner.utility.Constants;
+import com.hungnguyen.qrcodescanner.utility.MainLayout;
 
 @SuppressLint("NewApi")
 public class MainActivity extends Activity implements OnItemClickListener,
 		Constants {
-	DrawerLayout mDrawerLayout;
+	ImageButton mIbMenu;
 	ListView mListSlidingMenu;
-	ActionBarDrawerToggle mDrawerToggle;
+	MainLayout mLayout;
 	String[] titles = { "Scan", "History", "Settings", "About" };
 	int mIndex = 0;
 	long back_pressed;
 	Toast mToast;
+	TextView mTvTitle;
+
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		setContentView(R.layout.activity_main);
-		mDrawerLayout = (DrawerLayout) findViewById(R.id.map_drawer_layout);
+		getWindow().requestFeature(Window.FEATURE_ACTION_BAR);
+		getActionBar().hide();
+		mLayout = (MainLayout) this.getLayoutInflater().inflate(
+				R.layout.activity_main, null);
+		setContentView(mLayout);
+		mTvTitle = (TextView) findViewById(R.id.main_tv_titlebar);
+		mIbMenu = (ImageButton) findViewById(R.id.main_ib_menu);
+		mIbMenu.setOnClickListener(new OnClickListener() {
+
+			@Override
+			public void onClick(View v) {
+				mLayout.toggleMenu();
+			}
+		});
 		mListSlidingMenu = (ListView) findViewById(R.id.main_lv_sliding_menu);
-		getActionBar().setDisplayHomeAsUpEnabled(true);
-		getActionBar().setHomeButtonEnabled(true);
-
-		// View titleView = getWindow().findViewById(android.R.id.title);
-		// if (titleView != null) {
-		// ViewParent parent = titleView.getParent();
-		// if (parent != null && (parent instanceof View)) {
-		// View parentView = (View) parent;
-		// parentView.setBackgroundColor(Color.YELLOW);
-		// }
-		// }
-		mDrawerToggle = new ActionBarDrawerToggle(this, mDrawerLayout,
-				R.drawable.ic_menu, R.string.app_name, R.string.app_name) {
-
-			@Override
-			public void onDrawerClosed(View drawerView) {
-				invalidateOptionsMenu();
-				setTitleBar(mIndex);
-			}
-
-			@Override
-			public void onDrawerOpened(View drawerView) {
-				invalidateOptionsMenu();
-				setTitle("Menu");
-			}
-
-		};
-		mDrawerLayout.setDrawerListener(mDrawerToggle);
+		getActionBar().setDisplayHomeAsUpEnabled(false);
+		getActionBar().setHomeButtonEnabled(false);
 		ArrayList<SlidingListItemObject> list = new ArrayList<SlidingListItemObject>();
 		list.add(new SlidingListItemObject(R.drawable.ic_btn_scan));
 		list.add(new SlidingListItemObject(R.drawable.ic_btn_history));
@@ -104,7 +93,21 @@ public class MainActivity extends Activity implements OnItemClickListener,
 			editor.putString(SHARE_SHORTCUT, "");
 			editor.commit();
 		}
-
+//		WindowManager wm = (WindowManager) this
+//				.getSystemService(Context.WINDOW_SERVICE);
+//		Display display = wm.getDefaultDisplay();
+//		int height = display.getHeight();
+//		int width = display.getWidth();
+//		BitmapFactory.Options dimensions = new BitmapFactory.Options();
+//		dimensions.inJustDecodeBounds = true;
+//		Bitmap mBitmap = BitmapFactory.decodeResource(getResources(),
+//				R.drawable.ic_bt_scan, dimensions);
+//		int imageHeight = dimensions.outHeight;
+//		int imageWidth = dimensions.outWidth;
+//		int marginHoz = width - imageWidth / 2;
+//		int marginVer = (height - (4 * imageHeight)) / 8;
+//		mListSlidingMenu.setDividerHeight(marginVer);
+//		mListSlidingMenu.setPadding(marginHoz, marginVer, marginHoz, marginVer);
 	}
 
 	@Override
@@ -136,7 +139,6 @@ public class MainActivity extends Activity implements OnItemClickListener,
 		// fragmentTransaction.addToBackStack(null);
 		mListSlidingMenu.setItemChecked(index, true);
 		mListSlidingMenu.setSelection(index);
-		mDrawerLayout.closeDrawer(mListSlidingMenu);
 	}
 
 	@Override
@@ -147,9 +149,6 @@ public class MainActivity extends Activity implements OnItemClickListener,
 
 	@Override
 	public boolean onMenuItemSelected(int featureId, MenuItem item) {
-		if (mDrawerToggle.onOptionsItemSelected(item)) {
-			return true;
-		}
 		switch (item.getItemId()) {
 		case R.id.menu_setting:
 			return true;
@@ -159,84 +158,47 @@ public class MainActivity extends Activity implements OnItemClickListener,
 	}
 
 	@Override
-	public boolean onPrepareOptionsMenu(Menu menu) {
-		boolean drawerOpen = mDrawerLayout.isDrawerOpen(mListSlidingMenu);
-		menu.findItem(R.id.menu_setting).setVisible(!drawerOpen);
-		return super.onPrepareOptionsMenu(menu);
-	}
-
-	@Override
-	protected void onPostCreate(Bundle savedInstanceState) {
-		super.onPostCreate(savedInstanceState);
-		// Sync the toggle state after onRestoreInstanceState has occurred.
-		mDrawerToggle.syncState();
-	}
-
-	@Override
-	public void onConfigurationChanged(Configuration newConfig) {
-		super.onConfigurationChanged(newConfig);
-		// Pass any configuration change to the drawer toggls
-		mDrawerToggle.onConfigurationChanged(newConfig);
-	}
-
-	@Override
 	public void onItemClick(AdapterView<?> parent, View view, int position,
 			long id) {
+		if (mIndex == position) {
+			mLayout.toggleMenu();
+			return;
+		}
 		showFragment(position);
 		setTitleBar(position);
-
+		mLayout.toggleMenu();
 	}
 
 	private void setTitleBar(int index) {
 		mIndex = index;
 		switch (index) {
 		case 0:
-			setTitle(titles[index]);
+			mTvTitle.setText("" + titles[index]);
 			break;
 		case 1:
-			setTitle(titles[index]);
+			mTvTitle.setText("" + titles[index]);
 			break;
 		case 2:
-			setTitle(titles[index]);
+			mTvTitle.setText("" + titles[index]);
 			break;
 		case 3:
-			setTitle(titles[index]);
+			mTvTitle.setText("" + titles[index]);
 			break;
 		}
 	}
 
 	@Override
 	public void onBackPressed() {
-		// AlertDialog.Builder builder = new AlertDialog.Builder(this);
-		// builder.setTitle("Warning !");
-		// builder.setMessage("Do you want to close QRCode Application");
-		// builder.setNegativeButton("NO", new OnClickListener() {
-		//
-		// @Override
-		// public void onClick(DialogInterface dialog, int which) {
-		// dialog.dismiss();
-		// }
-		// });
-		// builder.setPositiveButton("YES", new OnClickListener() {
-		//
-		// @Override
-		// public void onClick(DialogInterface dialog, int which) {
-		// dialog.dismiss();
-		// finish();
-		// }
-		// });
-		// AlertDialog alert = builder.create();
-		// alert.show();
 		if (back_pressed + 500 > System.currentTimeMillis())
 			finish();
 		else
 			showToast("Press again to exit!");
 		back_pressed = System.currentTimeMillis();
 	}
+
 	private void showToast(final CharSequence msg) {
 		if (mToast == null) {
-			mToast = Toast.makeText(MainActivity.this, "",
-					Toast.LENGTH_SHORT);
+			mToast = Toast.makeText(MainActivity.this, "", Toast.LENGTH_SHORT);
 		}
 		if (mToast != null) {
 			// Cancel last message toast

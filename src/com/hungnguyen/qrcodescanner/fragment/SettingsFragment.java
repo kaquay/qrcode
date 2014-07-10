@@ -1,5 +1,7 @@
 package com.hungnguyen.qrcodescanner.fragment;
 
+import java.net.URL;
+import java.net.URLConnection;
 import java.util.ArrayList;
 
 import twitter4j.Twitter;
@@ -153,18 +155,26 @@ public class SettingsFragment extends Fragment implements OnItemClickListener,
 	}
 
 	private void setUpShareTwitter() {
-		// TODO
-		try {
-			// AccessToken a = new
-			// AccessToken(TWITTER_ACCESS_TOKEN,TWITTER_SECRET_ACCESS_TOKEN);
-			Twitter twitter = new TwitterFactory().getInstance();
-			twitter.setOAuthConsumer(TWITTER_ACCESS_TOKEN,
-					TWITTER_SECRET_ACCESS_TOKEN);
-			// twitter.setOAuthAccessToken(a);
-			twitter.updateStatus("POST TEST");
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
+		SharedPreferences sp = getActivity().getSharedPreferences(
+				SHARE_TWITTER, 0);
+		String access_token = sp.getString(TWITTER_ACCESS_TOKEN, null);
+		String access_token_secret = sp.getString(TWITTER_ACESS_TOKEN_SECRET,
+				null);
+		if (access_token == null || access_token_secret == null) {
+
+		} else
+			try {
+
+				// AccessToken a = new
+				// AccessToken(TWITTER_ACCESS_TOKEN,TWITTER_SECRET_ACCESS_TOKEN);
+				Twitter twitter = new TwitterFactory().getInstance();
+				twitter.setOAuthConsumer(TWITTER_CONSUMER_KEY,
+						TWITTER_CONSUMER_SECRET);
+				// twitter.setOAuthAccessToken(a);
+				twitter.updateStatus("POST TEST");
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
 
 	}
 
@@ -255,12 +265,12 @@ public class SettingsFragment extends Fragment implements OnItemClickListener,
 
 			@Override
 			public void onClick(View v) {
-				String st = "" + etValue.getText().toString().trim();
-				if (st.equals(shortcutURL)) {
+				String url = "" + etValue.getText().toString().trim();
+				if (!checkURL(url)) {
 
 				} else {
 					Editor editor = sp.edit();
-					editor.putString(SHARE_SHORTCUT, st);
+					editor.putString(SHARE_SHORTCUT, url);
 					editor.commit();
 					showToast(getActivity().getResources().getString(
 							R.string.toast_update_url_shortcut));
@@ -270,6 +280,17 @@ public class SettingsFragment extends Fragment implements OnItemClickListener,
 			}
 		});
 		dialog.show();
+	}
+
+	private boolean checkURL(String url) {
+		try {
+			URL u = new URL(url);
+			URLConnection conn = u.openConnection();
+			conn.connect();
+			return true;
+		} catch (Exception e) {
+			return false;
+		}
 	}
 
 	private void setUpAutoCloseURL() {
@@ -282,10 +303,12 @@ public class SettingsFragment extends Fragment implements OnItemClickListener,
 			listValue.add("" + i + " seconds");
 		}
 		listValue.add("Never");
-		final String[] menuWheel = (String[]) listValue.toArray();
+		final String[] menuWheel = listValue.toArray(new String[listValue
+				.size()]);
 		final WheelView wheel = (WheelView) dialog
 				.findViewById(R.id.dialog_picker_wheelview);
-		wheel.setAdapter(new ArrayWheelAdapter<String>(menuWheel));
+		ArrayWheelAdapter<String> adapter = new ArrayWheelAdapter<String>(menuWheel);
+		wheel.setAdapter(adapter);
 		wheel.setVisibleItems(2);
 		wheel.setCurrentItem(0);
 		int index = sp.getInt(SHARE_AUTO_CLOSE_URL, 0);
@@ -386,6 +409,12 @@ public class SettingsFragment extends Fragment implements OnItemClickListener,
 			mToast.setText(msg);
 			mToast.show();
 		}
+	}
+
+	@Override
+	public void startActivityForResult(Intent intent, int requestCode) {
+		super.startActivityForResult(intent, requestCode);
+
 	}
 
 }
