@@ -41,10 +41,11 @@ import com.facebook.android.FacebookError;
 import com.hungnguyen.qrcodescanner.adapter.SettingListAdapter;
 import com.hungnguyen.qrcodescanner.model.SettingChooseObject;
 import com.hungnguyen.qrcodescanner.model.SettingItemEntity;
-import com.hungnguyen.qrcodescanner.model.SettingListViewItemEntity;
+import com.hungnguyen.qrcodescanner.model.SettingItemFactory;
 import com.hungnguyen.qrcodescanner.model.SettingSectionItemObject;
 import com.hungnguyen.qrcodescanner.model.SettingSwitchObject;
 import com.hungnguyen.qrcodescanner.utility.Constants;
+import com.hungnguyen.qrcodescanner.utility.Util;
 
 @TargetApi(Build.VERSION_CODES.HONEYCOMB)
 public class SettingsFragment extends Fragment implements OnItemClickListener,
@@ -127,7 +128,7 @@ public class SettingsFragment extends Fragment implements OnItemClickListener,
 	@Override
 	public void onItemClick(AdapterView<?> parent, View view, int position,
 			long id) {
-		SettingListViewItemEntity listviewItem = (SettingListViewItemEntity) mList
+		SettingItemFactory listviewItem = (SettingItemFactory) mList
 				.get(position);
 		switch (listviewItem.getId()) {
 		case SETTING_ITEM_URL_PROFILE:
@@ -266,7 +267,7 @@ public class SettingsFragment extends Fragment implements OnItemClickListener,
 			@Override
 			public void onClick(View v) {
 				String url = "" + etValue.getText().toString().trim();
-				if (!checkURL(url)) {
+				if (!Util.isURI(url)) {
 
 				} else {
 					Editor editor = sp.edit();
@@ -282,16 +283,6 @@ public class SettingsFragment extends Fragment implements OnItemClickListener,
 		dialog.show();
 	}
 
-	private boolean checkURL(String url) {
-		try {
-			URL u = new URL(url);
-			URLConnection conn = u.openConnection();
-			conn.connect();
-			return true;
-		} catch (Exception e) {
-			return false;
-		}
-	}
 
 	private void setUpAutoCloseURL() {
 		final SharedPreferences sp = getActivity().getSharedPreferences(

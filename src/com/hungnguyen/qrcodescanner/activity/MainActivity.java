@@ -1,85 +1,77 @@
 package com.hungnguyen.qrcodescanner.activity;
 
-import java.util.ArrayList;
-
-import android.annotation.SuppressLint;
-import android.app.Activity;
 import android.app.Fragment;
 import android.app.FragmentManager;
 import android.app.FragmentTransaction;
-import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.Editor;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.os.Bundle;
-import android.view.Display;
-import android.view.Menu;
-import android.view.MenuItem;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.Window;
-import android.view.WindowManager;
-import android.widget.AdapterView;
-import android.widget.AdapterView.OnItemClickListener;
+import android.widget.Button;
 import android.widget.ImageButton;
-import android.widget.ListView;
+import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.qrcodescanner.R;
-import com.hungnguyen.qrcodescanner.adapter.SlidingListAdapter;
 import com.hungnguyen.qrcodescanner.fragment.HistoryFragment;
 import com.hungnguyen.qrcodescanner.fragment.IntroduceFragment;
 import com.hungnguyen.qrcodescanner.fragment.ScannerFragment;
 import com.hungnguyen.qrcodescanner.fragment.SettingsFragment;
-import com.hungnguyen.qrcodescanner.model.SlidingListItemObject;
+import com.hungnguyen.qrcodescanner.fragment.SlidingMenuFragment;
+import com.hungnguyen.qrcodescanner.utility.ChangeFragmentListener;
 import com.hungnguyen.qrcodescanner.utility.Constants;
-import com.hungnguyen.qrcodescanner.utility.MainLayout;
+import com.jeremyfeinstein.slidingmenu.lib.app.SlidingActivity;
 
-@SuppressLint("NewApi")
-public class MainActivity extends Activity implements OnItemClickListener,
-		Constants {
+public class MainActivity extends SlidingActivity implements Constants,
+		OnClickListener, ChangeFragmentListener {
 	ImageButton mIbMenu;
-	ListView mListSlidingMenu;
-	MainLayout mLayout;
 	String[] titles = { "Scan", "History", "Settings", "About" };
 	int mIndex = 0;
 	long back_pressed;
 	Toast mToast;
 	TextView mTvTitle;
+	ImageButton mIbShortcut;
+	Button mBtDeleteAll;
+	float lastTranslate = 0.0f;
+	RelativeLayout mRlActionBar;
 
 	@Override
-	protected void onCreate(Bundle savedInstanceState) {
+	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		getWindow().requestFeature(Window.FEATURE_ACTION_BAR);
 		getActionBar().hide();
-		mLayout = (MainLayout) this.getLayoutInflater().inflate(
-				R.layout.activity_main, null);
-		setContentView(mLayout);
+		setContentView(R.layout.activity_main);
+		// =============
+		setBehindContentView(R.layout.menu);
+		getFragmentManager().beginTransaction()
+				.replace(R.id.frame_slidingmenu, new SlidingMenuFragment(this))
+				.commit();
+		int width = getResources().getDisplayMetrics().widthPixels * 70 / 100;
+		getSlidingMenu().setBehindOffset(width);
+		// ============
 		mTvTitle = (TextView) findViewById(R.id.main_tv_titlebar);
 		mIbMenu = (ImageButton) findViewById(R.id.main_ib_menu);
-		mIbMenu.setOnClickListener(new OnClickListener() {
-
-			@Override
-			public void onClick(View v) {
-				mLayout.toggleMenu();
-			}
-		});
-		mListSlidingMenu = (ListView) findViewById(R.id.main_lv_sliding_menu);
+		mIbShortcut = (ImageButton) findViewById(R.id.main_ib_shortcut);
+		mBtDeleteAll = (Button) findViewById(R.id.main_history_bt_delete);
+		mRlActionBar = (RelativeLayout) findViewById(R.id.main_rl_actionbar);
+		// ============
+		int height = getResources().getDisplayMetrics().heightPixels / 10;
+		mRlActionBar.getLayoutParams().height = height;
+		mRlActionBar.requestLayout();
+		mIbShortcut.setOnClickListener(this);
+		mIbMenu.setOnClickListener(this);
 		getActionBar().setDisplayHomeAsUpEnabled(false);
 		getActionBar().setHomeButtonEnabled(false);
-		ArrayList<SlidingListItemObject> list = new ArrayList<SlidingListItemObject>();
-		list.add(new SlidingListItemObject(R.drawable.ic_btn_scan));
-		list.add(new SlidingListItemObject(R.drawable.ic_btn_history));
-		list.add(new SlidingListItemObject(R.drawable.ic_btn_setting));
-		list.add(new SlidingListItemObject(R.drawable.ic_btn_info));
-		mListSlidingMenu.setAdapter(new SlidingListAdapter(
-				getApplicationContext(), list));
-		mListSlidingMenu.setOnItemClickListener(this);
+
+		// ===========
 		if (savedInstanceState == null) {
-			showFragment(0);
 			setTitleBar(0);
+			showFragment(0);
 		}
 		SharedPreferences sp = getSharedPreferences(SHARE_NAME, 0);
 		boolean isFirst = sp.getBoolean(SHARE_IS_FIRST, true);
@@ -88,85 +80,16 @@ public class MainActivity extends Activity implements OnItemClickListener,
 			editor.putBoolean(SHARE_IS_FIRST, false);
 			editor.putBoolean(SHARE_SW_SOUND, true);
 			editor.putBoolean(SHARE_SW_AUTO_OPEN, true);
-			editor.putString(SHARE_URL_PROFILE, "");
+			editor.putString(SHARE_URL_PROFILE, null);
 			editor.putInt(SHARE_AUTO_CLOSE_URL, 0);
 			editor.putString(SHARE_SHORTCUT, "");
 			editor.commit();
 		}
-//		WindowManager wm = (WindowManager) this
-//				.getSystemService(Context.WINDOW_SERVICE);
-//		Display display = wm.getDefaultDisplay();
-//		int height = display.getHeight();
-//		int width = display.getWidth();
-//		BitmapFactory.Options dimensions = new BitmapFactory.Options();
-//		dimensions.inJustDecodeBounds = true;
-//		Bitmap mBitmap = BitmapFactory.decodeResource(getResources(),
-//				R.drawable.ic_bt_scan, dimensions);
-//		int imageHeight = dimensions.outHeight;
-//		int imageWidth = dimensions.outWidth;
-//		int marginHoz = width - imageWidth / 2;
-//		int marginVer = (height - (4 * imageHeight)) / 8;
-//		mListSlidingMenu.setDividerHeight(marginVer);
-//		mListSlidingMenu.setPadding(marginHoz, marginVer, marginHoz, marginVer);
 	}
 
 	@Override
 	protected void onResume() {
 		super.onResume();
-	}
-
-	private void showFragment(int index) {
-		FragmentManager fragmentManager = getFragmentManager();
-		FragmentTransaction fragmentTransaction = fragmentManager
-				.beginTransaction();
-		Fragment fragment = null;
-		switch (index) {
-		case 0:
-			fragment = new ScannerFragment();
-			break;
-		case 1:
-			fragment = new HistoryFragment();
-			break;
-		case 2:
-			fragment = new SettingsFragment();
-			break;
-		case 3:
-			fragment = new IntroduceFragment();
-			break;
-		}
-		fragmentTransaction.replace(R.id.main_frame_container, fragment)
-				.commit();
-		// fragmentTransaction.addToBackStack(null);
-		mListSlidingMenu.setItemChecked(index, true);
-		mListSlidingMenu.setSelection(index);
-	}
-
-	@Override
-	public boolean onCreateOptionsMenu(Menu menu) {
-		getMenuInflater().inflate(R.menu.main, menu);
-		return true;
-	}
-
-	@Override
-	public boolean onMenuItemSelected(int featureId, MenuItem item) {
-		switch (item.getItemId()) {
-		case R.id.menu_setting:
-			return true;
-		default:
-			return super.onOptionsItemSelected(item);
-		}
-	}
-
-	@Override
-	public void onItemClick(AdapterView<?> parent, View view, int position,
-			long id) {
-		if (mIndex == position) {
-			mLayout.toggleMenu();
-			return;
-		}
-		showFragment(position);
-		setTitleBar(position);
-		mLayout.toggleMenu();
 	}
 
 	private void setTitleBar(int index) {
@@ -210,4 +133,67 @@ public class MainActivity extends Activity implements OnItemClickListener,
 		}
 	}
 
+	@Override
+	public void onClick(View view) {
+		switch (view.getId()) {
+		case R.id.main_ib_shortcut:
+			SharedPreferences sp = getSharedPreferences(SHARE_NAME, 0);
+			String url = sp.getString(SHARE_SHORTCUT, "");
+			if (!url.equals("")) {
+				Intent intent = new Intent(MainActivity.this,
+						ResultActivity.class);
+				Bundle extras = new Bundle();
+				extras.putString("url", url);
+				intent.putExtras(extras);
+				startActivity(intent);
+			} else {
+				showToast("You must insert shortcut url first !");
+			}
+			break;
+		case R.id.main_ib_menu:
+			toggle();
+			break;
+		}
+	}
+
+	private void showFragment(int index) {
+		FragmentManager fragmentManager = getFragmentManager();
+		FragmentTransaction fragmentTransaction = fragmentManager
+				.beginTransaction();
+		Fragment fragment = null;
+		switch (index) {
+		case 0:
+			fragment = new ScannerFragment();
+			mBtDeleteAll.setVisibility(View.GONE);
+			mIbShortcut.setVisibility(View.VISIBLE);
+			break;
+		case 1:
+			fragment = new HistoryFragment();
+			mBtDeleteAll.setVisibility(View.VISIBLE);
+			mIbShortcut.setVisibility(View.GONE);
+			break;
+		case 2:
+			fragment = new SettingsFragment();
+			mBtDeleteAll.setVisibility(View.GONE);
+			mIbShortcut.setVisibility(View.GONE);
+			break;
+		case 3:
+			fragment = new IntroduceFragment();
+			mBtDeleteAll.setVisibility(View.GONE);
+			mIbShortcut.setVisibility(View.GONE);
+			break;
+		}
+		fragmentTransaction.replace(R.id.main_frame_container, fragment)
+				.commit();
+		// fragmentTransaction.addToBackStack(null);
+		// mListSlidingMenu.setItemChecked(index, true);
+		// mListSlidingMenu.setSelection(index);
+	}
+
+	@Override
+	public void onChangFragmentListener(int position) {
+		showFragment(position);
+		setTitleBar(position);
+		toggle();
+	}
 }

@@ -15,6 +15,7 @@ import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.LinearLayout.LayoutParams;
+import android.widget.Toast;
 
 import com.example.qrcodescanner.R;
 import com.hungnguyen.qrcodescanner.model.SlidingListItemObject;
@@ -48,26 +49,34 @@ public class SlidingListAdapter extends ArrayAdapter<SlidingListItemObject> {
 		holder.iv.setImageResource(getItem(position).getImage());
 		//
 
-		WindowManager wm = (WindowManager) mContext
-				.getSystemService(Context.WINDOW_SERVICE);
-		Display display = wm.getDefaultDisplay();
-		int height = display.getHeight();
-		int width = display.getWidth();
+		int height = mContext.getResources().getDisplayMetrics().heightPixels
+				- getStatusBarHeight();
+		int width = mContext.getResources().getDisplayMetrics().widthPixels * 30 / 100;
 		BitmapFactory.Options dimensions = new BitmapFactory.Options();
 		dimensions.inJustDecodeBounds = false;
 		Bitmap mBitmap = BitmapFactory.decodeResource(mContext.getResources(),
 				R.drawable.ic_bt_scan, dimensions);
 		int imageHeight = dimensions.outHeight;
 		int imageWidth = dimensions.outWidth;
-		int marginHoz = width - imageWidth / 2;
-		int marginVer = (height - (4 * imageHeight)) / 16; 
-		// 
+		int marginHoz = (width - imageWidth) / 2;
+		int marginVer = (height - (4 * imageHeight)) / 8;
+		//
 		LinearLayout.LayoutParams ll = new LinearLayout.LayoutParams(
 				LinearLayout.LayoutParams.WRAP_CONTENT,
 				LinearLayout.LayoutParams.WRAP_CONTENT);
-		ll.setMargins(0, marginVer, 0, marginVer);
+		ll.setMargins(marginHoz, marginVer, marginHoz, marginVer);
 		holder.iv.setLayoutParams(ll);
 		return convertView;
+	}
+
+	public int getStatusBarHeight() {
+		int result = 0;
+		int resourceId = mContext.getResources().getIdentifier(
+				"status_bar_height", "dimen", "android");
+		if (resourceId > 0) {
+			result = mContext.getResources().getDimensionPixelSize(resourceId);
+		}
+		return result;
 	}
 
 	private class Holder {

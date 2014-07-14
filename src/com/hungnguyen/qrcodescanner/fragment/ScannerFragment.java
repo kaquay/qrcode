@@ -23,6 +23,7 @@ import android.widget.Toast;
 import com.dm.zbar.android.scanner.CameraPreview;
 import com.example.qrcodescanner.R;
 import com.hungnguyen.qrcodescanner.activity.ResultActivity;
+import com.hungnguyen.qrcodescanner.utility.ChangeFragmentListener;
 import com.hungnguyen.qrcodescanner.utility.Util;
 
 @TargetApi(Build.VERSION_CODES.HONEYCOMB)
@@ -34,6 +35,7 @@ public class ScannerFragment extends Fragment implements Camera.PreviewCallback 
 	Handler mAutoFocusHandler;
 	boolean mPreviewing = true;
 	FrameLayout mFrameLayout;
+	ChangeFragmentListener mListener;
 	static {
 		System.loadLibrary("iconv");
 	}

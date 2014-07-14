@@ -2,7 +2,7 @@ package com.hungnguyen.qrcodescanner.model;
 
 import com.hungnguyen.qrcodescanner.utility.Constants;
 
-public class SettingSwitchObject extends SettingListViewItemEntity implements  Constants {
+public class SettingSwitchObject extends SettingItemFactory implements  Constants {
 	private String title;
 	private boolean isSwitchOn;
 

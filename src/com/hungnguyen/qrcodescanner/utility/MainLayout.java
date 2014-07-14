@@ -18,6 +18,8 @@ public class MainLayout extends LinearLayout {
 	private View menu;
 	private View content;
 	private static int menuRightMargin = 15;
+	private int down = 0;
+	private int up = 0;
 
 	private enum MenuState {
 		HIDING, HIDDEN, SHOWING, SHOWN,
@@ -58,6 +60,7 @@ public class MainLayout extends LinearLayout {
 		content.setOnTouchListener(new OnTouchListener() {
 			@Override
 			public boolean onTouch(View v, MotionEvent event) {
+				
 				return MainLayout.this.onContentTouch(v, event);
 			}
 		});
@@ -161,10 +164,15 @@ public class MainLayout extends LinearLayout {
 			return false;
 		int curX = (int) event.getRawX();
 		int diffX = 0;
-
+		
+		Log.d("TAG", "up = :" + up + "--- down = :" + down);
+		// Log.d("MainLayout.java onContentTouch()", event.);
+		int xdown = 0, xmove = 0, xup = 0;
 		switch (event.getAction()) {
 		case MotionEvent.ACTION_DOWN:
-
+			xdown = (int) event.getX();
+			down = xdown;
+			Log.d("TAG", "down :" + xdown);
 			prevX = curX;
 			return true;
 
@@ -186,33 +194,51 @@ public class MainLayout extends LinearLayout {
 
 			prevX = curX;
 			lastDiffX = diffX;
+			xmove = (int) event.getX();
+			Log.d("TAG", "move :" + xmove);
 			return true;
 
 		case MotionEvent.ACTION_UP:
 			Log.d("MainLayout.java onContentTouch()", "Up lastDiffX "
 					+ lastDiffX);
-
+			xup = (int) event.getX();
+			Log.d("TAG", "up :" + xup);
+			up = xup;
 			if (lastDiffX > 0) {
 				currentMenuState = MenuState.SHOWING;
 				menuScroller.startScroll(contentXOffset, 0,
 						menu.getLayoutParams().width - contentXOffset, 0,
 						SLIDING_DURATION);
-			} else if (lastDiffX <= 0) {
+			} else if (lastDiffX < 0) {
 				currentMenuState = MenuState.HIDING;
 				menuScroller.startScroll(contentXOffset, 0, -contentXOffset, 0,
 						SLIDING_DURATION);
+				// } else {
+				// if (currentMenuState != MenuState.SHOWING) {
+				// currentMenuState = MenuState.HIDING;
+				// menuScroller.startScroll(contentXOffset, 0,
+				// -contentXOffset, 0, SLIDING_DURATION);
+				// } else {
+				// currentMenuState = MenuState.SHOWING;
+				// menuScroller.startScroll(contentXOffset, 0,
+				// menu.getLayoutParams().width - contentXOffset, 0,
+				// SLIDING_DURATION);
+				// }
 			}
 			menuHandler.postDelayed(menuRunnable, QUERY_INTERVAL);
 			this.invalidate();
 			isDragging = false;
 			prevX = 0;
 			lastDiffX = 0;
+
 			return true;
 
 		default:
+
 			break;
 		}
-
+		Log.d("TAG", "up = :" + up + "--- down = :" + down);
+		if (up != down) toggleMenu();
 		return false;
 	}
 }

@@ -1,8 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<com.hungnguyen.qrcodescanner.utility.MainLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/historylistview_entry_drawer"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:orientation="horizontal" >
+    android:layout_height="wrap_content" >
+
+    <!-- The layout showed -->
+
+    <FrameLayout
+        android:id="@+id/historylistview_entry_frameshow"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
 
     <TextView
         android:id="@+id/historylistview_entry_tv_id"
@@ -11,11 +18,10 @@
         android:visibility="gone" />
 
     <LinearLayout
-        android:id="@+id/historylistview_entry_layout_sharebutton"
+        android:id="@+id/historylistview_entry_layout_left"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:visibility="gone" >
+        android:orientation="horizontal" >
 
         <ImageButton
             android:id="@+id/historylistview_entry_ib_message"
@@ -45,47 +51,19 @@
             android:background="#00000000"
             android:src="@drawable/ic_btn_fb_fc" />
     </LinearLayout>
-    <!-- The layout showed -->
 
-    <RelativeLayout
-        android:id="@+id/historylistview_entry_layout_showlayout"
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:layout_gravity="fill_horizontal"
-        android:clickable="true"
-        android:focusable="true"
-        android:focusableInTouchMode="true" >
-
-        <ImageButton
-            android:id="@+id/historylistview_entry_ib_sliding_left"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentLeft="true"
-            android:background="#00000000"
-            android:src="@drawable/ic_qrcode" />
-
-        <TextView
-            android:layout_toRightOf="@+id/historylistview_entry_ib_sliding_left"
-            android:id="@+id/historylistview_entry_tv_name"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="xxxxxxxxxxxxxxxxx" />
-
-        <ImageButton
-            android:id="@+id/historylistview_entry_ib_sliding_right"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:background="#00000000"
-            android:layout_alignParentRight="true"
-            android:src="@drawable/ic_arrow" />
-    </RelativeLayout>
-
-    <ImageButton
-        android:id="@+id/historylistview_entry_ib_delete"
+    <LinearLayout
+        android:id="@+id/historylistview_entry_layout_right"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:background="#00000000"
-        android:src="@drawable/ic_btn_delete_fc"
-        android:visibility="gone" />
+        android:orientation="horizontal" >
 
-</LinearLayout>
+        <ImageButton
+            android:id="@+id/historylistview_entry_ib_delete"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="#00000000"
+            android:src="@drawable/ic_btn_delete_fc" />
+    </LinearLayout>
+
+</com.hungnguyen.qrcodescanner.utility.MainLayout>

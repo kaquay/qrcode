@@ -2,7 +2,7 @@ package com.hungnguyen.qrcodescanner.model;
 
 import com.hungnguyen.qrcodescanner.utility.Constants;
 
-public class SettingChooseObject extends SettingListViewItemEntity implements
+public class SettingChooseObject extends SettingItemFactory implements
 		Constants {
 	private String title;
 	private String status;
