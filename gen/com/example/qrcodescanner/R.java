@@ -18,7 +18,7 @@ theme attribute (in the form
 "<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>")
 containing a value of this type.
          */
-        public static final int behindOffset=0x7f010003;
+        public static final int behindOffset=0x7f01000f;
         /** <p>Must be a floating point value, such as "<code>1.2</code>".
 <p>This may also be a reference to a resource (in the form
 "<code>@[<i>package</i>:]<i>type</i>:<i>name</i></code>") or
@@ -26,7 +26,7 @@ theme attribute (in the form
 "<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>")
 containing a value of this type.
          */
-        public static final int behindScrollScale=0x7f010005;
+        public static final int behindScrollScale=0x7f010011;
         /** <p>Must be a dimension value, which is a floating point number appended with a unit such as "<code>14.5sp</code>".
 Available units are: px (pixels), dp (density-independent pixels), sp (scaled pixels based on preferred font size),
 in (inches), mm (millimeters).
@@ -36,7 +36,7 @@ theme attribute (in the form
 "<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>")
 containing a value of this type.
          */
-        public static final int behindWidth=0x7f010004;
+        public static final int behindWidth=0x7f010010;
         /** <p>Must be a boolean value, either "<code>true</code>" or "<code>false</code>".
 <p>This may also be a reference to a resource (in the form
 "<code>@[<i>package</i>:]<i>type</i>:<i>name</i></code>") or
@@ -44,11 +44,11 @@ theme attribute (in the form
 "<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>")
 containing a value of this type.
          */
-        public static final int confirm_logout=0x7f01001a;
+        public static final int confirm_logout=0x7f010026;
         /** <p>Must be a reference to another resource, in the form "<code>@[+][<i>package</i>:]<i>type</i>:<i>name</i></code>"
 or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>".
          */
-        public static final int done_button_background=0x7f010014;
+        public static final int done_button_background=0x7f010020;
         /** <p>Must be a string value, using '\\;' to escape characters such as '\\n' or '\\uxxxx' for a unicode character.
 <p>This may also be a reference to a resource (in the form
 "<code>@[<i>package</i>:]<i>type</i>:<i>name</i></code>") or
@@ -56,7 +56,7 @@ theme attribute (in the form
 "<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>")
 containing a value of this type.
          */
-        public static final int done_button_text=0x7f010012;
+        public static final int done_button_text=0x7f01001e;
         /** <p>Must be a string value, using '\\;' to escape characters such as '\\n' or '\\uxxxx' for a unicode character.
 <p>This may also be a reference to a resource (in the form
 "<code>@[<i>package</i>:]<i>type</i>:<i>name</i></code>") or
@@ -64,7 +64,7 @@ theme attribute (in the form
 "<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>")
 containing a value of this type.
          */
-        public static final int extra_fields=0x7f01000f;
+        public static final int extra_fields=0x7f01001b;
         /** <p>Must be a floating point value, such as "<code>1.2</code>".
 <p>This may also be a reference to a resource (in the form
 "<code>@[<i>package</i>:]<i>type</i>:<i>name</i></code>") or
@@ -72,7 +72,7 @@ theme attribute (in the form
 "<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>")
 containing a value of this type.
          */
-        public static final int fadeDegree=0x7f01000b;
+        public static final int fadeDegree=0x7f010017;
         /** <p>Must be a boolean value, either "<code>true</code>" or "<code>false</code>".
 <p>This may also be a reference to a resource (in the form
 "<code>@[<i>package</i>:]<i>type</i>:<i>name</i></code>") or
@@ -80,7 +80,7 @@ theme attribute (in the form
 "<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>")
 containing a value of this type.
          */
-        public static final int fadeEnabled=0x7f01000a;
+        public static final int fadeEnabled=0x7f010016;
         /** <p>Must be a boolean value, either "<code>true</code>" or "<code>false</code>".
 <p>This may also be a reference to a resource (in the form
 "<code>@[<i>package</i>:]<i>type</i>:<i>name</i></code>") or
@@ -88,7 +88,7 @@ theme attribute (in the form
 "<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>")
 containing a value of this type.
          */
-        public static final int fetch_user_info=0x7f01001b;
+        public static final int fetch_user_info=0x7f010027;
         /** <p>Must be a boolean value, either "<code>true</code>" or "<code>false</code>".
 <p>This may also be a reference to a resource (in the form
 "<code>@[<i>package</i>:]<i>type</i>:<i>name</i></code>") or
@@ -96,7 +96,7 @@ theme attribute (in the form
 "<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>")
 containing a value of this type.
          */
-        public static final int is_cropped=0x7f01001f;
+        public static final int is_cropped=0x7f01002b;
         /** <p>Must be a string value, using '\\;' to escape characters such as '\\n' or '\\uxxxx' for a unicode character.
 <p>This may also be a reference to a resource (in the form
 "<code>@[<i>package</i>:]<i>type</i>:<i>name</i></code>") or
@@ -104,7 +104,7 @@ theme attribute (in the form
 "<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>")
 containing a value of this type.
          */
-        public static final int login_text=0x7f01001c;
+        public static final int login_text=0x7f010028;
         /** <p>Must be a string value, using '\\;' to escape characters such as '\\n' or '\\uxxxx' for a unicode character.
 <p>This may also be a reference to a resource (in the form
 "<code>@[<i>package</i>:]<i>type</i>:<i>name</i></code>") or
@@ -112,7 +112,7 @@ theme attribute (in the form
 "<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>")
 containing a value of this type.
          */
-        public static final int logout_text=0x7f01001d;
+        public static final int logout_text=0x7f010029;
         /** <p>Must be one of the following constant values.</p>
 <table>
 <colgroup align="left" />
@@ -123,7 +123,7 @@ containing a value of this type.
 <tr><td><code>right</code></td><td>1</td><td></td></tr>
 </table>
          */
-        public static final int mode=0x7f010000;
+        public static final int mode=0x7f01000c;
         /** <p>Must be a boolean value, either "<code>true</code>" or "<code>false</code>".
 <p>This may also be a reference to a resource (in the form
 "<code>@[<i>package</i>:]<i>type</i>:<i>name</i></code>") or
@@ -131,7 +131,7 @@ theme attribute (in the form
 "<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>")
 containing a value of this type.
          */
-        public static final int multi_select=0x7f010015;
+        public static final int multi_select=0x7f010021;
         /** <p>Must be one of the following constant values.</p>
 <table>
 <colgroup align="left" />
@@ -143,7 +143,7 @@ containing a value of this type.
 <tr><td><code>large</code></td><td>-4</td><td></td></tr>
 </table>
          */
-        public static final int preset_size=0x7f01001e;
+        public static final int preset_size=0x7f01002a;
         /** <p>Must be an integer value, such as "<code>100</code>".
 <p>This may also be a reference to a resource (in the form
 "<code>@[<i>package</i>:]<i>type</i>:<i>name</i></code>") or
@@ -151,7 +151,7 @@ theme attribute (in the form
 "<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>")
 containing a value of this type.
          */
-        public static final int radius_in_meters=0x7f010016;
+        public static final int radius_in_meters=0x7f010022;
         /** <p>Must be an integer value, such as "<code>100</code>".
 <p>This may also be a reference to a resource (in the form
 "<code>@[<i>package</i>:]<i>type</i>:<i>name</i></code>") or
@@ -159,7 +159,7 @@ theme attribute (in the form
 "<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>")
 containing a value of this type.
          */
-        public static final int results_limit=0x7f010017;
+        public static final int results_limit=0x7f010023;
         /** <p>Must be a string value, using '\\;' to escape characters such as '\\n' or '\\uxxxx' for a unicode character.
 <p>This may also be a reference to a resource (in the form
 "<code>@[<i>package</i>:]<i>type</i>:<i>name</i></code>") or
@@ -167,11 +167,11 @@ theme attribute (in the form
 "<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>")
 containing a value of this type.
          */
-        public static final int search_text=0x7f010018;
+        public static final int search_text=0x7f010024;
         /** <p>Must be a reference to another resource, in the form "<code>@[+][<i>package</i>:]<i>type</i>:<i>name</i></code>"
 or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>".
          */
-        public static final int selectorDrawable=0x7f01000d;
+        public static final int selectorDrawable=0x7f010019;
         /** <p>Must be a boolean value, either "<code>true</code>" or "<code>false</code>".
 <p>This may also be a reference to a resource (in the form
 "<code>@[<i>package</i>:]<i>type</i>:<i>name</i></code>") or
@@ -179,11 +179,11 @@ theme attribute (in the form
 "<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>")
 containing a value of this type.
          */
-        public static final int selectorEnabled=0x7f01000c;
+        public static final int selectorEnabled=0x7f010018;
         /** <p>Must be a reference to another resource, in the form "<code>@[+][<i>package</i>:]<i>type</i>:<i>name</i></code>"
 or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>".
          */
-        public static final int shadowDrawable=0x7f010008;
+        public static final int shadowDrawable=0x7f010014;
         /** <p>Must be a dimension value, which is a floating point number appended with a unit such as "<code>14.5sp</code>".
 Available units are: px (pixels), dp (density-independent pixels), sp (scaled pixels based on preferred font size),
 in (inches), mm (millimeters).
@@ -193,7 +193,7 @@ theme attribute (in the form
 "<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>")
 containing a value of this type.
          */
-        public static final int shadowWidth=0x7f010009;
+        public static final int shadowWidth=0x7f010015;
         /** <p>Must be a boolean value, either "<code>true</code>" or "<code>false</code>".
 <p>This may also be a reference to a resource (in the form
 "<code>@[<i>package</i>:]<i>type</i>:<i>name</i></code>") or
@@ -201,7 +201,7 @@ theme attribute (in the form
 "<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>")
 containing a value of this type.
          */
-        public static final int show_pictures=0x7f01000e;
+        public static final int show_pictures=0x7f01001a;
         /** <p>Must be a boolean value, either "<code>true</code>" or "<code>false</code>".
 <p>This may also be a reference to a resource (in the form
 "<code>@[<i>package</i>:]<i>type</i>:<i>name</i></code>") or
@@ -209,7 +209,7 @@ theme attribute (in the form
 "<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>")
 containing a value of this type.
          */
-        public static final int show_search_box=0x7f010019;
+        public static final int show_search_box=0x7f010025;
         /** <p>Must be a boolean value, either "<code>true</code>" or "<code>false</code>".
 <p>This may also be a reference to a resource (in the form
 "<code>@[<i>package</i>:]<i>type</i>:<i>name</i></code>") or
@@ -217,11 +217,108 @@ theme attribute (in the form
 "<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>")
 containing a value of this type.
          */
-        public static final int show_title_bar=0x7f010010;
+        public static final int show_title_bar=0x7f01001c;
+        /** <p>Must be one of the following constant values.</p>
+<table>
+<colgroup align="left" />
+<colgroup align="left" />
+<colgroup align="left" />
+<tr><th>Constant</th><th>Value</th><th>Description</th></tr>
+<tr><td><code>reveal</code></td><td>0</td><td></td></tr>
+<tr><td><code>dismiss</code></td><td>1</td><td></td></tr>
+<tr><td><code>choice</code></td><td>2</td><td></td></tr>
+</table>
+         */
+        public static final int swipeActionLeft=0x7f010008;
+        /** <p>Must be one of the following constant values.</p>
+<table>
+<colgroup align="left" />
+<colgroup align="left" />
+<colgroup align="left" />
+<tr><th>Constant</th><th>Value</th><th>Description</th></tr>
+<tr><td><code>reveal</code></td><td>0</td><td></td></tr>
+<tr><td><code>dismiss</code></td><td>1</td><td></td></tr>
+<tr><td><code>choice</code></td><td>2</td><td></td></tr>
+</table>
+         */
+        public static final int swipeActionRight=0x7f010009;
+        /** <p>Must be an integer value, such as "<code>100</code>".
+<p>This may also be a reference to a resource (in the form
+"<code>@[<i>package</i>:]<i>type</i>:<i>name</i></code>") or
+theme attribute (in the form
+"<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>")
+containing a value of this type.
+         */
+        public static final int swipeAnimationTime=0x7f010001;
         /** <p>Must be a reference to another resource, in the form "<code>@[+][<i>package</i>:]<i>type</i>:<i>name</i></code>"
 or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>".
          */
-        public static final int title_bar_background=0x7f010013;
+        public static final int swipeBackView=0x7f010006;
+        /** <p>Must be a boolean value, either "<code>true</code>" or "<code>false</code>".
+<p>This may also be a reference to a resource (in the form
+"<code>@[<i>package</i>:]<i>type</i>:<i>name</i></code>") or
+theme attribute (in the form
+"<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>")
+containing a value of this type.
+         */
+        public static final int swipeCloseAllItemsWhenMoveList=0x7f010004;
+        /** <p>Must be a reference to another resource, in the form "<code>@[+][<i>package</i>:]<i>type</i>:<i>name</i></code>"
+or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>".
+         */
+        public static final int swipeDrawableChecked=0x7f01000a;
+        /** <p>Must be a reference to another resource, in the form "<code>@[+][<i>package</i>:]<i>type</i>:<i>name</i></code>"
+or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>".
+         */
+        public static final int swipeDrawableUnchecked=0x7f01000b;
+        /** <p>Must be a reference to another resource, in the form "<code>@[+][<i>package</i>:]<i>type</i>:<i>name</i></code>"
+or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>".
+         */
+        public static final int swipeFrontView=0x7f010005;
+        /** <p>Must be one of the following constant values.</p>
+<table>
+<colgroup align="left" />
+<colgroup align="left" />
+<colgroup align="left" />
+<tr><th>Constant</th><th>Value</th><th>Description</th></tr>
+<tr><td><code>none</code></td><td>0</td><td></td></tr>
+<tr><td><code>both</code></td><td>1</td><td></td></tr>
+<tr><td><code>right</code></td><td>2</td><td></td></tr>
+<tr><td><code>left</code></td><td>3</td><td></td></tr>
+</table>
+         */
+        public static final int swipeMode=0x7f010007;
+        /** <p>Must be a dimension value, which is a floating point number appended with a unit such as "<code>14.5sp</code>".
+Available units are: px (pixels), dp (density-independent pixels), sp (scaled pixels based on preferred font size),
+in (inches), mm (millimeters).
+<p>This may also be a reference to a resource (in the form
+"<code>@[<i>package</i>:]<i>type</i>:<i>name</i></code>") or
+theme attribute (in the form
+"<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>")
+containing a value of this type.
+         */
+        public static final int swipeOffsetLeft=0x7f010002;
+        /** <p>Must be a dimension value, which is a floating point number appended with a unit such as "<code>14.5sp</code>".
+Available units are: px (pixels), dp (density-independent pixels), sp (scaled pixels based on preferred font size),
+in (inches), mm (millimeters).
+<p>This may also be a reference to a resource (in the form
+"<code>@[<i>package</i>:]<i>type</i>:<i>name</i></code>") or
+theme attribute (in the form
+"<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>")
+containing a value of this type.
+         */
+        public static final int swipeOffsetRight=0x7f010003;
+        /** <p>Must be a boolean value, either "<code>true</code>" or "<code>false</code>".
+<p>This may also be a reference to a resource (in the form
+"<code>@[<i>package</i>:]<i>type</i>:<i>name</i></code>") or
+theme attribute (in the form
+"<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>")
+containing a value of this type.
+         */
+        public static final int swipeOpenOnLongPress=0x7f010000;
+        /** <p>Must be a reference to another resource, in the form "<code>@[+][<i>package</i>:]<i>type</i>:<i>name</i></code>"
+or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>".
+         */
+        public static final int title_bar_background=0x7f01001f;
         /** <p>Must be a string value, using '\\;' to escape characters such as '\\n' or '\\uxxxx' for a unicode character.
 <p>This may also be a reference to a resource (in the form
 "<code>@[<i>package</i>:]<i>type</i>:<i>name</i></code>") or
@@ -229,7 +326,7 @@ theme attribute (in the form
 "<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>")
 containing a value of this type.
          */
-        public static final int title_text=0x7f010011;
+        public static final int title_text=0x7f01001d;
         /** <p>Must be one of the following constant values.</p>
 <table>
 <colgroup align="left" />
@@ -241,7 +338,7 @@ containing a value of this type.
 <tr><td><code>none</code></td><td>2</td><td></td></tr>
 </table>
          */
-        public static final int touchModeAbove=0x7f010006;
+        public static final int touchModeAbove=0x7f010012;
         /** <p>Must be one of the following constant values.</p>
 <table>
 <colgroup align="left" />
@@ -253,15 +350,15 @@ containing a value of this type.
 <tr><td><code>none</code></td><td>2</td><td></td></tr>
 </table>
          */
-        public static final int touchModeBehind=0x7f010007;
+        public static final int touchModeBehind=0x7f010013;
         /** <p>Must be a reference to another resource, in the form "<code>@[+][<i>package</i>:]<i>type</i>:<i>name</i></code>"
 or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>".
          */
-        public static final int viewAbove=0x7f010001;
+        public static final int viewAbove=0x7f01000d;
         /** <p>Must be a reference to another resource, in the form "<code>@[+][<i>package</i>:]<i>type</i>:<i>name</i></code>"
 or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>".
          */
-        public static final int viewBehind=0x7f010002;
+        public static final int viewBehind=0x7f01000e;
     }
     public static final class color {
         public static final int actionbarcolor=0x7f070007;
@@ -460,92 +557,100 @@ or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>na
         public static final int wheel_val=0x7f0200a6;
     }
     public static final class id {
-        public static final int com_facebook_body_frame=0x7f040026;
-        public static final int com_facebook_button_xout=0x7f040028;
-        public static final int com_facebook_login_activity_progress_bar=0x7f040016;
-        public static final int com_facebook_picker_activity_circle=0x7f040015;
-        public static final int com_facebook_picker_checkbox=0x7f040018;
-        public static final int com_facebook_picker_checkbox_stub=0x7f04001c;
-        public static final int com_facebook_picker_divider=0x7f040020;
-        public static final int com_facebook_picker_done_button=0x7f04001f;
-        public static final int com_facebook_picker_image=0x7f040019;
-        public static final int com_facebook_picker_list_section_header=0x7f04001d;
-        public static final int com_facebook_picker_list_view=0x7f040014;
-        public static final int com_facebook_picker_profile_pic_stub=0x7f04001a;
-        public static final int com_facebook_picker_row_activity_circle=0x7f040017;
-        public static final int com_facebook_picker_search_text=0x7f040025;
-        public static final int com_facebook_picker_title=0x7f04001b;
-        public static final int com_facebook_picker_title_bar=0x7f040022;
-        public static final int com_facebook_picker_title_bar_stub=0x7f040021;
-        public static final int com_facebook_picker_top_bar=0x7f04001e;
-        public static final int com_facebook_search_bar_view=0x7f040024;
-        public static final int com_facebook_tooltip_bubble_view_bottom_pointer=0x7f04002a;
-        public static final int com_facebook_tooltip_bubble_view_text_body=0x7f040029;
-        public static final int com_facebook_tooltip_bubble_view_top_pointer=0x7f040027;
-        public static final int com_facebook_usersettingsfragment_login_button=0x7f04002d;
-        public static final int com_facebook_usersettingsfragment_logo_image=0x7f04002b;
-        public static final int com_facebook_usersettingsfragment_profile_name=0x7f04002c;
-        public static final int dialog_insert_bt_cancel=0x7f040030;
-        public static final int dialog_insert_bt_ok=0x7f040031;
-        public static final int dialog_insert_et_value=0x7f04002e;
-        public static final int dialog_insert_tv_decription=0x7f04002f;
-        public static final int dialog_picker_bt_cancel=0x7f040034;
-        public static final int dialog_picker_bt_set=0x7f040033;
-        public static final int dialog_picker_wheelview=0x7f040032;
-        public static final int frame_slidingmenu=0x7f040052;
-        public static final int fullscreen=0x7f040003;
-        public static final int history_list=0x7f040035;
-        public static final int history_listview_section_text=0x7f040049;
-        public static final int historylistview_entry_drawer=0x7f04003f;
-        public static final int historylistview_entry_frameshow=0x7f040040;
-        public static final int historylistview_entry_ib_delete=0x7f040048;
-        public static final int historylistview_entry_ib_email=0x7f040044;
-        public static final int historylistview_entry_ib_facebook=0x7f040046;
-        public static final int historylistview_entry_ib_message=0x7f040043;
-        public static final int historylistview_entry_ib_sliding_left=0x7f040037;
-        public static final int historylistview_entry_ib_sliding_right=0x7f040039;
-        public static final int historylistview_entry_ib_twitter=0x7f040045;
-        public static final int historylistview_entry_layout_left=0x7f040042;
-        public static final int historylistview_entry_layout_right=0x7f040047;
-        public static final int historylistview_entry_layout_showlayout=0x7f040036;
-        public static final int historylistview_entry_tv_id=0x7f040041;
-        public static final int historylistview_entry_tv_name=0x7f040038;
-        public static final int introduce_webview=0x7f04003a;
-        public static final int item_slidinglist_image=0x7f040051;
-        public static final int item_slidinglist_layout=0x7f040050;
-        public static final int large=0x7f040008;
-        public static final int left=0x7f040000;
-        public static final int main_container=0x7f040009;
-        public static final int main_frame_container=0x7f04000f;
-        public static final int main_history_bt_delete=0x7f04000e;
-        public static final int main_ib_menu=0x7f04000b;
-        public static final int main_ib_shortcut=0x7f04000d;
-        public static final int main_rl_actionbar=0x7f04000a;
-        public static final int main_tv_titlebar=0x7f04000c;
-        public static final int margin=0x7f040002;
-        public static final int menu_setting=0x7f040054;
-        public static final int menu_star=0x7f040055;
-        public static final int none=0x7f040004;
-        public static final int normal=0x7f040007;
-        public static final int picker_subtitle=0x7f040023;
-        public static final int result_ib_back=0x7f040012;
-        public static final int result_ib_share=0x7f040011;
-        public static final int result_tv_title=0x7f040010;
-        public static final int result_webview=0x7f040013;
-        public static final int right=0x7f040001;
-        public static final int scanner_framelayout_camera=0x7f04003b;
-        public static final int scanner_tv=0x7f04003c;
-        public static final int selected_view=0x7f040005;
-        public static final int setting_list=0x7f04003d;
-        public static final int setting_listview_section_text=0x7f04004f;
-        public static final int settinglistview_entry_iv_choose=0x7f04004d;
-        public static final int settinglistview_entry_iv_left=0x7f04004a;
-        public static final int settinglistview_entry_sw_switch=0x7f04004e;
-        public static final int settinglistview_entry_tv_status=0x7f04004c;
-        public static final int settinglistview_entry_tv_title=0x7f04004b;
-        public static final int slidinglist=0x7f04003e;
-        public static final int slidingmenumain=0x7f040053;
-        public static final int small=0x7f040006;
+        public static final int both=0x7f040001;
+        public static final int choice=0x7f040006;
+        public static final int com_facebook_body_frame=0x7f04002b;
+        public static final int com_facebook_button_xout=0x7f04002d;
+        public static final int com_facebook_login_activity_progress_bar=0x7f04001b;
+        public static final int com_facebook_picker_activity_circle=0x7f04001a;
+        public static final int com_facebook_picker_checkbox=0x7f04001d;
+        public static final int com_facebook_picker_checkbox_stub=0x7f040021;
+        public static final int com_facebook_picker_divider=0x7f040025;
+        public static final int com_facebook_picker_done_button=0x7f040024;
+        public static final int com_facebook_picker_image=0x7f04001e;
+        public static final int com_facebook_picker_list_section_header=0x7f040022;
+        public static final int com_facebook_picker_list_view=0x7f040019;
+        public static final int com_facebook_picker_profile_pic_stub=0x7f04001f;
+        public static final int com_facebook_picker_row_activity_circle=0x7f04001c;
+        public static final int com_facebook_picker_search_text=0x7f04002a;
+        public static final int com_facebook_picker_title=0x7f040020;
+        public static final int com_facebook_picker_title_bar=0x7f040027;
+        public static final int com_facebook_picker_title_bar_stub=0x7f040026;
+        public static final int com_facebook_picker_top_bar=0x7f040023;
+        public static final int com_facebook_search_bar_view=0x7f040029;
+        public static final int com_facebook_tooltip_bubble_view_bottom_pointer=0x7f04002f;
+        public static final int com_facebook_tooltip_bubble_view_text_body=0x7f04002e;
+        public static final int com_facebook_tooltip_bubble_view_top_pointer=0x7f04002c;
+        public static final int com_facebook_usersettingsfragment_login_button=0x7f040032;
+        public static final int com_facebook_usersettingsfragment_logo_image=0x7f040030;
+        public static final int com_facebook_usersettingsfragment_profile_name=0x7f040031;
+        public static final int dialog_insert_bt_cancel=0x7f040035;
+        public static final int dialog_insert_bt_ok=0x7f040036;
+        public static final int dialog_insert_et_value=0x7f040033;
+        public static final int dialog_insert_tv_decription=0x7f040034;
+        public static final int dialog_logintwitter_webview=0x7f040037;
+        public static final int dialog_picker_bt_cancel=0x7f04003a;
+        public static final int dialog_picker_bt_set=0x7f040039;
+        public static final int dialog_picker_wheelview=0x7f040038;
+        public static final int dismiss=0x7f040005;
+        public static final int frame_slidingmenu=0x7f04005a;
+        public static final int fullscreen=0x7f040008;
+        public static final int history_list=0x7f04003b;
+        public static final int history_listview_section_text=0x7f040051;
+        public static final int historylistview_entry_back=0x7f04003c;
+        public static final int historylistview_entry_back_ll_left=0x7f040048;
+        public static final int historylistview_entry_drawer=0x7f040047;
+        public static final int historylistview_entry_front=0x7f04003d;
+        public static final int historylistview_entry_ib_delete=0x7f04004e;
+        public static final int historylistview_entry_ib_email=0x7f04004b;
+        public static final int historylistview_entry_ib_facebook=0x7f04004d;
+        public static final int historylistview_entry_ib_message=0x7f04004a;
+        public static final int historylistview_entry_ib_sliding_left=0x7f04003f;
+        public static final int historylistview_entry_ib_sliding_right=0x7f040041;
+        public static final int historylistview_entry_ib_twitter=0x7f04004c;
+        public static final int historylistview_entry_iv_qrcode=0x7f04004f;
+        public static final int historylistview_entry_layout_showlayout=0x7f04003e;
+        public static final int historylistview_entry_tv_id=0x7f040049;
+        public static final int historylistview_entry_tv_name=0x7f040040;
+        public static final int historylistview_entry_tv_title=0x7f040050;
+        public static final int introduce_webview=0x7f040042;
+        public static final int item_slidinglist_image=0x7f040059;
+        public static final int item_slidinglist_layout=0x7f040058;
+        public static final int large=0x7f04000c;
+        public static final int left=0x7f040003;
+        public static final int main_container=0x7f04000d;
+        public static final int main_frame_container=0x7f040013;
+        public static final int main_history_bt_delete=0x7f040012;
+        public static final int main_ib_menu=0x7f04000f;
+        public static final int main_ib_shortcut=0x7f040011;
+        public static final int main_rl_actionbar=0x7f04000e;
+        public static final int main_tv_titlebar=0x7f040010;
+        public static final int margin=0x7f040007;
+        public static final int menu_setting=0x7f04005c;
+        public static final int menu_star=0x7f04005d;
+        public static final int none=0x7f040000;
+        public static final int normal=0x7f04000b;
+        public static final int picker_subtitle=0x7f040028;
+        public static final int result_bt_back=0x7f040017;
+        public static final int result_ib_share=0x7f040016;
+        public static final int result_rl_actionbar=0x7f040014;
+        public static final int result_tv_title=0x7f040015;
+        public static final int result_webview=0x7f040018;
+        public static final int reveal=0x7f040004;
+        public static final int right=0x7f040002;
+        public static final int scanner_framelayout_camera=0x7f040043;
+        public static final int scanner_tv=0x7f040044;
+        public static final int selected_view=0x7f040009;
+        public static final int setting_list=0x7f040045;
+        public static final int setting_listview_section_text=0x7f040057;
+        public static final int settinglistview_entry_iv_choose=0x7f040055;
+        public static final int settinglistview_entry_iv_left=0x7f040052;
+        public static final int settinglistview_entry_sw_switch=0x7f040056;
+        public static final int settinglistview_entry_tv_status=0x7f040054;
+        public static final int settinglistview_entry_tv_title=0x7f040053;
+        public static final int slidinglist=0x7f040046;
+        public static final int slidingmenumain=0x7f04005b;
+        public static final int small=0x7f04000a;
     }
     public static final class layout {
         public static final int activity_main=0x7f030000;
@@ -567,21 +672,22 @@ or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>na
         public static final int com_facebook_tooltip_bubble=0x7f030010;
         public static final int com_facebook_usersettingsfragment=0x7f030011;
         public static final int dialog_insert_value=0x7f030012;
-        public static final int dialog_picker=0x7f030013;
-        public static final int fragment_history=0x7f030014;
-        public static final int fragment_historyitem_entry=0x7f030015;
-        public static final int fragment_introduce=0x7f030016;
-        public static final int fragment_scanner=0x7f030017;
-        public static final int fragment_settings=0x7f030018;
-        public static final int fragment_slidingmenu=0x7f030019;
-        public static final int item_historylistview_entry=0x7f03001a;
-        public static final int item_historylistview_section=0x7f03001b;
-        public static final int item_settinglistview_entry_choose=0x7f03001c;
-        public static final int item_settinglistview_entry_switch=0x7f03001d;
-        public static final int item_settinglistview_section=0x7f03001e;
-        public static final int item_slidinglist=0x7f03001f;
-        public static final int menu=0x7f030020;
-        public static final int slidingmenumain=0x7f030021;
+        public static final int dialog_logintwitter=0x7f030013;
+        public static final int dialog_picker=0x7f030014;
+        public static final int fragment_history=0x7f030015;
+        public static final int fragment_historyitem_entry=0x7f030016;
+        public static final int fragment_introduce=0x7f030017;
+        public static final int fragment_scanner=0x7f030018;
+        public static final int fragment_settings=0x7f030019;
+        public static final int fragment_slidingmenu=0x7f03001a;
+        public static final int item_historylistview_entry=0x7f03001b;
+        public static final int item_historylistview_section=0x7f03001c;
+        public static final int item_settinglistview_entry_choose=0x7f03001d;
+        public static final int item_settinglistview_entry_switch=0x7f03001e;
+        public static final int item_settinglistview_section=0x7f03001f;
+        public static final int item_slidinglist=0x7f030020;
+        public static final int menu=0x7f030021;
+        public static final int slidingmenumain=0x7f030022;
     }
     public static final class menu {
         public static final int main=0x7f090000;
@@ -703,10 +809,10 @@ or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>na
            @see #SlidingMenu_viewBehind
          */
         public static final int[] SlidingMenu = {
-            0x7f010000, 0x7f010001, 0x7f010002, 0x7f010003,
-            0x7f010004, 0x7f010005, 0x7f010006, 0x7f010007,
-            0x7f010008, 0x7f010009, 0x7f01000a, 0x7f01000b,
-            0x7f01000c, 0x7f01000d
+            0x7f01000c, 0x7f01000d, 0x7f01000e, 0x7f01000f,
+            0x7f010010, 0x7f010011, 0x7f010012, 0x7f010013,
+            0x7f010014, 0x7f010015, 0x7f010016, 0x7f010017,
+            0x7f010018, 0x7f010019
         };
         /**
           <p>This symbol is the offset where the {@link com.example.qrcodescanner.R.attr#behindOffset}
@@ -905,6 +1011,212 @@ or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>na
           @attr name com.example.qrcodescanner:viewBehind
         */
         public static final int SlidingMenu_viewBehind = 2;
+        /** Attributes that can be used with a SwipeListView.
+           <p>Includes the following attributes:</p>
+           <table>
+           <colgroup align="left" />
+           <colgroup align="left" />
+           <tr><th>Attribute</th><th>Description</th></tr>
+           <tr><td><code>{@link #SwipeListView_swipeActionLeft com.example.qrcodescanner:swipeActionLeft}</code></td><td></td></tr>
+           <tr><td><code>{@link #SwipeListView_swipeActionRight com.example.qrcodescanner:swipeActionRight}</code></td><td></td></tr>
+           <tr><td><code>{@link #SwipeListView_swipeAnimationTime com.example.qrcodescanner:swipeAnimationTime}</code></td><td></td></tr>
+           <tr><td><code>{@link #SwipeListView_swipeBackView com.example.qrcodescanner:swipeBackView}</code></td><td></td></tr>
+           <tr><td><code>{@link #SwipeListView_swipeCloseAllItemsWhenMoveList com.example.qrcodescanner:swipeCloseAllItemsWhenMoveList}</code></td><td></td></tr>
+           <tr><td><code>{@link #SwipeListView_swipeDrawableChecked com.example.qrcodescanner:swipeDrawableChecked}</code></td><td></td></tr>
+           <tr><td><code>{@link #SwipeListView_swipeDrawableUnchecked com.example.qrcodescanner:swipeDrawableUnchecked}</code></td><td></td></tr>
+           <tr><td><code>{@link #SwipeListView_swipeFrontView com.example.qrcodescanner:swipeFrontView}</code></td><td></td></tr>
+           <tr><td><code>{@link #SwipeListView_swipeMode com.example.qrcodescanner:swipeMode}</code></td><td></td></tr>
+           <tr><td><code>{@link #SwipeListView_swipeOffsetLeft com.example.qrcodescanner:swipeOffsetLeft}</code></td><td></td></tr>
+           <tr><td><code>{@link #SwipeListView_swipeOffsetRight com.example.qrcodescanner:swipeOffsetRight}</code></td><td></td></tr>
+           <tr><td><code>{@link #SwipeListView_swipeOpenOnLongPress com.example.qrcodescanner:swipeOpenOnLongPress}</code></td><td></td></tr>
+           </table>
+           @see #SwipeListView_swipeActionLeft
+           @see #SwipeListView_swipeActionRight
+           @see #SwipeListView_swipeAnimationTime
+           @see #SwipeListView_swipeBackView
+           @see #SwipeListView_swipeCloseAllItemsWhenMoveList
+           @see #SwipeListView_swipeDrawableChecked
+           @see #SwipeListView_swipeDrawableUnchecked
+           @see #SwipeListView_swipeFrontView
+           @see #SwipeListView_swipeMode
+           @see #SwipeListView_swipeOffsetLeft
+           @see #SwipeListView_swipeOffsetRight
+           @see #SwipeListView_swipeOpenOnLongPress
+         */
+        public static final int[] SwipeListView = {
+            0x7f010000, 0x7f010001, 0x7f010002, 0x7f010003,
+            0x7f010004, 0x7f010005, 0x7f010006, 0x7f010007,
+            0x7f010008, 0x7f010009, 0x7f01000a, 0x7f01000b
+        };
+        /**
+          <p>This symbol is the offset where the {@link com.example.qrcodescanner.R.attr#swipeActionLeft}
+          attribute's value can be found in the {@link #SwipeListView} array.
+
+
+          <p>Must be one of the following constant values.</p>
+<table>
+<colgroup align="left" />
+<colgroup align="left" />
+<colgroup align="left" />
+<tr><th>Constant</th><th>Value</th><th>Description</th></tr>
+<tr><td><code>reveal</code></td><td>0</td><td></td></tr>
+<tr><td><code>dismiss</code></td><td>1</td><td></td></tr>
+<tr><td><code>choice</code></td><td>2</td><td></td></tr>
+</table>
+          @attr name com.example.qrcodescanner:swipeActionLeft
+        */
+        public static final int SwipeListView_swipeActionLeft = 8;
+        /**
+          <p>This symbol is the offset where the {@link com.example.qrcodescanner.R.attr#swipeActionRight}
+          attribute's value can be found in the {@link #SwipeListView} array.
+
+
+          <p>Must be one of the following constant values.</p>
+<table>
+<colgroup align="left" />
+<colgroup align="left" />
+<colgroup align="left" />
+<tr><th>Constant</th><th>Value</th><th>Description</th></tr>
+<tr><td><code>reveal</code></td><td>0</td><td></td></tr>
+<tr><td><code>dismiss</code></td><td>1</td><td></td></tr>
+<tr><td><code>choice</code></td><td>2</td><td></td></tr>
+</table>
+          @attr name com.example.qrcodescanner:swipeActionRight
+        */
+        public static final int SwipeListView_swipeActionRight = 9;
+        /**
+          <p>This symbol is the offset where the {@link com.example.qrcodescanner.R.attr#swipeAnimationTime}
+          attribute's value can be found in the {@link #SwipeListView} array.
+
+
+          <p>Must be an integer value, such as "<code>100</code>".
+<p>This may also be a reference to a resource (in the form
+"<code>@[<i>package</i>:]<i>type</i>:<i>name</i></code>") or
+theme attribute (in the form
+"<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>")
+containing a value of this type.
+          @attr name com.example.qrcodescanner:swipeAnimationTime
+        */
+        public static final int SwipeListView_swipeAnimationTime = 1;
+        /**
+          <p>This symbol is the offset where the {@link com.example.qrcodescanner.R.attr#swipeBackView}
+          attribute's value can be found in the {@link #SwipeListView} array.
+
+
+          <p>Must be a reference to another resource, in the form "<code>@[+][<i>package</i>:]<i>type</i>:<i>name</i></code>"
+or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>".
+          @attr name com.example.qrcodescanner:swipeBackView
+        */
+        public static final int SwipeListView_swipeBackView = 6;
+        /**
+          <p>This symbol is the offset where the {@link com.example.qrcodescanner.R.attr#swipeCloseAllItemsWhenMoveList}
+          attribute's value can be found in the {@link #SwipeListView} array.
+
+
+          <p>Must be a boolean value, either "<code>true</code>" or "<code>false</code>".
+<p>This may also be a reference to a resource (in the form
+"<code>@[<i>package</i>:]<i>type</i>:<i>name</i></code>") or
+theme attribute (in the form
+"<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>")
+containing a value of this type.
+          @attr name com.example.qrcodescanner:swipeCloseAllItemsWhenMoveList
+        */
+        public static final int SwipeListView_swipeCloseAllItemsWhenMoveList = 4;
+        /**
+          <p>This symbol is the offset where the {@link com.example.qrcodescanner.R.attr#swipeDrawableChecked}
+          attribute's value can be found in the {@link #SwipeListView} array.
+
+
+          <p>Must be a reference to another resource, in the form "<code>@[+][<i>package</i>:]<i>type</i>:<i>name</i></code>"
+or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>".
+          @attr name com.example.qrcodescanner:swipeDrawableChecked
+        */
+        public static final int SwipeListView_swipeDrawableChecked = 10;
+        /**
+          <p>This symbol is the offset where the {@link com.example.qrcodescanner.R.attr#swipeDrawableUnchecked}
+          attribute's value can be found in the {@link #SwipeListView} array.
+
+
+          <p>Must be a reference to another resource, in the form "<code>@[+][<i>package</i>:]<i>type</i>:<i>name</i></code>"
+or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>".
+          @attr name com.example.qrcodescanner:swipeDrawableUnchecked
+        */
+        public static final int SwipeListView_swipeDrawableUnchecked = 11;
+        /**
+          <p>This symbol is the offset where the {@link com.example.qrcodescanner.R.attr#swipeFrontView}
+          attribute's value can be found in the {@link #SwipeListView} array.
+
+
+          <p>Must be a reference to another resource, in the form "<code>@[+][<i>package</i>:]<i>type</i>:<i>name</i></code>"
+or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>".
+          @attr name com.example.qrcodescanner:swipeFrontView
+        */
+        public static final int SwipeListView_swipeFrontView = 5;
+        /**
+          <p>This symbol is the offset where the {@link com.example.qrcodescanner.R.attr#swipeMode}
+          attribute's value can be found in the {@link #SwipeListView} array.
+
+
+          <p>Must be one of the following constant values.</p>
+<table>
+<colgroup align="left" />
+<colgroup align="left" />
+<colgroup align="left" />
+<tr><th>Constant</th><th>Value</th><th>Description</th></tr>
+<tr><td><code>none</code></td><td>0</td><td></td></tr>
+<tr><td><code>both</code></td><td>1</td><td></td></tr>
+<tr><td><code>right</code></td><td>2</td><td></td></tr>
+<tr><td><code>left</code></td><td>3</td><td></td></tr>
+</table>
+          @attr name com.example.qrcodescanner:swipeMode
+        */
+        public static final int SwipeListView_swipeMode = 7;
+        /**
+          <p>This symbol is the offset where the {@link com.example.qrcodescanner.R.attr#swipeOffsetLeft}
+          attribute's value can be found in the {@link #SwipeListView} array.
+
+
+          <p>Must be a dimension value, which is a floating point number appended with a unit such as "<code>14.5sp</code>".
+Available units are: px (pixels), dp (density-independent pixels), sp (scaled pixels based on preferred font size),
+in (inches), mm (millimeters).
+<p>This may also be a reference to a resource (in the form
+"<code>@[<i>package</i>:]<i>type</i>:<i>name</i></code>") or
+theme attribute (in the form
+"<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>")
+containing a value of this type.
+          @attr name com.example.qrcodescanner:swipeOffsetLeft
+        */
+        public static final int SwipeListView_swipeOffsetLeft = 2;
+        /**
+          <p>This symbol is the offset where the {@link com.example.qrcodescanner.R.attr#swipeOffsetRight}
+          attribute's value can be found in the {@link #SwipeListView} array.
+
+
+          <p>Must be a dimension value, which is a floating point number appended with a unit such as "<code>14.5sp</code>".
+Available units are: px (pixels), dp (density-independent pixels), sp (scaled pixels based on preferred font size),
+in (inches), mm (millimeters).
+<p>This may also be a reference to a resource (in the form
+"<code>@[<i>package</i>:]<i>type</i>:<i>name</i></code>") or
+theme attribute (in the form
+"<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>")
+containing a value of this type.
+          @attr name com.example.qrcodescanner:swipeOffsetRight
+        */
+        public static final int SwipeListView_swipeOffsetRight = 3;
+        /**
+          <p>This symbol is the offset where the {@link com.example.qrcodescanner.R.attr#swipeOpenOnLongPress}
+          attribute's value can be found in the {@link #SwipeListView} array.
+
+
+          <p>Must be a boolean value, either "<code>true</code>" or "<code>false</code>".
+<p>This may also be a reference to a resource (in the form
+"<code>@[<i>package</i>:]<i>type</i>:<i>name</i></code>") or
+theme attribute (in the form
+"<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>")
+containing a value of this type.
+          @attr name com.example.qrcodescanner:swipeOpenOnLongPress
+        */
+        public static final int SwipeListView_swipeOpenOnLongPress = 0;
         /** Attributes that can be used with a com_facebook_friend_picker_fragment.
            <p>Includes the following attributes:</p>
            <table>
@@ -916,7 +1228,7 @@ or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>na
            @see #com_facebook_friend_picker_fragment_multi_select
          */
         public static final int[] com_facebook_friend_picker_fragment = {
-            0x7f010015
+            0x7f010021
         };
         /**
           <p>This symbol is the offset where the {@link com.example.qrcodescanner.R.attr#multi_select}
@@ -949,7 +1261,7 @@ containing a value of this type.
            @see #com_facebook_login_view_logout_text
          */
         public static final int[] com_facebook_login_view = {
-            0x7f01001a, 0x7f01001b, 0x7f01001c, 0x7f01001d
+            0x7f010026, 0x7f010027, 0x7f010028, 0x7f010029
         };
         /**
           <p>This symbol is the offset where the {@link com.example.qrcodescanner.R.attr#confirm_logout}
@@ -1030,8 +1342,8 @@ containing a value of this type.
            @see #com_facebook_picker_fragment_title_text
          */
         public static final int[] com_facebook_picker_fragment = {
-            0x7f01000e, 0x7f01000f, 0x7f010010, 0x7f010011,
-            0x7f010012, 0x7f010013, 0x7f010014
+            0x7f01001a, 0x7f01001b, 0x7f01001c, 0x7f01001d,
+            0x7f01001e, 0x7f01001f, 0x7f010020
         };
         /**
           <p>This symbol is the offset where the {@link com.example.qrcodescanner.R.attr#done_button_background}
@@ -1140,7 +1452,7 @@ containing a value of this type.
            @see #com_facebook_place_picker_fragment_show_search_box
          */
         public static final int[] com_facebook_place_picker_fragment = {
-            0x7f010016, 0x7f010017, 0x7f010018, 0x7f010019
+            0x7f010022, 0x7f010023, 0x7f010024, 0x7f010025
         };
         /**
           <p>This symbol is the offset where the {@link com.example.qrcodescanner.R.attr#radius_in_meters}
@@ -1211,7 +1523,7 @@ containing a value of this type.
            @see #com_facebook_profile_picture_view_preset_size
          */
         public static final int[] com_facebook_profile_picture_view = {
-            0x7f01001e, 0x7f01001f
+            0x7f01002a, 0x7f01002b
         };
         /**
           <p>This symbol is the offset where the {@link com.example.qrcodescanner.R.attr#is_cropped}

@@ -3,7 +3,9 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:layout_marginTop="20dp" >
+    android:layout_marginTop="20dp"
+    android:focusableInTouchMode="false"
+    android:background="#E3E4FA" >
 
     <include
         android:id="@+id/history_listview_section_text"

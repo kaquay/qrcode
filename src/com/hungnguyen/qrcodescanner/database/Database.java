@@ -54,6 +54,11 @@ public class Database extends SQLiteOpenHelper {
 		db.close();
 	}
 
+	/**
+	 * Delete Row
+	 * 
+	 * @param id
+	 */
 	public void delete(String id) {
 		SQLiteDatabase db = this.getWritableDatabase();
 		String query = "DELETE FROM " + TABLE_NAME + " WHERE " + COLUMN_1 + "="
@@ -62,10 +67,15 @@ public class Database extends SQLiteOpenHelper {
 		db.close();
 	}
 
+	/**
+	 * Get all date DISTINTC
+	 * 
+	 * @return
+	 */
 	public ArrayList<String> getAllDate() {
 		ArrayList<String> listValues = new ArrayList<String>();
 		SQLiteDatabase db = this.getReadableDatabase();
-		String query = "SELECT * FROM " + TABLE_NAME;
+		String query = "SELECT DISTINCT " + COLUMN_3 + " FROM " + TABLE_NAME;
 		Cursor cursor = db.rawQuery(query, null);
 		if (cursor.moveToFirst()) {
 			do {
@@ -77,6 +87,13 @@ public class Database extends SQLiteOpenHelper {
 		return listValues;
 	}
 
+	/**
+	 * Select all row where have date like 'date'
+	 * 
+	 * @param date
+	 *            format DD/MM/YYYY
+	 * @return
+	 */
 	public ArrayList<HistoryItemObject> getValueByDate(String date) {
 		ArrayList<HistoryItemObject> listValues = new ArrayList<HistoryItemObject>();
 		SQLiteDatabase db = this.getReadableDatabase();
@@ -92,5 +109,11 @@ public class Database extends SQLiteOpenHelper {
 		}
 		db.close();
 		return listValues;
+	}
+	public void DeleteAllItem() {
+		SQLiteDatabase db = this.getWritableDatabase();
+		String query = "DELETE FROM " + TABLE_NAME;
+		db.execSQL(query);
+		db.close();
 	}
 }

@@ -1,16 +1,12 @@
 package com.hungnguyen.qrcodescanner.fragment;
 
-import java.net.URL;
-import java.net.URLConnection;
 import java.util.ArrayList;
-
-import twitter4j.Twitter;
-import twitter4j.TwitterException;
-import twitter4j.TwitterFactory;
-import twitter4j.auth.AccessToken;
 
 import kankan.wheel.widget.ArrayWheelAdapter;
 import kankan.wheel.widget.WheelView;
+import twitter4j.Twitter;
+import twitter4j.TwitterFactory;
+import twitter4j.auth.AccessToken;
 import android.annotation.TargetApi;
 import android.app.Dialog;
 import android.app.Fragment;
@@ -135,7 +131,7 @@ public class SettingsFragment extends Fragment implements OnItemClickListener,
 			setUpURLProfile();
 			break;
 		case SETTING_ITEM_AUTO_CLOSE_URL:
-			setUpAutoCloseURL();
+			// setUpAutoCloseURL();
 			break;
 		case SETTING_ITEM_MESSAGE:
 			setUpShareMessage();
@@ -156,29 +152,25 @@ public class SettingsFragment extends Fragment implements OnItemClickListener,
 	}
 
 	private void setUpShareTwitter() {
-		SharedPreferences sp = getActivity().getSharedPreferences(
-				SHARE_TWITTER, 0);
-		String access_token = sp.getString(TWITTER_ACCESS_TOKEN, null);
-		String access_token_secret = sp.getString(TWITTER_ACESS_TOKEN_SECRET,
-				null);
-		if (access_token == null || access_token_secret == null) {
-
-		} else
-			try {
-
-				// AccessToken a = new
-				// AccessToken(TWITTER_ACCESS_TOKEN,TWITTER_SECRET_ACCESS_TOKEN);
-				Twitter twitter = new TwitterFactory().getInstance();
-				twitter.setOAuthConsumer(TWITTER_CONSUMER_KEY,
-						TWITTER_CONSUMER_SECRET);
-				// twitter.setOAuthAccessToken(a);
-				twitter.updateStatus("POST TEST");
-			} catch (Exception e) {
-				e.printStackTrace();
-			}
+		try {
+			String access_token = TWITTER_ACCESS_TOKEN;
+			String access_token_secret = TWITTER_ACESS_TOKEN_SECRET;
+			AccessToken a = new AccessToken(access_token, access_token_secret);
+			Twitter twitter = new TwitterFactory().getInstance();
+			twitter.setOAuthAccessToken(a);
+			twitter.setOAuthConsumer(TWITTER_CONSUMER_KEY,
+					TWITTER_CONSUMER_SECRET);
+			twitter.updateStatus("POST TEST");
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 
 	}
-
+	private void showDialogLoginTwitter() {
+		Dialog dialog = new Dialog(getActivity());
+		dialog.setContentView(R.layout.dialog_logintwitter);
+		
+	}
 	@SuppressWarnings("deprecation")
 	private void setUpShareFacebook() {
 		Facebook fb = new Facebook(FACEBOOK_APP_API);
@@ -283,7 +275,6 @@ public class SettingsFragment extends Fragment implements OnItemClickListener,
 		dialog.show();
 	}
 
-
 	private void setUpAutoCloseURL() {
 		final SharedPreferences sp = getActivity().getSharedPreferences(
 				SHARE_NAME, 0);
@@ -298,7 +289,8 @@ public class SettingsFragment extends Fragment implements OnItemClickListener,
 				.size()]);
 		final WheelView wheel = (WheelView) dialog
 				.findViewById(R.id.dialog_picker_wheelview);
-		ArrayWheelAdapter<String> adapter = new ArrayWheelAdapter<String>(menuWheel);
+		ArrayWheelAdapter<String> adapter = new ArrayWheelAdapter<String>(
+				menuWheel);
 		wheel.setAdapter(adapter);
 		wheel.setVisibleItems(2);
 		wheel.setCurrentItem(0);

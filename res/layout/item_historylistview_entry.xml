@@ -1,69 +1,96 @@
 <?xml version="1.0" encoding="utf-8"?>
-<com.hungnguyen.qrcodescanner.utility.MainLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/historylistview_entry_drawer"
     android:layout_width="match_parent"
     android:layout_height="wrap_content" >
 
-    <!-- The layout showed -->
+    <!-- The layout background -->
 
-    <FrameLayout
-        android:id="@+id/historylistview_entry_frameshow"
+    <RelativeLayout
+        android:id="@+id/historylistview_entry_back"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
+        android:layout_height="wrap_content" >
 
-    <TextView
-        android:id="@+id/historylistview_entry_tv_id"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:visibility="gone" />
-
-    <LinearLayout
-        android:id="@+id/historylistview_entry_layout_left"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal" >
-
-        <ImageButton
-            android:id="@+id/historylistview_entry_ib_message"
+        <LinearLayout
+            android:id="@+id/historylistview_entry_back_ll_left"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:background="#00000000"
-            android:src="@drawable/ic_btn_sms_fc" />
+            android:layout_alignParentLeft="true"
+            android:orientation="horizontal" >
 
-        <ImageButton
-            android:id="@+id/historylistview_entry_ib_email"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:background="#00000000"
-            android:src="@drawable/ic_btn_mail_fc" />
+            <TextView
+                android:id="@+id/historylistview_entry_tv_id"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:visibility="gone" />
 
-        <ImageButton
-            android:id="@+id/historylistview_entry_ib_twitter"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:background="#00000000"
-            android:src="@drawable/ic_btn_twitter_fc" />
+            <ImageButton
+                android:id="@+id/historylistview_entry_ib_message"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="#00000000"
+                android:src="@drawable/ic_btn_sms_fc" />
 
-        <ImageButton
-            android:id="@+id/historylistview_entry_ib_facebook"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:background="#00000000"
-            android:src="@drawable/ic_btn_fb_fc" />
-    </LinearLayout>
+            <ImageButton
+                android:id="@+id/historylistview_entry_ib_email"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="#00000000"
+                android:src="@drawable/ic_btn_mail_fc" />
 
-    <LinearLayout
-        android:id="@+id/historylistview_entry_layout_right"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal" >
+            <ImageButton
+                android:id="@+id/historylistview_entry_ib_twitter"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="#00000000"
+                android:src="@drawable/ic_btn_twitter_fc" />
+
+            <ImageButton
+                android:id="@+id/historylistview_entry_ib_facebook"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="#00000000"
+                android:src="@drawable/ic_btn_fb_fc" />
+        </LinearLayout>
 
         <ImageButton
             android:id="@+id/historylistview_entry_ib_delete"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
             android:background="#00000000"
             android:src="@drawable/ic_btn_delete_fc" />
-    </LinearLayout>
+    </RelativeLayout>
 
-</com.hungnguyen.qrcodescanner.utility.MainLayout>
+    <RelativeLayout
+        android:id="@+id/historylistview_entry_front"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@android:color/white" >
+
+        <ImageView
+            android:id="@+id/historylistview_entry_iv_qrcode"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_centerVertical="true"
+            android:src="@drawable/ic_qrcode" />
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:src="@drawable/ic_arrow" />
+
+        <TextView
+            android:id="@+id/historylistview_entry_tv_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_toRightOf="@+id/historylistview_entry_iv_qrcode"
+            android:text="zzzz" />
+    </RelativeLayout>
+
+</FrameLayout>

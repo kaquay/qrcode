@@ -1,8 +1,10 @@
 package com.hungnguyen.qrcodescanner.activity;
 
+import android.app.AlertDialog;
 import android.app.Fragment;
 import android.app.FragmentManager;
 import android.app.FragmentTransaction;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.Editor;
@@ -18,6 +20,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.qrcodescanner.R;
+import com.hungnguyen.qrcodescanner.database.Database;
 import com.hungnguyen.qrcodescanner.fragment.HistoryFragment;
 import com.hungnguyen.qrcodescanner.fragment.IntroduceFragment;
 import com.hungnguyen.qrcodescanner.fragment.ScannerFragment;
@@ -30,6 +33,9 @@ import com.jeremyfeinstein.slidingmenu.lib.app.SlidingActivity;
 public class MainActivity extends SlidingActivity implements Constants,
 		OnClickListener, ChangeFragmentListener {
 	ImageButton mIbMenu;
+	/*
+	 * Have 4 Fragment with them name : Scan, History, Settings, About
+	 */
 	String[] titles = { "Scan", "History", "Settings", "About" };
 	int mIndex = 0;
 	long back_pressed;
@@ -46,33 +52,44 @@ public class MainActivity extends SlidingActivity implements Constants,
 		getWindow().requestFeature(Window.FEATURE_ACTION_BAR);
 		getActionBar().hide();
 		setContentView(R.layout.activity_main);
-		// =============
+
 		setBehindContentView(R.layout.menu);
 		getFragmentManager().beginTransaction()
 				.replace(R.id.frame_slidingmenu, new SlidingMenuFragment(this))
 				.commit();
+		/*
+		 * Set Width of SlidingMenu : 30 per cents of Screen width
+		 */
 		int width = getResources().getDisplayMetrics().widthPixels * 70 / 100;
 		getSlidingMenu().setBehindOffset(width);
-		// ============
+
 		mTvTitle = (TextView) findViewById(R.id.main_tv_titlebar);
 		mIbMenu = (ImageButton) findViewById(R.id.main_ib_menu);
 		mIbShortcut = (ImageButton) findViewById(R.id.main_ib_shortcut);
 		mBtDeleteAll = (Button) findViewById(R.id.main_history_bt_delete);
 		mRlActionBar = (RelativeLayout) findViewById(R.id.main_rl_actionbar);
-		// ============
+
+		/*
+		 * set ActionBar height : 10 per cents of Screen height
+		 */
 		int height = getResources().getDisplayMetrics().heightPixels / 10;
 		mRlActionBar.getLayoutParams().height = height;
 		mRlActionBar.requestLayout();
 		mIbShortcut.setOnClickListener(this);
 		mIbMenu.setOnClickListener(this);
+		mBtDeleteAll.setOnClickListener(this);
 		getActionBar().setDisplayHomeAsUpEnabled(false);
 		getActionBar().setHomeButtonEnabled(false);
-
-		// ===========
+		/*
+		 * Open ScanFragment (0) when App start
+		 */
 		if (savedInstanceState == null) {
 			setTitleBar(0);
 			showFragment(0);
 		}
+		/*
+		 * Config app when the first use.
+		 */
 		SharedPreferences sp = getSharedPreferences(SHARE_NAME, 0);
 		boolean isFirst = sp.getBoolean(SHARE_IS_FIRST, true);
 		if (isFirst) {
@@ -110,6 +127,12 @@ public class MainActivity extends SlidingActivity implements Constants,
 		}
 	}
 
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see android.app.Activity#onBackPressed() Double backPressed to close
+	 * App.
+	 */
 	@Override
 	public void onBackPressed() {
 		if (back_pressed + 500 > System.currentTimeMillis())
@@ -153,9 +176,38 @@ public class MainActivity extends SlidingActivity implements Constants,
 		case R.id.main_ib_menu:
 			toggle();
 			break;
+		case R.id.main_history_bt_delete:
+			DeleteAll();
+			break;
 		}
 	}
 
+	private void DeleteAll() {
+		AlertDialog.Builder dialog = new AlertDialog.Builder(
+				getApplicationContext());
+		dialog.setTitle("Warning !");
+		dialog.setMessage("Are you sure to delete all ?");
+		dialog.setNegativeButton("NO", new DialogInterface.OnClickListener() {
+
+			@Override
+			public void onClick(DialogInterface dialog, int which) {
+				dialog.dismiss();
+			}
+		});
+		dialog.setPositiveButton("YES", new DialogInterface.OnClickListener() {
+
+			@Override
+			public void onClick(DialogInterface dialog, int which) {
+				Database db = new Database(getApplicationContext());
+				db.DeleteAllItem();
+				dialog.dismiss();
+			}
+		});
+		dialog.show();
+	}
+
+	/*
+	 */
 	private void showFragment(int index) {
 		FragmentManager fragmentManager = getFragmentManager();
 		FragmentTransaction fragmentTransaction = fragmentManager
@@ -185,9 +237,6 @@ public class MainActivity extends SlidingActivity implements Constants,
 		}
 		fragmentTransaction.replace(R.id.main_frame_container, fragment)
 				.commit();
-		// fragmentTransaction.addToBackStack(null);
-		// mListSlidingMenu.setItemChecked(index, true);
-		// mListSlidingMenu.setSelection(index);
 	}
 
 	@Override

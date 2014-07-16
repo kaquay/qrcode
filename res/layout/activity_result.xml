@@ -5,6 +5,7 @@
     android:orientation="vertical" >
 
     <RelativeLayout
+        android:id="@+id/result_rl_actionbar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@color/actionbarcolor" >
@@ -23,21 +24,19 @@
             android:layout_height="wrap_content"
             android:layout_alignParentRight="true"
             android:layout_centerVertical="true"
-            android:layout_marginBottom="5sp"
-            android:layout_marginRight="20dp"
-            android:layout_marginTop="5sp"
             android:background="#00000000"
             android:src="@drawable/ic_history" />
 
-        <ImageButton
-            android:id="@+id/result_ib_back"
+        <Button
+            android:id="@+id/result_bt_back"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentLeft="true"
             android:layout_alignParentTop="true"
             android:layout_centerVertical="true"
+            android:layout_marginRight="2sp"
             android:background="#00000000"
-            android:src="@drawable/ic_btn_back"
+            android:drawableLeft="@drawable/ic_btn_back"
             android:text="Back" />
     </RelativeLayout>
 

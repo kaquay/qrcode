@@ -1,5 +1,9 @@
 package com.hungnguyen.qrcodescanner.fragment;
 
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Date;
+
 import net.sourceforge.zbar.Config;
 import net.sourceforge.zbar.Image;
 import net.sourceforge.zbar.ImageScanner;
@@ -8,12 +12,15 @@ import net.sourceforge.zbar.SymbolSet;
 import android.annotation.TargetApi;
 import android.app.Fragment;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.hardware.Camera;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.text.TextUtils;
+import android.text.format.DateFormat;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -23,11 +30,14 @@ import android.widget.Toast;
 import com.dm.zbar.android.scanner.CameraPreview;
 import com.example.qrcodescanner.R;
 import com.hungnguyen.qrcodescanner.activity.ResultActivity;
+import com.hungnguyen.qrcodescanner.database.Database;
 import com.hungnguyen.qrcodescanner.utility.ChangeFragmentListener;
+import com.hungnguyen.qrcodescanner.utility.Constants;
 import com.hungnguyen.qrcodescanner.utility.Util;
 
 @TargetApi(Build.VERSION_CODES.HONEYCOMB)
-public class ScannerFragment extends Fragment implements Camera.PreviewCallback {
+public class ScannerFragment extends Fragment implements
+		Camera.PreviewCallback, Constants {
 	Camera mCamera;
 	CameraPreview mCameraPreview;
 	ImageScanner mScanner;
@@ -187,16 +197,41 @@ public class ScannerFragment extends Fragment implements Camera.PreviewCallback 
 					break;
 				}
 			}
-			if (Util.isURI(symData)) {
+			SharedPreferences sp = getActivity().getSharedPreferences(
+					SHARE_NAME, 0);
+			String URLProfile = sp.getString(SHARE_URL_PROFILE, "");
+			if (URLProfile.contains("*var*")) {
+				String url = URLProfile.replace("*var*", symData);
 				Intent intent = new Intent(getActivity(), ResultActivity.class);
 				Bundle extras = new Bundle();
-				extras.putString("url", symData);
+				extras.putString("url", url);
 				intent.putExtras(extras);
 				getActivity().startActivity(intent);
+				Date date = Calendar.getInstance().getTime();
+				SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy");
+				String today = formatter.format(date);
+				Database db = new Database(getActivity());
+				Log.d("SCANNER", "" + today);
+				db.insert(url, today);
+				// TODO Save to Database
 			} else {
-				showToast(symData);
+				if (Util.isURI(symData)) {
+					Intent intent = new Intent(getActivity(),
+							ResultActivity.class);
+					Bundle extras = new Bundle();
+					extras.putString("url", symData);
+					intent.putExtras(extras);
+					getActivity().startActivity(intent);
+					Database db = new Database(getActivity());
+					Date date = Calendar.getInstance().getTime();
+					SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy");
+					String today = formatter.format(date);
+					Log.d("SCANNER", "" + today);
+					db.insert(symData, today);
+				} else {
+					showToast(symData);
+				}
 			}
-
 		}
 
 	}
