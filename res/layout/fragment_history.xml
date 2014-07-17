@@ -1,19 +1,20 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res/com.example.qrcodescanner"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
-    android:background="#FFFFFF" xmlns:app="http://schemas.android.com/apk/res/com.example.qrcodescanner">
+    android:background="#FFFFFF"
+    android:orientation="vertical" >
 
-      <com.fortysevendeg.swipelistview.SwipeListView
-          xmlns:swipe="http://schemas.android.com/apk/res-auto"
-          android:id="@+id/history_list"
-          android:layout_width="fill_parent"
-          android:layout_height="wrap_content"
-          android:listSelector="#00000000"
-          app:swipeBackView="@+id/historylistview_entry_back"
-          app:swipeFrontView="@+id/historylistview_entry_front"
-          swipe:swipeCloseAllItemsWhenMoveList="true"
-          swipe:swipeMode="both" />
+    <com.fortysevendeg.swipelistview.SwipeListView
+        xmlns:swipe="http://schemas.android.com/apk/res-auto"
+        android:id="@+id/history_list"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:listSelector="#00000000"
+        app:swipeBackView="@+id/historylistview_entry_back"
+        app:swipeFrontView="@+id/historylistview_entry_front"
+        swipe:swipeCloseAllItemsWhenMoveList="true"
+        swipe:swipeMode="both" />
 
 </LinearLayout>

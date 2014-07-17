@@ -2,6 +2,7 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    android:layout_margin="3sp"
     android:background="@android:color/white" >
 
     <ImageView
@@ -17,8 +18,10 @@
         android:layout_height="wrap_content"
         android:layout_alignParentTop="true"
         android:layout_centerVertical="true"
+        android:layout_marginLeft="3sp"
         android:layout_toRightOf="@+id/settinglistview_entry_iv_left"
-        android:text="zzzz" />
+        android:text="zzzz"
+        android:textColor="#000000" />
 
     <TextView
         android:id="@+id/settinglistview_entry_tv_status"
@@ -27,7 +30,8 @@
         android:layout_alignParentTop="true"
         android:layout_centerVertical="true"
         android:layout_toLeftOf="@+id/settinglistview_entry_iv_choose"
-        android:text="status" />
+        android:text="status"
+        android:textColor="#000000" />
 
     <ImageView
         android:id="@+id/settinglistview_entry_iv_choose"
@@ -35,6 +39,7 @@
         android:layout_height="wrap_content"
         android:layout_alignParentRight="true"
         android:layout_centerVertical="true"
+        android:layout_marginLeft="3sp"
         android:background="#00000000"
         android:src="@drawable/ic_arrow" />
 

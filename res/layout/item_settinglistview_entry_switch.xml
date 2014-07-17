@@ -2,6 +2,7 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    android:layout_margin="3sp"
     android:background="@android:color/white" >
 
     <TextView
@@ -10,7 +11,9 @@
         android:layout_height="wrap_content"
         android:layout_alignParentLeft="true"
         android:layout_centerVertical="true"
-        android:text="zzzzzzz" />
+        android:text="zzzzzzz"
+         android:layout_marginLeft="3sp"
+         android:textColor="#000000" />
 
     <Switch
         android:id="@+id/settinglistview_entry_sw_switch"

@@ -2,7 +2,8 @@
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/historylistview_entry_drawer"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content" >
+    android:layout_height="wrap_content"
+    android:background="@drawable/historylistview_entryitem_background" >
 
     <!-- The layout background -->
 
@@ -75,14 +76,18 @@
             android:layout_height="wrap_content"
             android:layout_alignParentLeft="true"
             android:layout_centerVertical="true"
-            android:src="@drawable/ic_qrcode" />
+            android:src="@drawable/ic_qrcode"
+            android:layout_marginLeft="3sp"
+            android:layout_weight="1" />
 
         <ImageView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentRight="true"
             android:layout_centerVertical="true"
-            android:src="@drawable/ic_arrow" />
+            android:src="@drawable/ic_arrow"
+            android:layout_weight="1"
+            android:layout_marginRight="3sp" />
 
         <TextView
             android:id="@+id/historylistview_entry_tv_title"

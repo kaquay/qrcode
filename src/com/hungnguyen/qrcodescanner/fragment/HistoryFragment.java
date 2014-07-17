@@ -1,15 +1,13 @@
 package com.hungnguyen.qrcodescanner.fragment;
 
-import java.text.Format;
-import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.Date;
 
 import android.annotation.TargetApi;
 import android.app.Fragment;
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -19,10 +17,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
-import android.widget.ImageButton;
-import android.widget.LinearLayout;
-import android.widget.ListView;
-import android.widget.RelativeLayout;
 import android.widget.Toast;
 
 import com.example.qrcodescanner.R;
@@ -30,12 +24,13 @@ import com.fortysevendeg.swipelistview.SwipeListView;
 import com.hungnguyen.qrcodescanner.activity.ResultActivity;
 import com.hungnguyen.qrcodescanner.adapter.HistoryListAdapter;
 import com.hungnguyen.qrcodescanner.database.Database;
-import com.hungnguyen.qrcodescanner.model.HistoryItemObject;
 import com.hungnguyen.qrcodescanner.model.HistoryItemEnity;
+import com.hungnguyen.qrcodescanner.model.HistoryItemObject;
 import com.hungnguyen.qrcodescanner.model.HistorySectionItemObject;
+import com.hungnguyen.qrcodescanner.utility.DeleteItemHistoryListener;
 
 @TargetApi(Build.VERSION_CODES.HONEYCOMB)
-public class HistoryFragment extends Fragment implements OnItemClickListener {
+public class HistoryFragment extends Fragment implements OnItemClickListener, DeleteItemHistoryListener {
 	SwipeListView mListHistory;
 	ArrayList<HistoryItemEnity> mList;
 
@@ -61,20 +56,32 @@ public class HistoryFragment extends Fragment implements OnItemClickListener {
 	@Override
 	public void onStart() {
 		super.onStart();
-		// mList = new ArrayList<HistoryItemEnity>();
-		// mList.add(new HistorySectionItemObject("section 1"));
-		// mList.add(new HistoryItemObject("1", "entry 1"));
-		// mList.add(new HistoryItemObject("2", "entry 2"));
-		// mList.add(new HistoryItemObject("3", "entry 3"));
-		// mList.add(new HistoryItemObject("4", "entry 4"));
-		// mList.add(new HistorySectionItemObject("section 2"));
-		// mList.add(new HistoryItemObject("1", "entry 1"));
-		// mList.add(new HistoryItemObject("2", "entry 2"));
-		// mList.add(new HistoryItemObject("3", "entry 3"));
-		// mList.add(new HistoryItemObject("4", "entry 4"));
-		// mList.add(new HistoryItemObject("5", "entry 5"));
-		// mList.add(new HistoryItemObject("6", "entry 6"));
-		// mList.add(new HistoryItemObject("7", "entry 7"));
+		SetupList();
+		BitmapFactory.Options dimensions = new BitmapFactory.Options();
+		dimensions.inJustDecodeBounds = false;
+		Bitmap mBitmap = BitmapFactory.decodeResource(getActivity()
+				.getResources(), R.drawable.ic_btn_delete_fc, dimensions);
+		int screenWidth = getActivity().getResources().getDisplayMetrics().widthPixels;
+		int imageWidth = dimensions.outWidth;
+		int leftOffset = screenWidth - imageWidth;
+		int rightOffset = screenWidth - (imageWidth * 4);
+		Log.d("LOG", "RIGHT :" + rightOffset+ ", LEFT " + leftOffset);
+		mListHistory.setOffsetLeft(leftOffset);
+		mListHistory.setOffsetRight(rightOffset);
+	}
+
+	@Override
+	public void onItemClick(AdapterView<?> parent, View view, int position,
+			long id) {
+		Intent intent = new Intent(getActivity(), ResultActivity.class);
+		Bundle bundle = new Bundle();
+		HistoryItemObject item = (HistoryItemObject) mList.get(position);
+		bundle.putString("url", item.getTitle());
+		intent.putExtras(bundle);
+		getActivity().startActivity(intent);
+		Toast.makeText(getActivity(), "zzzz", Toast.LENGTH_SHORT).show();
+	}
+	private void SetupList() {
 		mList = new ArrayList<HistoryItemEnity>();
 		Database db = new Database(getActivity());
 		ArrayList<String> listSection = new ArrayList<String>();
@@ -100,35 +107,12 @@ public class HistoryFragment extends Fragment implements OnItemClickListener {
 		}
 		if (mList != null) {
 			HistoryListAdapter adapter = new HistoryListAdapter(getActivity(),
-					mList);
+					mList,this);
 			mListHistory.setAdapter(adapter);
 		}
-		mListHistory.setOnItemClickListener(this);
-//		LinearLayout layoutShare = (LinearLayout) getActivity().findViewById(
-//				R.id.historylistview_entry_back_ll_left);
-//		RelativeLayout.LayoutParams params = (RelativeLayout.LayoutParams) layoutShare
-//				.getLayoutParams();
-//		int widthLeft = params.width;
-//		ImageButton ibDelete = (ImageButton) getActivity().findViewById(
-//				R.id.historylistview_entry_ib_delete);
-//		RelativeLayout.LayoutParams ibparams = (RelativeLayout.LayoutParams) ibDelete
-//				.getLayoutParams();
-//		int widthRight = ibparams.width;
-//		int screenWidth = getActivity().getResources().getDisplayMetrics().widthPixels;
-		mListHistory.setOffsetLeft(140);
-		mListHistory.setOffsetRight(140);
-
 	}
-
 	@Override
-	public void onItemClick(AdapterView<?> parent, View view, int position,
-			long id) {
-		Intent intent = new Intent(getActivity(), ResultActivity.class);
-		Bundle bundle = new Bundle();
-		HistoryItemObject item = (HistoryItemObject) mList.get(position);
-		bundle.putString("url", item.getTitle());
-		intent.putExtras(bundle);
-		getActivity().startActivity(intent);
-		Toast.makeText(getActivity(), "zzzz", Toast.LENGTH_SHORT).show();
+	public void onDeleteItemHistoryComplete() {
+		SetupList();
 	}
 }

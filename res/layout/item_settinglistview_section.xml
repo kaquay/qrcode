@@ -3,7 +3,8 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:background="@android:color/background_dark">
+    android:background="#E3E4FA"
+    android:layout_margin="3sp">
      <include
         android:id="@+id/setting_listview_section_text"
         layout="@android:layout/preference_category" >

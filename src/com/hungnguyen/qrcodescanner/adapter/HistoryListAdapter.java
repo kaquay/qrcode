@@ -31,24 +31,27 @@ import com.facebook.android.DialogError;
 import com.facebook.android.Facebook;
 import com.facebook.android.FacebookError;
 import com.facebook.android.Facebook.DialogListener;
+import com.hungnguyen.qrcodescanner.activity.ResultActivity;
 import com.hungnguyen.qrcodescanner.database.Database;
 import com.hungnguyen.qrcodescanner.fragment.HistoryItemFragment;
 import com.hungnguyen.qrcodescanner.model.HistoryItemEnity;
 import com.hungnguyen.qrcodescanner.model.HistoryItemObject;
 import com.hungnguyen.qrcodescanner.model.HistorySectionItemObject;
 import com.hungnguyen.qrcodescanner.utility.Constants;
+import com.hungnguyen.qrcodescanner.utility.DeleteItemHistoryListener;
 
 public class HistoryListAdapter extends ArrayAdapter<HistoryItemEnity>
 		implements Constants {
 	Activity mContext;
 	ArrayList<HistoryItemEnity> mList;
 	LayoutInflater mInflater;
-
-	public HistoryListAdapter(Activity context, ArrayList<HistoryItemEnity> list) {
+	DeleteItemHistoryListener mListener;
+	public HistoryListAdapter(Activity context, ArrayList<HistoryItemEnity> list, DeleteItemHistoryListener listener) {
 		super(context, 0, list);
 		this.mContext = context;
 		this.mList = list;
 		this.mInflater = LayoutInflater.from(context);
+		this.mListener = listener;
 	}
 
 	@Override
@@ -180,10 +183,27 @@ public class HistoryListAdapter extends ArrayAdapter<HistoryItemEnity>
 						public void onClick(View v) {
 							Database db = new Database(mContext);
 							db.delete("" + entryItem.getId());
+							DeleteItemHistoryListener listener = mListener;
+							listener.onDeleteItemHistoryComplete();
 						}
 					});
 					holder.tvTitle.setText("" + entryItem.getTitle());
 					holder.tvId.setText("" + entryItem.getId());
+					holder.relativeLayout
+							.setOnClickListener(new OnClickListener() {
+
+								@Override
+								public void onClick(View arg0) {
+									Intent intent = new Intent(mContext,
+											ResultActivity.class);
+									Bundle bundle = new Bundle();
+									bundle.putString("url",
+											entryItem.getTitle());
+									intent.putExtras(bundle);
+									mContext.startActivity(intent);
+								}
+							});
+
 					int sreenHeight = mContext.getResources()
 							.getDisplayMetrics().widthPixels;
 					BitmapFactory.Options dimensions = new BitmapFactory.Options();
