@@ -5,8 +5,6 @@ import java.util.ArrayList;
 import kankan.wheel.widget.ArrayWheelAdapter;
 import kankan.wheel.widget.WheelView;
 import twitter4j.Twitter;
-import twitter4j.TwitterFactory;
-import twitter4j.auth.AccessToken;
 import android.annotation.TargetApi;
 import android.app.Dialog;
 import android.app.Fragment;
@@ -40,6 +38,9 @@ import com.hungnguyen.qrcodescanner.model.SettingItemEntity;
 import com.hungnguyen.qrcodescanner.model.SettingItemFactory;
 import com.hungnguyen.qrcodescanner.model.SettingSectionItemObject;
 import com.hungnguyen.qrcodescanner.model.SettingSwitchObject;
+import com.hungnguyen.qrcodescanner.ownerlibs.TwitterAPI;
+import com.hungnguyen.qrcodescanner.ownerlibs.TwitterAPI.TwitterLoginListener;
+import com.hungnguyen.qrcodescanner.ownerlibs.TwitterAPI.TwitterPostStatusListener;
 import com.hungnguyen.qrcodescanner.utility.Constants;
 import com.hungnguyen.qrcodescanner.utility.Util;
 
@@ -152,25 +153,51 @@ public class SettingsFragment extends Fragment implements OnItemClickListener,
 	}
 
 	private void setUpShareTwitter() {
-		try {
-			String access_token = TWITTER_ACCESS_TOKEN;
-			String access_token_secret = TWITTER_ACESS_TOKEN_SECRET;
-			AccessToken a = new AccessToken(access_token, access_token_secret);
-			Twitter twitter = new TwitterFactory().getInstance();
-			twitter.setOAuthAccessToken(a);
-			twitter.setOAuthConsumer(TWITTER_CONSUMER_KEY,
-					TWITTER_CONSUMER_SECRET);
-			twitter.updateStatus("POST TEST");
-		} catch (Exception e) {
-			e.printStackTrace();
+		final TwitterAPI twitterAPI = new TwitterAPI(getActivity());
+		twitterAPI.setCALLBACK_URL(TWITTER_CALLBACK_URL);
+		twitterAPI.setCONSUMER_KEY(TWITTER_CONSUMER_KEY);
+		twitterAPI.setCONSUMER_SECRET(TWITTER_CONSUMER_SECRET);
+		if (!twitterAPI.isAlreadyLogin()) {
+
+			twitterAPI.showDialogLogin(new TwitterLoginListener() {
+
+				@Override
+				public void onTwitterLoginFailed() {
+
+				}
+
+				@Override
+				public void onTwitterLoginComplete(Twitter twitter) {
+					twitterAPI.postStatus(getActivity().getResources()
+							.getString(R.string.sms_message), null);
+				}
+			});
+		} else {
+			twitterAPI.postStatus(
+					getActivity().getResources()
+							.getString(R.string.sms_message),
+					new TwitterPostStatusListener() {
+
+						@Override
+						public void onPostStatusSuccess() {
+
+						}
+
+						@Override
+						public void onPostStatusFail() {
+
+						}
+					});
 		}
 
 	}
+
 	private void showDialogLoginTwitter() {
 		Dialog dialog = new Dialog(getActivity());
 		dialog.setContentView(R.layout.dialog_logintwitter);
-		
+
 	}
+
 	@SuppressWarnings("deprecation")
 	private void setUpShareFacebook() {
 		Facebook fb = new Facebook(FACEBOOK_APP_API);

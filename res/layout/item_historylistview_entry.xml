@@ -10,7 +10,8 @@
     <RelativeLayout
         android:id="@+id/historylistview_entry_back"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content" >
+        android:layout_height="wrap_content"
+        android:background="@color/actionbarcolor" >
 
         <LinearLayout
             android:id="@+id/historylistview_entry_back_ll_left"
@@ -30,28 +31,28 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:background="#00000000"
-                android:src="@drawable/ic_btn_sms_fc" />
+                android:src="@drawable/ic_btn_sms" />
 
             <ImageButton
                 android:id="@+id/historylistview_entry_ib_email"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:background="#00000000"
-                android:src="@drawable/ic_btn_mail_fc" />
+                android:src="@drawable/ic_btn_mail" />
 
             <ImageButton
                 android:id="@+id/historylistview_entry_ib_twitter"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:background="#00000000"
-                android:src="@drawable/ic_btn_twitter_fc" />
+                android:src="@drawable/ic_btn_twitter" />
 
             <ImageButton
                 android:id="@+id/historylistview_entry_ib_facebook"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:background="#00000000"
-                android:src="@drawable/ic_btn_fb_fc" />
+                android:src="@drawable/ic_btn_fb" />
         </LinearLayout>
 
         <ImageButton
@@ -61,7 +62,7 @@
             android:layout_alignParentRight="true"
             android:layout_centerVertical="true"
             android:background="#00000000"
-            android:src="@drawable/ic_btn_delete_fc" />
+            android:src="@drawable/ic_btn_delete" />
     </RelativeLayout>
 
     <RelativeLayout
@@ -76,18 +77,18 @@
             android:layout_height="wrap_content"
             android:layout_alignParentLeft="true"
             android:layout_centerVertical="true"
-            android:src="@drawable/ic_qrcode"
             android:layout_marginLeft="3sp"
-            android:layout_weight="1" />
+            android:layout_weight="1"
+            android:src="@drawable/ic_qrcode" />
 
         <ImageView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentRight="true"
             android:layout_centerVertical="true"
-            android:src="@drawable/ic_arrow"
+            android:layout_marginRight="3sp"
             android:layout_weight="1"
-            android:layout_marginRight="3sp" />
+            android:src="@drawable/ic_arrow" />
 
         <TextView
             android:id="@+id/historylistview_entry_tv_title"

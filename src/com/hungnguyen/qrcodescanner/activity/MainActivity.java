@@ -9,6 +9,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.Editor;
 import android.os.Bundle;
+import android.os.StrictMode;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.Window;
@@ -102,6 +103,13 @@ public class MainActivity extends SlidingActivity implements Constants,
 			editor.putString(SHARE_SHORTCUT, "");
 			editor.commit();
 		}
+		/*
+		 */
+		if (android.os.Build.VERSION.SDK_INT > 9) {
+			StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder()
+					.permitAll().build();
+			StrictMode.setThreadPolicy(policy);
+		}
 	}
 
 	@Override
@@ -183,8 +191,7 @@ public class MainActivity extends SlidingActivity implements Constants,
 	}
 
 	private void DeleteAll() {
-		AlertDialog.Builder dialog = new AlertDialog.Builder(
-				getApplicationContext());
+		AlertDialog.Builder dialog = new AlertDialog.Builder(MainActivity.this);
 		dialog.setTitle("Warning !");
 		dialog.setMessage("Are you sure to delete all ?");
 		dialog.setNegativeButton("NO", new DialogInterface.OnClickListener() {
@@ -201,6 +208,7 @@ public class MainActivity extends SlidingActivity implements Constants,
 				Database db = new Database(getApplicationContext());
 				db.DeleteAllItem();
 				dialog.dismiss();
+				showFragment(1);
 			}
 		});
 		dialog.show();

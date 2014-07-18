@@ -27,8 +27,7 @@ public interface Constants {
 	public String FACEBOOK_APP_API = "268297316688931";
 	// Twitter
 	public String SHARE_TWITTER = "twitter";
-	public String TWITTER_CONSUMER_KEY = "pySsIrq0mjZWyRuUcdle2NpMr";
-	public String TWITTER_CONSUMER_SECRET ="xsp69BNHy0UFQkzrUyGLDeg3J48PNh5WEvDCvYMBtsbnV3AlWd";
-	public String TWITTER_ACCESS_TOKEN = "1448940582-UTibwB4LK5kjJpQCwl5FPGnOKgGLUTQ2UMMGh9B";
-	public String TWITTER_ACESS_TOKEN_SECRET = "VEm9tYtwRYfSGV5Ry3okhLQgsQDrjnQarXCMZyZe7mmfU";
+	public String TWITTER_CONSUMER_KEY = "WdHHaxSbGwuusMDLTIxi80ZYZ";
+	public String TWITTER_CONSUMER_SECRET ="FWkKIYgnWAIBPAqt9Ha4kBiLaxAhxJMOkqp4NWvEy4j51FS7gD";
+	public String TWITTER_CALLBACK_URL = "qrcode://main";
 }

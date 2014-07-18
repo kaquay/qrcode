@@ -25,6 +25,11 @@
             </intent-filter>
         </activity>
         <activity android:name="com.hungnguyen.qrcodescanner.activity.MainActivity" >
+            <intent-filter>
+                <data
+                    android:host="main"
+                    android:scheme="qrcode" />
+            </intent-filter>
         </activity>
         <activity
             android:name="com.hungnguyen.qrcodescanner.activity.ResultActivity"

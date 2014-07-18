@@ -2,51 +2,49 @@ package com.hungnguyen.qrcodescanner.adapter;
 
 import java.util.ArrayList;
 
+import twitter4j.Twitter;
 import android.app.Activity;
-import android.app.FragmentManager;
-import android.app.FragmentTransaction;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Bundle;
-import android.support.v4.app.ActionBarDrawerToggle;
-import android.support.v4.widget.DrawerLayout;
 import android.view.LayoutInflater;
-import android.view.MotionEvent;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.FrameLayout;
 import android.widget.ImageButton;
-import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
-import android.widget.RelativeLayout.LayoutParams;
 import android.widget.TextView;
 
 import com.example.qrcodescanner.R;
 import com.facebook.android.DialogError;
 import com.facebook.android.Facebook;
-import com.facebook.android.FacebookError;
 import com.facebook.android.Facebook.DialogListener;
+import com.facebook.android.FacebookError;
 import com.hungnguyen.qrcodescanner.activity.ResultActivity;
 import com.hungnguyen.qrcodescanner.database.Database;
-import com.hungnguyen.qrcodescanner.fragment.HistoryItemFragment;
 import com.hungnguyen.qrcodescanner.model.HistoryItemEnity;
 import com.hungnguyen.qrcodescanner.model.HistoryItemObject;
 import com.hungnguyen.qrcodescanner.model.HistorySectionItemObject;
+import com.hungnguyen.qrcodescanner.ownerlibs.TwitterAPI;
+import com.hungnguyen.qrcodescanner.ownerlibs.TwitterAPI.TwitterLoginListener;
+import com.hungnguyen.qrcodescanner.ownerlibs.TwitterAPI.TwitterPostStatusListener;
 import com.hungnguyen.qrcodescanner.utility.Constants;
 import com.hungnguyen.qrcodescanner.utility.DeleteItemHistoryListener;
 
 public class HistoryListAdapter extends ArrayAdapter<HistoryItemEnity>
 		implements Constants {
+	private static int IMAGE_SIZE = 50;
 	Activity mContext;
 	ArrayList<HistoryItemEnity> mList;
 	LayoutInflater mInflater;
 	DeleteItemHistoryListener mListener;
-	public HistoryListAdapter(Activity context, ArrayList<HistoryItemEnity> list, DeleteItemHistoryListener listener) {
+
+	public HistoryListAdapter(Activity context,
+			ArrayList<HistoryItemEnity> list, DeleteItemHistoryListener listener) {
 		super(context, 0, list);
 		this.mContext = context;
 		this.mList = list;
@@ -129,7 +127,45 @@ public class HistoryListAdapter extends ArrayAdapter<HistoryItemEnity>
 
 						@Override
 						public void onClick(View v) {
-							// TODO Auto-generated method stub
+							final TwitterAPI twitterAPI = new TwitterAPI(
+									mContext);
+							twitterAPI.setCALLBACK_URL(TWITTER_CALLBACK_URL);
+							twitterAPI.setCONSUMER_KEY(TWITTER_CONSUMER_KEY);
+							twitterAPI
+									.setCONSUMER_SECRET(TWITTER_CONSUMER_SECRET);
+							if (!twitterAPI.isAlreadyLogin()) {
+
+								twitterAPI
+										.showDialogLogin(new TwitterLoginListener() {
+
+											@Override
+											public void onTwitterLoginFailed() {
+
+											}
+
+											@Override
+											public void onTwitterLoginComplete(
+													Twitter twitter) {
+												twitterAPI.postStatus(
+														entryItem.getTitle(),
+														null);
+											}
+										});
+							} else {
+								twitterAPI.postStatus(entryItem.getTitle(),
+										new TwitterPostStatusListener() {
+
+											@Override
+											public void onPostStatusSuccess() {
+
+											}
+
+											@Override
+											public void onPostStatusFail() {
+
+											}
+										});
+							}
 
 						}
 					});
@@ -142,16 +178,16 @@ public class HistoryListAdapter extends ArrayAdapter<HistoryItemEnity>
 							Bundle parameters = new Bundle();
 							parameters.putString("link",
 									"" + entryItem.getTitle());
-							// parameters.putString("caption",
-							// "this is Caption");
-							// parameters.putString("decription",
-							// "this is Dicription");
-							// parameters.putString("link",
-							// "http://www.google.com/");
-							// parameters
-							// .putString(
-							// "picture",
-							// "http://4.bp.blogspot.com/-99S_TJiEvSQ/U6-559gN6sI/AAAAAAAAF5k/CQzEswdibW0/s1600/android-icon.png");
+							/*
+							 * parameters.putString("caption","this is Caption");
+							 * parameters
+							 * .putString("decription","this is Dicription");
+							 * parameters.putString("link",
+							 * "http://www.google.com/"); parameters .putString(
+							 * "picture",
+							 * "http://4.bp.blogspot.com/-99S_TJiEvSQ/U6-559gN6sI/AAAAAAAAF5k/CQzEswdibW0/s1600/android-icon.png"
+							 * );
+							 */
 							fb.dialog(mContext, "feed", parameters,
 									new DialogListener() {
 
@@ -208,10 +244,19 @@ public class HistoryListAdapter extends ArrayAdapter<HistoryItemEnity>
 							.getDisplayMetrics().widthPixels;
 					BitmapFactory.Options dimensions = new BitmapFactory.Options();
 					dimensions.inJustDecodeBounds = false;
-					Bitmap mBitmap = BitmapFactory.decodeResource(
-							mContext.getResources(), R.drawable.ic_btn_sms_fc,
+					Bitmap bmsms = BitmapFactory.decodeResource(
+							mContext.getResources(), R.drawable.ic_btn_sms,
 							dimensions);
-					int imageHeight = dimensions.outHeight;
+					holder.ibMessage
+							.setImageBitmap(com.hungnguyen.qrcodescanner.ownerlibs.BitmapFactory
+									.scaleBitmap(bmsms, IMAGE_SIZE, IMAGE_SIZE));
+					Bitmap bmemail = BitmapFactory.decodeResource(
+							mContext.getResources(), R.drawable.ic_btn_mail);
+					holder.ibEmail
+							.setImageBitmap(com.hungnguyen.qrcodescanner.ownerlibs.BitmapFactory
+									.scaleBitmap(bmemail, IMAGE_SIZE,
+											IMAGE_SIZE));
+					int imageHeight = bmsms.getHeight();
 
 					FrameLayout.LayoutParams params = (FrameLayout.LayoutParams) holder.relativeLayout
 							.getLayoutParams();

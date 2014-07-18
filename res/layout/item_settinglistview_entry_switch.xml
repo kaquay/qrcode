@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
+    android:layout_height="60dp"
     android:layout_margin="3sp"
     android:background="@android:color/white" >
 
@@ -11,9 +11,9 @@
         android:layout_height="wrap_content"
         android:layout_alignParentLeft="true"
         android:layout_centerVertical="true"
+        android:layout_marginLeft="3sp"
         android:text="zzzzzzz"
-         android:layout_marginLeft="3sp"
-         android:textColor="#000000" />
+        android:textColor="#000000" />
 
     <Switch
         android:id="@+id/settinglistview_entry_sw_switch"

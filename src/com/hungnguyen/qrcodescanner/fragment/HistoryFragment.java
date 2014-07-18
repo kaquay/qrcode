@@ -20,6 +20,7 @@ import android.widget.AdapterView.OnItemClickListener;
 import android.widget.Toast;
 
 import com.example.qrcodescanner.R;
+import com.fortysevendeg.swipelistview.BaseSwipeListViewListener;
 import com.fortysevendeg.swipelistview.SwipeListView;
 import com.hungnguyen.qrcodescanner.activity.ResultActivity;
 import com.hungnguyen.qrcodescanner.adapter.HistoryListAdapter;
@@ -30,7 +31,8 @@ import com.hungnguyen.qrcodescanner.model.HistorySectionItemObject;
 import com.hungnguyen.qrcodescanner.utility.DeleteItemHistoryListener;
 
 @TargetApi(Build.VERSION_CODES.HONEYCOMB)
-public class HistoryFragment extends Fragment implements OnItemClickListener, DeleteItemHistoryListener {
+public class HistoryFragment extends Fragment implements OnItemClickListener,
+		DeleteItemHistoryListener {
 	SwipeListView mListHistory;
 	ArrayList<HistoryItemEnity> mList;
 
@@ -65,9 +67,23 @@ public class HistoryFragment extends Fragment implements OnItemClickListener, De
 		int imageWidth = dimensions.outWidth;
 		int leftOffset = screenWidth - imageWidth;
 		int rightOffset = screenWidth - (imageWidth * 4);
-		Log.d("LOG", "RIGHT :" + rightOffset+ ", LEFT " + leftOffset);
+		Log.d("LOG", "RIGHT :" + rightOffset + ", LEFT " + leftOffset);
 		mListHistory.setOffsetLeft(leftOffset);
 		mListHistory.setOffsetRight(rightOffset);
+		mListHistory.setSwipeListViewListener(new BaseSwipeListViewListener() {
+
+			@Override
+			public void onClickFrontView(int position) {
+				Intent intent = new Intent(getActivity(), ResultActivity.class);
+				Bundle bundle = new Bundle();
+				HistoryItemObject item = (HistoryItemObject) mList
+						.get(position);
+				bundle.putString("url", item.getTitle());
+				intent.putExtras(bundle);
+				getActivity().startActivity(intent);
+			}
+
+		});
 	}
 
 	@Override
@@ -81,6 +97,7 @@ public class HistoryFragment extends Fragment implements OnItemClickListener, De
 		getActivity().startActivity(intent);
 		Toast.makeText(getActivity(), "zzzz", Toast.LENGTH_SHORT).show();
 	}
+
 	private void SetupList() {
 		mList = new ArrayList<HistoryItemEnity>();
 		Database db = new Database(getActivity());
@@ -105,12 +122,14 @@ public class HistoryFragment extends Fragment implements OnItemClickListener, De
 				}
 			}
 		}
-		if (mList != null) {
+		if (mList.isEmpty()) {
+		} else {
 			HistoryListAdapter adapter = new HistoryListAdapter(getActivity(),
-					mList,this);
+					mList, this);
 			mListHistory.setAdapter(adapter);
 		}
 	}
+
 	@Override
 	public void onDeleteItemHistoryComplete() {
 		SetupList();

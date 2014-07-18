@@ -23,6 +23,7 @@ public class ResultActivity extends Activity implements OnClickListener {
 	TextView mTvTitle;
 	String url;
 	RelativeLayout mLayoutActionBar;
+
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -33,10 +34,9 @@ public class ResultActivity extends Activity implements OnClickListener {
 		mBtBack = (Button) findViewById(R.id.result_bt_back);
 		mIbShare = (ImageButton) findViewById(R.id.result_ib_share);
 		mTvTitle = (TextView) findViewById(R.id.result_tv_title);
-		mLayoutActionBar =(RelativeLayout)findViewById(R.id.result_rl_actionbar);
+		mLayoutActionBar = (RelativeLayout) findViewById(R.id.result_rl_actionbar);
 		mBtBack.setOnClickListener(this);
 		mIbShare.setOnClickListener(this);
-
 		mWebView.setWebViewClient(new WebViewClient() {
 
 			@Override
@@ -52,13 +52,14 @@ public class ResultActivity extends Activity implements OnClickListener {
 			}
 
 		});
-		
+
 		int screenHeight = getResources().getDisplayMetrics().heightPixels;
 		int heightBar = screenHeight * 10 / 100; // 10% of creenHeight
-		LinearLayout.LayoutParams params = (LinearLayout.LayoutParams) mLayoutActionBar.getLayoutParams();
+		LinearLayout.LayoutParams params = (LinearLayout.LayoutParams) mLayoutActionBar
+				.getLayoutParams();
 		params.height = heightBar;
 		mLayoutActionBar.setLayoutParams(params);
-		
+
 		Bundle extras = getIntent().getExtras();
 		url = extras.getString("url");
 		mWebView.loadUrl(url);

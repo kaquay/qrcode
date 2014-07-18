@@ -10,14 +10,6 @@
         android:layout_height="wrap_content"
         android:background="@color/actionbarcolor" >
 
-        <TextView
-            android:id="@+id/result_tv_title"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerHorizontal="true"
-            android:layout_centerVertical="true"
-            android:text="title" />
-
         <ImageButton
             android:id="@+id/result_ib_share"
             android:layout_width="wrap_content"
@@ -25,7 +17,6 @@
             android:layout_alignParentRight="true"
             android:layout_centerVertical="true"
             android:layout_marginRight="3sp"
-            android:layout_weight="1"
             android:background="#00000000"
             android:src="@drawable/ic_history" />
 
@@ -34,13 +25,19 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentLeft="true"
-            android:layout_alignParentTop="true"
             android:layout_centerVertical="true"
             android:layout_marginRight="2sp"
-            android:layout_weight="1"
             android:background="#00000000"
             android:drawableLeft="@drawable/ic_btn_back"
             android:text="Back" />
+
+        <TextView
+            android:id="@+id/result_tv_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:layout_centerVertical="true"
+            android:text="title" />
     </RelativeLayout>
 
     <WebView
