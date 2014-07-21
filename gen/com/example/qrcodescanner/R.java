@@ -8,6 +8,9 @@
 package com.example.qrcodescanner;
 
 public final class R {
+    public static final class array {
+        public static final int title=0x7f090000;
+    }
     public static final class attr {
         /** <p>Must be a dimension value, which is a floating point number appended with a unit such as "<code>14.5sp</code>".
 Available units are: px (pixels), dp (density-independent pixels), sp (scaled pixels based on preferred font size),
@@ -595,7 +598,7 @@ or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>na
         public static final int dialog_picker_bt_set=0x7f040039;
         public static final int dialog_picker_wheelview=0x7f040038;
         public static final int dismiss=0x7f040005;
-        public static final int frame_slidingmenu=0x7f04005b;
+        public static final int frame_slidingmenu=0x7f04005d;
         public static final int fullscreen=0x7f040008;
         public static final int history_list=0x7f04003c;
         public static final int history_listview_section_text=0x7f040052;
@@ -616,8 +619,8 @@ or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>na
         public static final int historylistview_entry_tv_name=0x7f040041;
         public static final int historylistview_entry_tv_title=0x7f040051;
         public static final int introduce_webview=0x7f040043;
-        public static final int item_slidinglist_image=0x7f04005a;
-        public static final int item_slidinglist_layout=0x7f040059;
+        public static final int item_slidinglist_image=0x7f04005c;
+        public static final int item_slidinglist_layout=0x7f04005b;
         public static final int large=0x7f04000c;
         public static final int left=0x7f040003;
         public static final int main_container=0x7f04000d;
@@ -628,8 +631,8 @@ or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>na
         public static final int main_rl_actionbar=0x7f04000e;
         public static final int main_tv_titlebar=0x7f040010;
         public static final int margin=0x7f040007;
-        public static final int menu_setting=0x7f04005d;
-        public static final int menu_star=0x7f04005e;
+        public static final int menu_setting=0x7f04005f;
+        public static final int menu_star=0x7f040060;
         public static final int none=0x7f040000;
         public static final int normal=0x7f04000b;
         public static final int picker_subtitle=0x7f040028;
@@ -644,14 +647,16 @@ or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>na
         public static final int scanner_tv=0x7f040045;
         public static final int selected_view=0x7f040009;
         public static final int setting_list=0x7f040046;
-        public static final int setting_listview_section_text=0x7f040058;
-        public static final int settinglistview_entry_iv_choose=0x7f040056;
-        public static final int settinglistview_entry_iv_left=0x7f040053;
-        public static final int settinglistview_entry_sw_switch=0x7f040057;
-        public static final int settinglistview_entry_tv_status=0x7f040055;
-        public static final int settinglistview_entry_tv_title=0x7f040054;
+        public static final int setting_listview_section_text=0x7f04005a;
+        public static final int settinglistview_entry_iv_choose=0x7f040057;
+        public static final int settinglistview_entry_iv_left=0x7f040054;
+        public static final int settinglistview_entry_layout_choose=0x7f040053;
+        public static final int settinglistview_entry_layout_switch=0x7f040058;
+        public static final int settinglistview_entry_sw_switch=0x7f040059;
+        public static final int settinglistview_entry_tv_status=0x7f040056;
+        public static final int settinglistview_entry_tv_title=0x7f040055;
         public static final int slidinglist=0x7f040047;
-        public static final int slidingmenumain=0x7f04005c;
+        public static final int slidingmenumain=0x7f04005e;
         public static final int small=0x7f04000a;
         public static final int wvlogin=0x7f04003b;
     }
@@ -694,11 +699,12 @@ or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>na
         public static final int slidingmenumain=0x7f030023;
     }
     public static final class menu {
-        public static final int main=0x7f090000;
+        public static final int main=0x7f0a0000;
     }
     public static final class string {
         public static final int about=0x7f05002d;
         public static final int app_name=0x7f050000;
+        public static final int backpress_to_exit=0x7f05002e;
         public static final int com_facebook_choose_friends=0x7f050010;
         public static final int com_facebook_dialogloginactivity_ok_button=0x7f050001;
         public static final int com_facebook_internet_permission_error_message=0x7f050014;
@@ -731,18 +737,24 @@ or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>na
         public static final int dialog_insert_tv_decription_urlprofile=0x7f050022;
         public static final int dialog_insert_tv_title_shortcut=0x7f050023;
         public static final int dialog_insert_tv_title_urlprofile=0x7f050021;
+        public static final int dialog_message_delete_all_value=0x7f050032;
         public static final int dialog_picker_bt_cancel=0x7f05002b;
         public static final int dialog_picker_bt_set=0x7f05002a;
         public static final int dialog_picker_title=0x7f05002c;
+        public static final int dialog_title_warning=0x7f050031;
         public static final int menu_title_close=0x7f05001e;
         public static final int menu_title_open=0x7f05001d;
+        public static final int no=0x7f050034;
+        public static final int null_database_value=0x7f050030;
         public static final int setting_scanner=0x7f05001b;
         public static final int setting_share=0x7f05001c;
         public static final int share_mail_body=0x7f050029;
         public static final int share_mail_title=0x7f050028;
+        public static final int shortcut_url_null=0x7f05002f;
         public static final int sms_message=0x7f050027;
         public static final int toast_update_url_profile=0x7f050025;
         public static final int toast_update_url_shortcut=0x7f050026;
+        public static final int yes=0x7f050033;
     }
     public static final class style {
         /** 

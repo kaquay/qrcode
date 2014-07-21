@@ -3,6 +3,7 @@ package com.hungnguyen.qrcodescanner.fragment;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 
+import android.annotation.SuppressLint;
 import android.annotation.TargetApi;
 import android.app.Fragment;
 import android.content.Intent;
@@ -30,8 +31,9 @@ import com.hungnguyen.qrcodescanner.model.HistoryItemObject;
 import com.hungnguyen.qrcodescanner.model.HistorySectionItemObject;
 import com.hungnguyen.qrcodescanner.utility.DeleteItemHistoryListener;
 
+@SuppressLint("SimpleDateFormat")
 @TargetApi(Build.VERSION_CODES.HONEYCOMB)
-public class HistoryFragment extends Fragment implements OnItemClickListener,
+public class HistoryFragment extends Fragment implements
 		DeleteItemHistoryListener {
 	SwipeListView mListHistory;
 	ArrayList<HistoryItemEnity> mList;
@@ -59,15 +61,10 @@ public class HistoryFragment extends Fragment implements OnItemClickListener,
 	public void onStart() {
 		super.onStart();
 		SetupList();
-		BitmapFactory.Options dimensions = new BitmapFactory.Options();
-		dimensions.inJustDecodeBounds = false;
-		Bitmap mBitmap = BitmapFactory.decodeResource(getActivity()
-				.getResources(), R.drawable.ic_btn_delete_fc, dimensions);
 		int screenWidth = getActivity().getResources().getDisplayMetrics().widthPixels;
-		int imageWidth = dimensions.outWidth;
+		int imageWidth = (screenWidth * 10 / 100) + 5; // 10%
 		int leftOffset = screenWidth - imageWidth;
 		int rightOffset = screenWidth - (imageWidth * 4);
-		Log.d("LOG", "RIGHT :" + rightOffset + ", LEFT " + leftOffset);
 		mListHistory.setOffsetLeft(leftOffset);
 		mListHistory.setOffsetRight(rightOffset);
 		mListHistory.setSwipeListViewListener(new BaseSwipeListViewListener() {
@@ -84,18 +81,6 @@ public class HistoryFragment extends Fragment implements OnItemClickListener,
 			}
 
 		});
-	}
-
-	@Override
-	public void onItemClick(AdapterView<?> parent, View view, int position,
-			long id) {
-		Intent intent = new Intent(getActivity(), ResultActivity.class);
-		Bundle bundle = new Bundle();
-		HistoryItemObject item = (HistoryItemObject) mList.get(position);
-		bundle.putString("url", item.getTitle());
-		intent.putExtras(bundle);
-		getActivity().startActivity(intent);
-		Toast.makeText(getActivity(), "zzzz", Toast.LENGTH_SHORT).show();
 	}
 
 	private void SetupList() {
@@ -134,4 +119,9 @@ public class HistoryFragment extends Fragment implements OnItemClickListener,
 	public void onDeleteItemHistoryComplete() {
 		SetupList();
 	}
+	private String formatday(String day){
+		return null;
+	}
+	
+	
 }

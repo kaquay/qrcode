@@ -28,6 +28,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.qrcodescanner.R;
+import com.facebook.android.AsyncFacebookRunner;
 import com.facebook.android.DialogError;
 import com.facebook.android.Facebook;
 import com.facebook.android.Facebook.DialogListener;
@@ -93,8 +94,8 @@ public class SettingsFragment extends Fragment implements OnItemClickListener,
 				"URL Profile", urlprofile, true, false, 0));
 		int autoClose = sp.getInt(SHARE_AUTO_CLOSE_URL, 0);
 		String st = "";
-		if (autoClose > 0) {
-			st = autoClose + " seconds";
+		if (autoClose >= 0 && autoClose < 18) {
+			st = (autoClose + 1) * 5 + " seconds";
 		} else
 			st = "Never";
 		mList.add(new SettingChooseObject(SETTING_ITEM_AUTO_CLOSE_URL,
@@ -132,7 +133,7 @@ public class SettingsFragment extends Fragment implements OnItemClickListener,
 			setUpURLProfile();
 			break;
 		case SETTING_ITEM_AUTO_CLOSE_URL:
-			// setUpAutoCloseURL();
+			setUpAutoCloseURL();
 			break;
 		case SETTING_ITEM_MESSAGE:
 			setUpShareMessage();
@@ -180,21 +181,15 @@ public class SettingsFragment extends Fragment implements OnItemClickListener,
 
 						@Override
 						public void onPostStatusSuccess() {
-
+							showToast("Done!");
 						}
 
 						@Override
 						public void onPostStatusFail() {
-
+							showToast("Failed!");
 						}
 					});
 		}
-
-	}
-
-	private void showDialogLoginTwitter() {
-		Dialog dialog = new Dialog(getActivity());
-		dialog.setContentView(R.layout.dialog_logintwitter);
 
 	}
 
@@ -306,6 +301,7 @@ public class SettingsFragment extends Fragment implements OnItemClickListener,
 		final SharedPreferences sp = getActivity().getSharedPreferences(
 				SHARE_NAME, 0);
 		final Dialog dialog = new Dialog(getActivity());
+		dialog.setContentView(R.layout.dialog_picker);
 		dialog.setTitle(R.string.dialog_picker_title);
 		ArrayList<String> listValue = new ArrayList<String>();
 		for (int i = 5; i <= 90; i += 5) {
@@ -314,6 +310,7 @@ public class SettingsFragment extends Fragment implements OnItemClickListener,
 		listValue.add("Never");
 		final String[] menuWheel = listValue.toArray(new String[listValue
 				.size()]);
+		// final String[] menuWheel = { "1", "2", "3", "4" };
 		final WheelView wheel = (WheelView) dialog
 				.findViewById(R.id.dialog_picker_wheelview);
 		ArrayWheelAdapter<String> adapter = new ArrayWheelAdapter<String>(
@@ -322,11 +319,11 @@ public class SettingsFragment extends Fragment implements OnItemClickListener,
 		wheel.setVisibleItems(2);
 		wheel.setCurrentItem(0);
 		int index = sp.getInt(SHARE_AUTO_CLOSE_URL, 0);
-		if (index > 0) {
+//		if (index > 0) {
 			wheel.setCurrentItem(index);
-		} else {
-			wheel.setCurrentItem(menuWheel.length - 1);
-		}
+		// } else {
+		// wheel.setCurrentItem(menuWheel.length - 1);
+		// }
 		Button btSet = (Button) dialog.findViewById(R.id.dialog_picker_bt_set);
 		Button btCancel = (Button) dialog
 				.findViewById(R.id.dialog_picker_bt_cancel);
@@ -341,16 +338,17 @@ public class SettingsFragment extends Fragment implements OnItemClickListener,
 
 			@Override
 			public void onClick(View v) {
-				int index = wheel.getCurrentItem() + 1;
-				if (index < menuWheel.length) {
+				int index = wheel.getCurrentItem();
+//				if (index < menuWheel.length && index > 0) {
 					Editor editor = sp.edit();
 					editor.putInt(SHARE_AUTO_CLOSE_URL, index);
 					editor.commit();
-				} else {
-					Editor editor = sp.edit();
-					editor.putInt(SHARE_AUTO_CLOSE_URL, 0);
-					editor.commit();
-				}
+//				} else {
+//					Editor editor = sp.edit();
+//					editor.putInt(SHARE_AUTO_CLOSE_URL, 0);
+//					editor.commit();
+//				}
+				setupList();
 				dialog.dismiss();
 			}
 		});
@@ -419,12 +417,6 @@ public class SettingsFragment extends Fragment implements OnItemClickListener,
 			mToast.setText(msg);
 			mToast.show();
 		}
-	}
-
-	@Override
-	public void startActivityForResult(Intent intent, int requestCode) {
-		super.startActivityForResult(intent, requestCode);
-
 	}
 
 }

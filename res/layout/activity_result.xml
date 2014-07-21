@@ -16,7 +16,7 @@
             android:layout_height="wrap_content"
             android:layout_alignParentRight="true"
             android:layout_centerVertical="true"
-            android:layout_marginRight="3sp"
+            android:layout_marginRight="8sp"
             android:background="#00000000"
             android:src="@drawable/ic_history" />
 
@@ -26,6 +26,7 @@
             android:layout_height="wrap_content"
             android:layout_alignParentLeft="true"
             android:layout_centerVertical="true"
+            android:layout_marginLeft="8sp"
             android:layout_marginRight="2sp"
             android:background="#00000000"
             android:drawableLeft="@drawable/ic_btn_back"
@@ -35,9 +36,10 @@
             android:id="@+id/result_tv_title"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_centerHorizontal="true"
             android:layout_centerVertical="true"
-            android:text="title" />
+            android:layout_marginLeft="3sp"
+            android:layout_toRightOf="@+id/result_bt_back"
+            android:text="" />
     </RelativeLayout>
 
     <WebView

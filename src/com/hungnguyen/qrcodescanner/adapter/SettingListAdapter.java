@@ -11,7 +11,9 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.CompoundButton;
 import android.widget.CompoundButton.OnCheckedChangeListener;
+import android.widget.FrameLayout;
 import android.widget.ImageView;
+import android.widget.RelativeLayout;
 import android.widget.Switch;
 import android.widget.TextView;
 
@@ -38,88 +40,120 @@ public class SettingListAdapter extends ArrayAdapter<SettingItemEntity>
 
 	@Override
 	public View getView(int position, View convertView, ViewGroup parent) {
-		View view = convertView;
-		TextView tvTitle;
 		SettingItemEntity item = mList.get(position);
-		if (item != null) {
-			switch (item.chooseItem()) {
-			case SETTING_LISTVIEW_SECTION:
-				SettingSectionItemObject sectionItem = (SettingSectionItemObject) item;
-				view = mInflater.inflate(R.layout.item_settinglistview_section,
-						null);
-				tvTitle = (TextView) view
-						.findViewById(R.id.setting_listview_section_text);
-				tvTitle.setText("" + sectionItem.getTitle());
-				view.setOnClickListener(null);
-				view.setOnLongClickListener(null);
-				view.setLongClickable(false);
-				break;
-			case SETTING_LISTVIEW_ENTRY_SWITCH:
-				final SettingSwitchObject switchItem = (SettingSwitchObject) item;
-				view = mInflater.inflate(
-						R.layout.item_settinglistview_entry_switch, null);
-				Switch sw = (Switch) view
-						.findViewById(R.id.settinglistview_entry_sw_switch);
-				sw.setChecked(switchItem.isSwitchOn());
-				sw.setOnCheckedChangeListener(new OnCheckedChangeListener() {
+		final Holder holder;
+		if (convertView == null) {
+			if (item != null) {
+				switch (item.chooseItem()) {
+				case SETTING_LISTVIEW_SECTION:
+					SettingSectionItemObject sectionItem = (SettingSectionItemObject) item;
+					convertView = mInflater.inflate(
+							R.layout.item_settinglistview_section, null);
+					holder = new Holder();
+					holder.tvTitle = (TextView) convertView
+							.findViewById(R.id.setting_listview_section_text);
+					holder.tvTitle.setText("" + sectionItem.getTitle());
+					convertView.setOnClickListener(null);
+					convertView.setOnLongClickListener(null);
+					convertView.setLongClickable(false);
+					convertView.setTag(holder);
+					break;
+				case SETTING_LISTVIEW_ENTRY_SWITCH:
+					final SettingSwitchObject switchItem = (SettingSwitchObject) item;
+					convertView = mInflater.inflate(
+							R.layout.item_settinglistview_entry_switch, null);
+					holder = new Holder();
+					holder.sw = (Switch) convertView
+							.findViewById(R.id.settinglistview_entry_sw_switch);
+					holder.relativelayout = (RelativeLayout) convertView
+							.findViewById(R.id.settinglistview_entry_layout_switch);
+					holder.sw.setChecked(switchItem.isSwitchOn());
+					holder.sw
+							.setOnCheckedChangeListener(new OnCheckedChangeListener() {
 
-					@Override
-					public void onCheckedChanged(CompoundButton buttonView,
-							boolean isChecked) {
-						if (switchItem.getId() == SETTING_ITEM_SOUND) {
-							switchItem.setSwitchOn(isChecked);
-							SharedPreferences sp = mContext
-									.getSharedPreferences(SHARE_NAME, 0);
-							Editor editor = sp.edit();
-							editor.putBoolean(SHARE_SW_SOUND, isChecked);
-							editor.commit();
-						}
-						if (switchItem.getId() == SETTING_ITEM_AUTO_OPEN_URL) {
-							switchItem.setSwitchOn(isChecked);
-							SharedPreferences sp = mContext
-									.getSharedPreferences(SHARE_NAME, 0);
-							Editor editor = sp.edit();
-							editor.putBoolean(SHARE_SW_AUTO_OPEN, isChecked);
-							editor.commit();
-						}
+								@Override
+								public void onCheckedChanged(
+										CompoundButton buttonView,
+										boolean isChecked) {
+									if (switchItem.getId() == SETTING_ITEM_SOUND) {
+										switchItem.setSwitchOn(isChecked);
+										SharedPreferences sp = mContext
+												.getSharedPreferences(
+														SHARE_NAME, 0);
+										Editor editor = sp.edit();
+										editor.putBoolean(SHARE_SW_SOUND,
+												isChecked);
+										editor.commit();
+									}
+									if (switchItem.getId() == SETTING_ITEM_AUTO_OPEN_URL) {
+										switchItem.setSwitchOn(isChecked);
+										SharedPreferences sp = mContext
+												.getSharedPreferences(
+														SHARE_NAME, 0);
+										Editor editor = sp.edit();
+										editor.putBoolean(SHARE_SW_AUTO_OPEN,
+												isChecked);
+										editor.commit();
+									}
+								}
+							});
+					holder.tvTitle = (TextView) convertView
+							.findViewById(R.id.settinglistview_entry_tv_title);
+					holder.tvTitle.setText("" + switchItem.getTitle());
+					convertView.setOnClickListener(null);
+					convertView.setOnLongClickListener(null);
+					convertView.setLongClickable(false);
+
+					FrameLayout.LayoutParams params = (FrameLayout.LayoutParams) holder.relativelayout
+							.getLayoutParams();
+					params.height = 60;
+					holder.relativelayout.setLayoutParams(params);
+					convertView.setTag(holder);
+
+					convertView.setTag(holder);
+					break;
+				case SETTING_LISTVIEW_ENTRY_CHOOSE:
+					SettingChooseObject chooseItem = (SettingChooseObject) item;
+					convertView = mInflater.inflate(
+							R.layout.item_settinglistview_entry_choose, null);
+					holder = new Holder();
+					holder.relativelayout = (RelativeLayout) convertView
+							.findViewById(R.id.settinglistview_entry_layout_choose);
+					holder.tvTitle = (TextView) convertView
+							.findViewById(R.id.settinglistview_entry_tv_title);
+					holder.tvTitle.setText("" + chooseItem.getTitle());
+					holder.tvStatus = (TextView) convertView
+							.findViewById(R.id.settinglistview_entry_tv_status);
+					holder.tvStatus.setText("" + chooseItem.getStatus());
+					holder.ivLeft = (ImageView) convertView
+							.findViewById(R.id.settinglistview_entry_iv_left);
+					if (!chooseItem.isShowStatus()) {
+						holder.tvStatus.setVisibility(View.INVISIBLE);
 					}
-				});
-				tvTitle = (TextView) view
-						.findViewById(R.id.settinglistview_entry_tv_title);
-				tvTitle.setText("" + switchItem.getTitle());
-				view.setOnClickListener(null);
-				view.setOnLongClickListener(null);
-				view.setLongClickable(false);
-				break;
-			case SETTING_LISTVIEW_ENTRY_CHOOSE:
-				SettingChooseObject chooseItem = (SettingChooseObject) item;
-				view = mInflater.inflate(
-						R.layout.item_settinglistview_entry_choose, null);
-				tvTitle = (TextView) view
-						.findViewById(R.id.settinglistview_entry_tv_title);
-				tvTitle.setText("" + chooseItem.getTitle());
-				TextView tvStatus = (TextView) view
-						.findViewById(R.id.settinglistview_entry_tv_status);
-				tvStatus.setText("" + chooseItem.getStatus());
-				ImageView ivLeft = (ImageView) view
-						.findViewById(R.id.settinglistview_entry_iv_left);
-				if (!chooseItem.isShowStatus()) {
-					tvStatus.setVisibility(View.INVISIBLE);
+					holder.iv = (ImageView) convertView
+							.findViewById(R.id.settinglistview_entry_iv_choose);
+					if (!chooseItem.isShowImage()) {
+						holder.iv.setVisibility(View.INVISIBLE);
+					}
+					if (chooseItem.getImage() == 0) {
+						holder.ivLeft.setVisibility(View.INVISIBLE);
+					} else {
+						holder.ivLeft.setImageResource(chooseItem.getImage());
+					}
+
+					FrameLayout.LayoutParams params1 = (FrameLayout.LayoutParams) holder.relativelayout
+							.getLayoutParams();
+					params1.height = 60;
+					holder.relativelayout.setLayoutParams(params1);
+
+					convertView.setTag(holder);
+					break;
 				}
-				ImageView iv = (ImageView) view
-						.findViewById(R.id.settinglistview_entry_iv_choose);
-				if (!chooseItem.isShowImage()) {
-					iv.setVisibility(View.INVISIBLE);
-				}
-				if (chooseItem.getImage() == 0) {
-					ivLeft.setVisibility(View.INVISIBLE);
-				} else {
-					ivLeft.setImageResource(chooseItem.getImage());
-				}
-				break;
 			}
+		} else {
+			holder = (Holder) convertView.getTag();
 		}
-		return view;
+		return convertView;
 	}
 
 	@Override
@@ -133,4 +167,14 @@ public class SettingListAdapter extends ArrayAdapter<SettingItemEntity>
 
 		return position;
 	}
+
+	private class Holder {
+		TextView tvTitle;
+		Switch sw;
+		TextView tvStatus;
+		ImageView ivLeft;
+		ImageView iv;
+		RelativeLayout relativelayout;
+	}
+
 }

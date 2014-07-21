@@ -2,7 +2,10 @@ package com.hungnguyen.qrcodescanner.activity;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.os.Handler;
+import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.Window;
@@ -15,8 +18,10 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.example.qrcodescanner.R;
+import com.hungnguyen.qrcodescanner.utility.Constants;
 
-public class ResultActivity extends Activity implements OnClickListener {
+public class ResultActivity extends Activity implements OnClickListener,
+		Constants {
 	WebView mWebView;
 	ImageButton mIbShare;
 	Button mBtBack;
@@ -43,6 +48,7 @@ public class ResultActivity extends Activity implements OnClickListener {
 			public void onPageFinished(WebView view, String url) {
 				super.onPageFinished(view, url);
 				mTvTitle.setText("" + view.getTitle());
+				autoClose();
 			}
 
 			@Override
@@ -54,15 +60,24 @@ public class ResultActivity extends Activity implements OnClickListener {
 		});
 
 		int screenHeight = getResources().getDisplayMetrics().heightPixels;
-		int heightBar = screenHeight * 10 / 100; // 10% of creenHeight
+		int screenWidth = getResources().getDisplayMetrics().widthPixels;
+		Log.d("WIDTH", "" + screenWidth);
+		int heightBar = screenHeight * 10 / 100; // 10% of screenHeight
 		LinearLayout.LayoutParams params = (LinearLayout.LayoutParams) mLayoutActionBar
 				.getLayoutParams();
 		params.height = heightBar;
 		mLayoutActionBar.setLayoutParams(params);
 
+		int btBackWidth = mBtBack.getLayoutParams().width;
+		int btShareWidth = mIbShare.getLayoutParams().width;
+		RelativeLayout.LayoutParams txparams = (RelativeLayout.LayoutParams) mTvTitle
+				.getLayoutParams();
+		txparams.width = screenWidth - btBackWidth - btShareWidth;
+		mTvTitle.setLayoutParams(txparams);
 		Bundle extras = getIntent().getExtras();
 		url = extras.getString("url");
 		mWebView.loadUrl(url);
+
 	}
 
 	@Override
@@ -78,6 +93,21 @@ public class ResultActivity extends Activity implements OnClickListener {
 			sendIntent.setType("text/plain");
 			startActivity(Intent.createChooser(sendIntent, ""));
 			break;
+		}
+	}
+
+	private void autoClose() {
+		SharedPreferences sp = getSharedPreferences(SHARE_NAME, 0);
+		int autoClose = sp.getInt(SHARE_AUTO_CLOSE_URL, 0);
+		if (autoClose < 18 && autoClose >= 0) {
+			int timeToClose = (autoClose + 1) * 5 * 1000;
+			new Handler().postDelayed(new Runnable() {
+
+				@Override
+				public void run() {
+					finish();
+				}
+			}, timeToClose);
 		}
 	}
 

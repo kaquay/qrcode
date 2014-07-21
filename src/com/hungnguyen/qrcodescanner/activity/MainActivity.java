@@ -34,10 +34,8 @@ import com.jeremyfeinstein.slidingmenu.lib.app.SlidingActivity;
 public class MainActivity extends SlidingActivity implements Constants,
 		OnClickListener, ChangeFragmentListener {
 	ImageButton mIbMenu;
-	/*
-	 * Have 4 Fragment with them name : Scan, History, Settings, About
-	 */
-	String[] titles = { "Scan", "History", "Settings", "About" };
+
+	String[] titles;
 	int mIndex = 0;
 	long back_pressed;
 	Toast mToast;
@@ -63,6 +61,12 @@ public class MainActivity extends SlidingActivity implements Constants,
 		 */
 		int width = getResources().getDisplayMetrics().widthPixels * 70 / 100;
 		getSlidingMenu().setBehindOffset(width);
+
+		/*
+		 * Have 4 Fragment with them name : Scan, History, Settings, About
+		 * strings.xml
+		 */
+		titles = getResources().getStringArray(R.array.title);
 
 		mTvTitle = (TextView) findViewById(R.id.main_tv_titlebar);
 		mIbMenu = (ImageButton) findViewById(R.id.main_ib_menu);
@@ -146,7 +150,7 @@ public class MainActivity extends SlidingActivity implements Constants,
 		if (back_pressed + 500 > System.currentTimeMillis())
 			finish();
 		else
-			showToast("Press again to exit!");
+			showToast(getResources().getString(R.string.backpress_to_exit));
 		back_pressed = System.currentTimeMillis();
 	}
 
@@ -178,7 +182,7 @@ public class MainActivity extends SlidingActivity implements Constants,
 				intent.putExtras(extras);
 				startActivity(intent);
 			} else {
-				showToast("You must insert shortcut url first !");
+				showToast(getResources().getString(R.string.shortcut_url_null));
 			}
 			break;
 		case R.id.main_ib_menu:
@@ -191,27 +195,36 @@ public class MainActivity extends SlidingActivity implements Constants,
 	}
 
 	private void DeleteAll() {
-		AlertDialog.Builder dialog = new AlertDialog.Builder(MainActivity.this);
-		dialog.setTitle("Warning !");
-		dialog.setMessage("Are you sure to delete all ?");
-		dialog.setNegativeButton("NO", new DialogInterface.OnClickListener() {
+		Database db = new Database(MainActivity.this);
+		if (db.isHaveValues()) {
+			AlertDialog.Builder dialog = new AlertDialog.Builder(
+					MainActivity.this);
+			dialog.setTitle(getResources().getString(
+					R.string.dialog_title_warning));
+			dialog.setMessage(getResources().getString(
+					R.string.dialog_message_delete_all_value));
+			dialog.setNegativeButton(getResources().getString(R.string.no),
+					new DialogInterface.OnClickListener() {
 
-			@Override
-			public void onClick(DialogInterface dialog, int which) {
-				dialog.dismiss();
-			}
-		});
-		dialog.setPositiveButton("YES", new DialogInterface.OnClickListener() {
+						@Override
+						public void onClick(DialogInterface dialog, int which) {
+							dialog.dismiss();
+						}
+					});
+			dialog.setPositiveButton(getResources().getString(R.string.yes),
+					new DialogInterface.OnClickListener() {
 
-			@Override
-			public void onClick(DialogInterface dialog, int which) {
-				Database db = new Database(getApplicationContext());
-				db.DeleteAllItem();
-				dialog.dismiss();
-				showFragment(1);
-			}
-		});
-		dialog.show();
+						@Override
+						public void onClick(DialogInterface dialog, int which) {
+							Database db = new Database(getApplicationContext());
+							db.DeleteAllItem();
+							dialog.dismiss();
+							showFragment(1);
+						}
+					});
+			dialog.show();
+		} else
+			showToast(getResources().getString(R.string.null_database_value));
 	}
 
 	/*

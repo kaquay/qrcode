@@ -37,7 +37,7 @@ import com.hungnguyen.qrcodescanner.utility.DeleteItemHistoryListener;
 
 public class HistoryListAdapter extends ArrayAdapter<HistoryItemEnity>
 		implements Constants {
-	private static int IMAGE_SIZE = 50;
+	private int IMAGE_SIZE;
 	Activity mContext;
 	ArrayList<HistoryItemEnity> mList;
 	LayoutInflater mInflater;
@@ -225,42 +225,40 @@ public class HistoryListAdapter extends ArrayAdapter<HistoryItemEnity>
 					});
 					holder.tvTitle.setText("" + entryItem.getTitle());
 					holder.tvId.setText("" + entryItem.getId());
-					holder.relativeLayout
-							.setOnClickListener(new OnClickListener() {
-
-								@Override
-								public void onClick(View arg0) {
-									Intent intent = new Intent(mContext,
-											ResultActivity.class);
-									Bundle bundle = new Bundle();
-									bundle.putString("url",
-											entryItem.getTitle());
-									intent.putExtras(bundle);
-									mContext.startActivity(intent);
-								}
-							});
-
-					int sreenHeight = mContext.getResources()
+					int screenHeight = mContext.getResources()
 							.getDisplayMetrics().widthPixels;
+					IMAGE_SIZE = (screenHeight * 10 / 100) + 5; // 10 %
 					BitmapFactory.Options dimensions = new BitmapFactory.Options();
 					dimensions.inJustDecodeBounds = false;
 					Bitmap bmsms = BitmapFactory.decodeResource(
 							mContext.getResources(), R.drawable.ic_btn_sms,
 							dimensions);
-					holder.ibMessage
-							.setImageBitmap(com.hungnguyen.qrcodescanner.ownerlibs.BitmapFactory
-									.scaleBitmap(bmsms, IMAGE_SIZE, IMAGE_SIZE));
+					holder.ibMessage.setImageBitmap(Bitmap.createScaledBitmap(
+							bmsms, IMAGE_SIZE, IMAGE_SIZE, true));
 					Bitmap bmemail = BitmapFactory.decodeResource(
 							mContext.getResources(), R.drawable.ic_btn_mail);
-					holder.ibEmail
-							.setImageBitmap(com.hungnguyen.qrcodescanner.ownerlibs.BitmapFactory
-									.scaleBitmap(bmemail, IMAGE_SIZE,
-											IMAGE_SIZE));
-					int imageHeight = bmsms.getHeight();
+					holder.ibEmail.setImageBitmap(Bitmap.createScaledBitmap(
+							bmemail, IMAGE_SIZE, IMAGE_SIZE, true));
+					Bitmap bmTwitter = BitmapFactory.decodeResource(
+							mContext.getResources(),
+							R.drawable.ic_btn_twitter_fc);
+					holder.ibTwitter.setImageBitmap(Bitmap.createScaledBitmap(
+							bmTwitter, IMAGE_SIZE, IMAGE_SIZE, true));
+					Bitmap bmFacebook = BitmapFactory.decodeResource(
+							mContext.getResources(), R.drawable.ic_btn_fb_fc);
+					holder.ibFacebook.setImageBitmap(Bitmap.createScaledBitmap(
+							bmFacebook, IMAGE_SIZE, IMAGE_SIZE, true));
+					Bitmap bmDelete = BitmapFactory.decodeResource(
+							mContext.getResources(),
+							R.drawable.ic_btn_delete_fc);
+					holder.ibDelete.setImageBitmap(Bitmap.createScaledBitmap(
+							bmDelete, IMAGE_SIZE, IMAGE_SIZE, true));
+
+					// int imageHeight = bmsms.getHeight();
 
 					FrameLayout.LayoutParams params = (FrameLayout.LayoutParams) holder.relativeLayout
 							.getLayoutParams();
-					params.height = imageHeight;
+					params.height = IMAGE_SIZE;
 					holder.relativeLayout.setLayoutParams(params);
 					convertView.setTag(holder);
 				}

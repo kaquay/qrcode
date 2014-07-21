@@ -110,6 +110,17 @@ public class Database extends SQLiteOpenHelper {
 		db.close();
 		return listValues;
 	}
+
+	public boolean isHaveValues() {
+		boolean result = true;
+		SQLiteDatabase db = this.getReadableDatabase();
+		Cursor cursor = db.rawQuery("SELECT * FROM " + TABLE_NAME, null);
+		if (cursor.moveToFirst())
+			result = false;
+
+		return result;
+	}
+
 	public void DeleteAllItem() {
 		SQLiteDatabase db = this.getWritableDatabase();
 		String query = "DELETE FROM " + TABLE_NAME;

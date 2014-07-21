@@ -14,10 +14,25 @@
     <string name="toast_update_url_profile">URL Profile have been updated successfully</string>
     <string name="toast_update_url_shortcut">URL Shortcut have been updated successfully</string>
     <string name="sms_message">Need a QR or barcode reader ? Captix: Scan is the best one I\'ve found. </string>
-	<string name="share_mail_title">Captix Scan Share</string>
-	<string name="share_mail_body">Need a QR or barcode reader ? Captix: Scan is the best one I\'ve found. Give it a try&#33; cptr.it&#47;captixscan</string>
-	<string name="dialog_picker_bt_set">Set</string>
-	<string name="dialog_picker_bt_cancel">Cancel</string>
-	<string name="dialog_picker_title">Pick time</string>
-	<string name="about"><Data><![CDATA[44Doors began whit the idea of bringing people togetehr through simple, meaningful interactions. Our software and strategies focus on reducing the friction often associated with communities and conversations. We strive for simple, yet powerful, interactions, and look to improve relationships throught active engagement. <br> We believe all conversations have value. Organizations must monetize these interactions to measure their impact, not simply for dashboards, stock tickes, and board meetings, but to ensure their value as an entity. This value is the commitment madeto employees, share holders, constituents, donors, partners, and the comunity. <br> Our name, 44Doors, stems from the main door of an organization, Decades ago, each business had a single, main entrance. Every interaction flowed throught that simple doorway. It was less complicated and easier to meansure. Today, organizations have many "doors" in which they operate, both physical and digital. Between buildings, catalogs, call centers, Twitter, Facebook, kiosks, direct mail. ]]> </Data> </string>
+    <string name="share_mail_title">Captix Scan Share</string>
+    <string name="share_mail_body">Need a QR or barcode reader ? Captix: Scan is the best one I\'ve found. Give it a try&#33; cptr.it&#47;captixscan</string>
+    <string name="dialog_picker_bt_set">Set</string>
+    <string name="dialog_picker_bt_cancel">Cancel</string>
+    <string name="dialog_picker_title">Pick time</string>
+    <string name="about"><Data><![CDATA[44Doors began whit the idea of bringing people togetehr through simple, meaningful interactions. Our software and strategies focus on reducing the friction often associated with communities and conversations. We strive for simple, yet powerful, interactions, and look to improve relationships throught active engagement. <br> We believe all conversations have value. Organizations must monetize these interactions to measure their impact, not simply for dashboards, stock tickes, and board meetings, but to ensure their value as an entity. This value is the commitment madeto employees, share holders, constituents, donors, partners, and the comunity. <br> Our name, 44Doors, stems from the main door of an organization, Decades ago, each business had a single, main entrance. Every interaction flowed throught that simple doorway. It was less complicated and easier to meansure. Today, organizations have many "doors" in which they operate, both physical and digital. Between buildings, catalogs, call centers, Twitter, Facebook, kiosks, direct mail. ]]></Data></string>
+
+    <string-array name="title">
+        <item>Scan</item>
+        <item>History</item>
+        <item>Settings</item>
+        <item>About</item>
+    </string-array>
+	<string name="backpress_to_exit">Press again to exit\!</string>
+	<string name="shortcut_url_null">You must insert shortcut url first \!</string>
+	<string name="null_database_value">You don\'t have any value to delete\!</string>
+	<string name="dialog_title_warning">Warning \!</string>
+	<string name="dialog_message_delete_all_value">Are you sure to delete all \?</string>
+	<string name="yes">Yes</string>
+	<string name="no">No</string>
+	
 </resources>

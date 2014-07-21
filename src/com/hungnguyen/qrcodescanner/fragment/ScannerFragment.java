@@ -10,7 +10,10 @@ import net.sourceforge.zbar.ImageScanner;
 import net.sourceforge.zbar.Symbol;
 import net.sourceforge.zbar.SymbolSet;
 import android.annotation.TargetApi;
+import android.app.AlertDialog;
 import android.app.Fragment;
+import android.content.DialogInterface;
+import android.content.DialogInterface.OnClickListener;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
@@ -19,7 +22,6 @@ import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.text.TextUtils;
-import android.text.format.DateFormat;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -121,7 +123,19 @@ public class ScannerFragment extends Fragment implements
 
 			mPreviewing = true;
 		} catch (Exception e) {
-			showToast(e.toString());
+			AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+			builder.setCancelable(false);
+			builder.setTitle("Captix Scan");
+			builder.setMessage("Sorry, the Android camera encountered a problem. You may need to restart the device");
+			builder.setPositiveButton("OK", new OnClickListener() {
+
+				@Override
+				public void onClick(DialogInterface dialog, int which) {
+					getActivity().finish();
+				}
+			});
+			AlertDialog dialog = builder.create();
+			dialog.show();
 		}
 	}
 
@@ -199,35 +213,123 @@ public class ScannerFragment extends Fragment implements
 			}
 			SharedPreferences sp = getActivity().getSharedPreferences(
 					SHARE_NAME, 0);
+			boolean autoOpenURL = sp.getBoolean(SHARE_SW_AUTO_OPEN, false);
 			String URLProfile = sp.getString(SHARE_URL_PROFILE, "");
 			if (URLProfile.contains("*var*")) {
-				String url = URLProfile.replace("*var*", symData);
-				Intent intent = new Intent(getActivity(), ResultActivity.class);
-				Bundle extras = new Bundle();
-				extras.putString("url", url);
-				intent.putExtras(extras);
-				getActivity().startActivity(intent);
+				final String url = URLProfile.replace("*var*", symData);
 				Date date = Calendar.getInstance().getTime();
 				SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy");
 				String today = formatter.format(date);
 				Database db = new Database(getActivity());
-				Log.d("SCANNER", "" + today);
 				db.insert(url, today);
-				// TODO Save to Database
+				if (!autoOpenURL) {
+					AlertDialog.Builder builder = new AlertDialog.Builder(
+							getActivity());
+					builder.setTitle("Captix Scan");
+					builder.setMessage("Would you like to connect to " + url);
+					builder.setPositiveButton("YES",
+							new DialogInterface.OnClickListener() {
+
+								@Override
+								public void onClick(DialogInterface dialog,
+										int which) {
+									Intent intent = new Intent(getActivity(),
+											ResultActivity.class);
+									Bundle extras = new Bundle();
+									extras.putString("url", url);
+									intent.putExtras(extras);
+									getActivity().startActivity(intent);
+									dialog.dismiss();
+								}
+							});
+					builder.setNegativeButton("NO", new OnClickListener() {
+
+						@Override
+						public void onClick(DialogInterface dialog, int which) {
+							dialog.dismiss();
+							try {
+								// Open the default i.e. the first rear facing camera.
+								mCamera = Camera.open();
+								mCamera.setDisplayOrientation(90);
+								if (mCamera == null) {
+									// Cancel request if mCamera is null.
+									cancelRequest();
+									return;
+								}
+
+								mCameraPreview.setCamera(mCamera);
+								mCameraPreview.showSurfaceView();
+
+								mPreviewing = true;
+							} catch (Exception e) {
+								
+							}
+						}
+					});
+					AlertDialog dialog = builder.create();
+					dialog.show();
+
+				}
 			} else {
 				if (Util.isURI(symData)) {
-					Intent intent = new Intent(getActivity(),
-							ResultActivity.class);
-					Bundle extras = new Bundle();
-					extras.putString("url", symData);
-					intent.putExtras(extras);
-					getActivity().startActivity(intent);
 					Database db = new Database(getActivity());
 					Date date = Calendar.getInstance().getTime();
-					SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy");
+					SimpleDateFormat formatter = new SimpleDateFormat(
+							"dd/MM/yyyy");
 					String today = formatter.format(date);
-					Log.d("SCANNER", "" + today);
 					db.insert(symData, today);
+
+					if (!autoOpenURL) {
+						final String url = symData;
+						AlertDialog.Builder builder = new AlertDialog.Builder(
+								getActivity());
+						builder.setTitle("Captix Scan");
+						builder.setMessage("Would you like to connect to "
+								+ symData);
+						builder.setPositiveButton("YES",
+								new DialogInterface.OnClickListener() {
+
+									@Override
+									public void onClick(DialogInterface dialog,
+											int which) {
+										Intent intent = new Intent(
+												getActivity(),
+												ResultActivity.class);
+										Bundle extras = new Bundle();
+										extras.putString("url", url);
+										intent.putExtras(extras);
+										getActivity().startActivity(intent);
+									}
+								});
+						builder.setNegativeButton("NO", new OnClickListener() {
+
+							@Override
+							public void onClick(DialogInterface dialog,
+									int which) {
+								dialog.dismiss();
+								try {
+									// Open the default i.e. the first rear facing camera.
+									mCamera = Camera.open();
+									mCamera.setDisplayOrientation(90);
+									if (mCamera == null) {
+										// Cancel request if mCamera is null.
+										cancelRequest();
+										return;
+									}
+
+									mCameraPreview.setCamera(mCamera);
+									mCameraPreview.showSurfaceView();
+
+									mPreviewing = true;
+								} catch (Exception e) {
+									
+								}
+							}
+						});
+						AlertDialog dialog = builder.create();
+						dialog.show();
+					}
+
 				} else {
 					showToast(symData);
 				}

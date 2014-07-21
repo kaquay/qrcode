@@ -206,11 +206,13 @@ public class TwitterAPI {
 		@Override
 		protected void onPostExecute(Boolean result) {
 			super.onPostExecute(result);
+
 			TwitterPostStatusListener listener = mPostStatusListener;
-			if (result)
-				listener.onPostStatusSuccess();
-			else
-				listener.onPostStatusFail();
+			if (listener != null)
+				if (result)
+					listener.onPostStatusSuccess();
+				else
+					listener.onPostStatusFail();
 			dialog.dismiss();
 		}
 
