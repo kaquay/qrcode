@@ -11,11 +11,13 @@
         android:id="@+id/history_list"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:divider="#CC99CC"
+        android:divider="#EEEEEE"
         android:dividerHeight="1dp"
+        android:listSelector="@drawable/list_selector"
         app:swipeBackView="@+id/historylistview_entry_back"
         app:swipeFrontView="@+id/historylistview_entry_front"
         swipe:swipeCloseAllItemsWhenMoveList="true"
-        swipe:swipeMode="both" />
+        swipe:swipeMode="both"
+         />
 
 </LinearLayout>

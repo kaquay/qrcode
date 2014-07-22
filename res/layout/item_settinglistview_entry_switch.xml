@@ -7,7 +7,7 @@
         android:id="@+id/settinglistview_entry_layout_switch"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_margin="3sp"
+        android:layout_marginLeft="10dp"
         android:background="@drawable/borderlayout" >
 
         <TextView

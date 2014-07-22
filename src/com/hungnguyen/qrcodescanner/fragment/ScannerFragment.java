@@ -12,15 +12,19 @@ import net.sourceforge.zbar.SymbolSet;
 import android.annotation.TargetApi;
 import android.app.AlertDialog;
 import android.app.Fragment;
+import android.app.FragmentManager;
+import android.app.FragmentTransaction;
 import android.content.DialogInterface;
 import android.content.DialogInterface.OnClickListener;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.hardware.Camera;
+import android.media.MediaPlayer;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
+import android.provider.MediaStore.Audio.Media;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -67,6 +71,7 @@ public class ScannerFragment extends Fragment implements
 				mScanner.setConfig(symbol, Config.ENABLE, 1);
 			}
 		}
+		Log.d("QRCODE", "setupScanner");
 	}
 
 	@Override
@@ -77,6 +82,7 @@ public class ScannerFragment extends Fragment implements
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 			Bundle savedInstanceState) {
+		Log.d("QRCODE", "onCreateView");
 		View view = inflater.inflate(R.layout.fragment_scanner, container,
 				false);
 
@@ -93,6 +99,7 @@ public class ScannerFragment extends Fragment implements
 	@Override
 	public void onStart() {
 		super.onStart();
+		Log.d("QRCODE", "onStart");
 		if (!isCameraAvailable()) {
 			showToast("Can't recognize Camera");
 			return;
@@ -111,6 +118,7 @@ public class ScannerFragment extends Fragment implements
 		try {
 			// Open the default i.e. the first rear facing camera.
 			mCamera = Camera.open();
+			// mCamera.unlock();
 			mCamera.setDisplayOrientation(90);
 			if (mCamera == null) {
 				// Cancel request if mCamera is null.
@@ -120,9 +128,10 @@ public class ScannerFragment extends Fragment implements
 
 			mCameraPreview.setCamera(mCamera);
 			mCameraPreview.showSurfaceView();
-
+			Log.d("QRCODE", "bot of TRY");
 			mPreviewing = true;
 		} catch (Exception e) {
+			Log.d("QRCODE", "CATCH");
 			AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
 			builder.setCancelable(false);
 			builder.setTitle("Captix Scan");
@@ -146,25 +155,29 @@ public class ScannerFragment extends Fragment implements
 	@Override
 	public void onPause() {
 		super.onPause();
+		try {
+			// Because the Camera object is a shared resource, it's very
+			// important to release it when the activity is paused.
+			if (mCamera != null) {
+				mCameraPreview.setCamera(null);
+				mCamera.cancelAutoFocus();
+				mCamera.setPreviewCallback(null);
+				mCamera.stopPreview();
+				mCamera.release();
 
-		// Because the Camera object is a shared resource, it's very
-		// important to release it when the activity is paused.
-		if (mCamera != null) {
-			mCameraPreview.setCamera(null);
-			mCamera.cancelAutoFocus();
-			mCamera.setPreviewCallback(null);
-			mCamera.stopPreview();
-			mCamera.release();
+				// According to Jason Kuang on
+				// http://stackoverflow.com/questions/6519120/how-to-recover-camera-preview-from-sleep,
+				// there might be surface recreation problems when the device
+				// goes
+				// to sleep. So lets just hide it and
+				// recreate on resume
+				mCameraPreview.hideSurfaceView();
 
-			// According to Jason Kuang on
-			// http://stackoverflow.com/questions/6519120/how-to-recover-camera-preview-from-sleep,
-			// there might be surface recreation problems when the device goes
-			// to sleep. So lets just hide it and
-			// recreate on resume
-			mCameraPreview.hideSurfaceView();
+				mPreviewing = false;
+				mCamera = null;
+			}
+		} finally {
 
-			mPreviewing = false;
-			mCamera = null;
 		}
 	}
 
@@ -199,6 +212,14 @@ public class ScannerFragment extends Fragment implements
 		int result = mScanner.scanImage(barcode);
 
 		if (result != 0) {
+			SharedPreferences sp = getActivity().getSharedPreferences(
+					SHARE_NAME, 0);
+			boolean isPlaySound = sp.getBoolean(SHARE_SW_SOUND, false);
+			if (isPlaySound) {
+				MediaPlayer player = MediaPlayer.create(getActivity(),
+						R.drawable.camera_shutter);
+				player.start();
+			}
 			mCamera.cancelAutoFocus();
 			mCamera.setPreviewCallback(null);
 			mCamera.stopPreview();
@@ -211,15 +232,13 @@ public class ScannerFragment extends Fragment implements
 					break;
 				}
 			}
-			SharedPreferences sp = getActivity().getSharedPreferences(
-					SHARE_NAME, 0);
+
 			boolean autoOpenURL = sp.getBoolean(SHARE_SW_AUTO_OPEN, false);
 			String URLProfile = sp.getString(SHARE_URL_PROFILE, "");
 			if (URLProfile.contains("*var*")) {
 				final String url = URLProfile.replace("*var*", symData);
-				Date date = Calendar.getInstance().getTime();
-				SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy");
-				String today = formatter.format(date);
+
+				String today = now();
 				Database db = new Database(getActivity());
 				db.insert(url, today);
 				if (!autoOpenURL) {
@@ -247,36 +266,24 @@ public class ScannerFragment extends Fragment implements
 						@Override
 						public void onClick(DialogInterface dialog, int which) {
 							dialog.dismiss();
-							try {
-								// Open the default i.e. the first rear facing camera.
-								mCamera = Camera.open();
-								mCamera.setDisplayOrientation(90);
-								if (mCamera == null) {
-									// Cancel request if mCamera is null.
-									cancelRequest();
-									return;
-								}
-
-								mCameraPreview.setCamera(mCamera);
-								mCameraPreview.showSurfaceView();
-
-								mPreviewing = true;
-							} catch (Exception e) {
-								
-							}
+							showScannerFragment();
 						}
 					});
 					AlertDialog dialog = builder.create();
 					dialog.show();
 
+				} else {
+					Intent intent = new Intent(getActivity(),
+							ResultActivity.class);
+					Bundle extras = new Bundle();
+					extras.putString("url", url);
+					intent.putExtras(extras);
+					getActivity().startActivity(intent);
 				}
 			} else {
 				if (Util.isURI(symData)) {
 					Database db = new Database(getActivity());
-					Date date = Calendar.getInstance().getTime();
-					SimpleDateFormat formatter = new SimpleDateFormat(
-							"dd/MM/yyyy");
-					String today = formatter.format(date);
+					String today = now();
 					db.insert(symData, today);
 
 					if (!autoOpenURL) {
@@ -307,34 +314,43 @@ public class ScannerFragment extends Fragment implements
 							public void onClick(DialogInterface dialog,
 									int which) {
 								dialog.dismiss();
-								try {
-									// Open the default i.e. the first rear facing camera.
-									mCamera = Camera.open();
-									mCamera.setDisplayOrientation(90);
-									if (mCamera == null) {
-										// Cancel request if mCamera is null.
-										cancelRequest();
-										return;
-									}
-
-									mCameraPreview.setCamera(mCamera);
-									mCameraPreview.showSurfaceView();
-
-									mPreviewing = true;
-								} catch (Exception e) {
-									
-								}
+								showScannerFragment();
 							}
 						});
 						AlertDialog dialog = builder.create();
 						dialog.show();
+					} else {
+						final String url = symData;
+						Intent intent = new Intent(getActivity(),
+								ResultActivity.class);
+						Bundle extras = new Bundle();
+						extras.putString("url", url);
+						intent.putExtras(extras);
+						getActivity().startActivity(intent);
 					}
 
 				} else {
 					showToast(symData);
+					showScannerFragment();
 				}
 			}
 		}
 
 	}
+
+	private void showScannerFragment() {
+		FragmentManager fragmentManager = getFragmentManager();
+		FragmentTransaction fragmentTransaction = fragmentManager
+				.beginTransaction();
+		Fragment fragment = new ScannerFragment();
+		fragmentTransaction.replace(R.id.main_frame_container, fragment)
+				.commit();
+	}
+
+	private String now() {
+		Date date = Calendar.getInstance().getTime();
+		SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy");
+		return formatter.format(date);
+	}
+
 }

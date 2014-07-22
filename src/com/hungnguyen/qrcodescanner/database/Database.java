@@ -75,7 +75,8 @@ public class Database extends SQLiteOpenHelper {
 	public ArrayList<String> getAllDate() {
 		ArrayList<String> listValues = new ArrayList<String>();
 		SQLiteDatabase db = this.getReadableDatabase();
-		String query = "SELECT DISTINCT " + COLUMN_3 + " FROM " + TABLE_NAME;
+		String query = "SELECT DISTINCT " + COLUMN_3 + " FROM " + TABLE_NAME
+				+ " ORDER BY " + COLUMN_3 + " DESC";
 		Cursor cursor = db.rawQuery(query, null);
 		if (cursor.moveToFirst()) {
 			do {

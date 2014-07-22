@@ -5,7 +5,7 @@
     android:orientation="vertical"
     android:layout_marginTop="20dp"
     android:focusableInTouchMode="false"
-    android:background="#E3E4FA" >
+    android:background="#EEEEEE" >
 
     <include
         android:id="@+id/history_listview_section_text"

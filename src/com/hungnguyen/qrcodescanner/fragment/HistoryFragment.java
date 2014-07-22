@@ -119,9 +119,7 @@ public class HistoryFragment extends Fragment implements
 	public void onDeleteItemHistoryComplete() {
 		SetupList();
 	}
-	private String formatday(String day){
-		return null;
-	}
+	
 	
 	
 }

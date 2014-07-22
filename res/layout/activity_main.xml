@@ -15,7 +15,7 @@
         <RelativeLayout
             android:id="@+id/main_rl_actionbar"
             android:layout_width="match_parent"
-            android:layout_height="48dp"
+            android:layout_height="55dp"
             android:background="@color/actionbarcolor" >
 
             <ImageButton
@@ -24,7 +24,7 @@
                 android:layout_height="wrap_content"
                 android:layout_alignParentLeft="true"
                 android:layout_centerVertical="true"
-                android:layout_marginLeft="5sp"
+                android:layout_marginLeft="10dp"
                 android:background="#00000000"
                 android:src="@drawable/ic_btn_menu" />
 
@@ -48,7 +48,7 @@
                 android:layout_centerVertical="true"
                 android:background="#00000000"
                 android:src="@drawable/ic_favourite_browser"
-                android:layout_marginRight="3sp" />
+                android:layout_marginRight="10dp" />
 
             <Button
                 android:id="@+id/main_history_bt_delete"

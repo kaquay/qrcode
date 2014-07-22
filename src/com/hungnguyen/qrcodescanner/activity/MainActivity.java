@@ -47,7 +47,9 @@ public class MainActivity extends SlidingActivity implements Constants,
 
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
-		super.onCreate(savedInstanceState);
+		if (savedInstanceState != null)
+			super.onCreate(savedInstanceState);
+		else super.onCreate(null);
 		getWindow().requestFeature(Window.FEATURE_ACTION_BAR);
 		getActionBar().hide();
 		setContentView(R.layout.activity_main);

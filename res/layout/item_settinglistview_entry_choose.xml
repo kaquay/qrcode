@@ -7,8 +7,9 @@
         android:id="@+id/settinglistview_entry_layout_choose"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_margin="3sp"
-        android:background="@drawable/borderlayout" >
+        android:layout_marginLeft="10dp"
+        android:background="@drawable/listview_selector"
+         >
 
         <ImageView
             android:id="@+id/settinglistview_entry_iv_left"
@@ -34,7 +35,7 @@
             android:layout_centerVertical="true"
             android:layout_toLeftOf="@+id/settinglistview_entry_iv_choose"
             android:text="status"
-            android:textColor="#000000" />
+            android:textColor="#777777" />
 
         <ImageView
             android:id="@+id/settinglistview_entry_iv_choose"

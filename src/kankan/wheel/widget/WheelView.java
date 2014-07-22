@@ -679,7 +679,7 @@ public class WheelView extends View {
 			pos = Math.min(pos, adapter.getItemsCount() - 1);
 			Log.d("DELTA", "" + delta);
 			int index = getCurrentItem();
-			int go = Math.abs((int) delta / 2);
+			int go = Math.abs((int) delta / 4);
 			for (int i = 1; i < go; i++) {
 				if (delta > 0) {
 					index--;

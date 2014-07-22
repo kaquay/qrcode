@@ -59,21 +59,25 @@ public class ResultActivity extends Activity implements OnClickListener,
 
 		});
 
-		int screenHeight = getResources().getDisplayMetrics().heightPixels;
-		int screenWidth = getResources().getDisplayMetrics().widthPixels;
-		Log.d("WIDTH", "" + screenWidth);
-		int heightBar = screenHeight * 10 / 100; // 10% of screenHeight
-		LinearLayout.LayoutParams params = (LinearLayout.LayoutParams) mLayoutActionBar
-				.getLayoutParams();
-		params.height = heightBar;
-		mLayoutActionBar.setLayoutParams(params);
-
-		int btBackWidth = mBtBack.getLayoutParams().width;
-		int btShareWidth = mIbShare.getLayoutParams().width;
-		RelativeLayout.LayoutParams txparams = (RelativeLayout.LayoutParams) mTvTitle
-				.getLayoutParams();
-		txparams.width = screenWidth - btBackWidth - btShareWidth;
-		mTvTitle.setLayoutParams(txparams);
+		// int screenHeight = getResources().getDisplayMetrics().heightPixels;
+		// int screenWidth = getResources().getDisplayMetrics().widthPixels;
+		// Log.d("WIDTH", "" + screenWidth);
+		// int heightBar = screenHeight * 10 / 100; // 10% of screenHeight
+		// LinearLayout.LayoutParams params = (LinearLayout.LayoutParams)
+		// mLayoutActionBar
+		// .getLayoutParams();
+		// params.height = heightBar;
+		// mLayoutActionBar.setLayoutParams(params);
+		//
+		// int btBackWidth = mBtBack.getLayoutParams().width;
+		// int btShareWidth = mIbShare.getLayoutParams().width;
+		// RelativeLayout.LayoutParams txparams = (RelativeLayout.LayoutParams)
+		// mTvTitle
+		// .getLayoutParams();
+		// txparams.width = screenWidth - btBackWidth - btShareWidth;
+		// mTvTitle.setLayoutParams(txparams);
+		//
+		
 		Bundle extras = getIntent().getExtras();
 		url = extras.getString("url");
 		mWebView.loadUrl(url);

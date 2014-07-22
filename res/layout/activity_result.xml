@@ -7,7 +7,7 @@
     <RelativeLayout
         android:id="@+id/result_rl_actionbar"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="55dp"
         android:background="@color/actionbarcolor" >
 
         <ImageButton
@@ -38,8 +38,12 @@
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"
             android:layout_marginLeft="3sp"
+            android:layout_marginRight="3sp"
+            android:layout_toLeftOf="@+id/result_ib_share"
             android:layout_toRightOf="@+id/result_bt_back"
-            android:text="" />
+            android:text=""
+            android:textColor="#FFFFFF"
+            android:gravity="center_horizontal" />
     </RelativeLayout>
 
     <WebView
