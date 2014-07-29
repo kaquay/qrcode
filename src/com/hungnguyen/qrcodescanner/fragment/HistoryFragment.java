@@ -69,6 +69,7 @@ public class HistoryFragment extends Fragment implements
 		mListHistory.setOffsetRight(rightOffset);
 		mListHistory.setSwipeListViewListener(new BaseSwipeListViewListener() {
 
+			
 			@Override
 			public void onClickFrontView(int position) {
 				Intent intent = new Intent(getActivity(), ResultActivity.class);

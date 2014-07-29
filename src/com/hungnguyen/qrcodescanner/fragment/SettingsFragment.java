@@ -1,5 +1,6 @@
 package com.hungnguyen.qrcodescanner.fragment;
 
+import java.io.ByteArrayOutputStream;
 import java.util.ArrayList;
 
 import kankan.wheel.widget.ArrayWheelAdapter;
@@ -8,10 +9,14 @@ import twitter4j.Twitter;
 import android.annotation.TargetApi;
 import android.app.Dialog;
 import android.app.Fragment;
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.Editor;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.net.Uri;
+import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -28,7 +33,6 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.qrcodescanner.R;
-import com.facebook.android.AsyncFacebookRunner;
 import com.facebook.android.DialogError;
 import com.facebook.android.Facebook;
 import com.facebook.android.Facebook.DialogListener;
@@ -51,6 +55,7 @@ public class SettingsFragment extends Fragment implements OnItemClickListener,
 	ListView mListView;
 	ArrayList<SettingItemEntity> mList;
 	Toast mToast;
+	Facebook mFacebobk;
 
 	public SettingsFragment() {
 		super();
@@ -81,42 +86,55 @@ public class SettingsFragment extends Fragment implements OnItemClickListener,
 
 	private void setupList() {
 		mList.clear();
-		mList.add(new SettingSectionItemObject("SCANNER"));
+		mList.add(new SettingSectionItemObject(getResources().getString(
+				R.string.setting_section_scanner)));
 		SharedPreferences sp = getActivity()
 				.getSharedPreferences(SHARE_NAME, 0);
 		boolean swSound = sp.getBoolean(SHARE_SW_SOUND, true);
-		mList.add(new SettingSwitchObject(SETTING_ITEM_SOUND, "Sound", swSound));
+		mList.add(new SettingSwitchObject(SETTING_ITEM_SOUND, getResources()
+				.getString(R.string.setting_sound), swSound));
 		boolean swAutoOpen = sp.getBoolean(SHARE_SW_AUTO_OPEN, true);
 		mList.add(new SettingSwitchObject(SETTING_ITEM_AUTO_OPEN_URL,
-				"Auto Open URL", swAutoOpen));
+				getResources().getString(R.string.setting_auto_open_url),
+				swAutoOpen));
 		String urlprofile = sp.getString(SHARE_URL_PROFILE, "");
 		mList.add(new SettingChooseObject(SETTING_ITEM_URL_PROFILE,
-				"URL Profile", urlprofile, true, false, 0));
+				getResources().getString(R.string.setting_url_profile),
+				urlprofile, true, false, 0));
 		int autoClose = sp.getInt(SHARE_AUTO_CLOSE_URL, 0);
 		String st = "";
 		if (autoClose >= 0 && autoClose < 18) {
-			st = (autoClose + 1) * 5 + " seconds";
+			st = (autoClose + 1) * 5 + " "
+					+ getResources().getString(R.string.second);
 		} else
 			st = "Never";
 		mList.add(new SettingChooseObject(SETTING_ITEM_AUTO_CLOSE_URL,
-				"Auto close URL view after", st, true, true, 0));
+				getResources().getString(R.string.setting_auto_close_url), st,
+				true, true, 0));
 		String shortcut = sp.getString(SHARE_SHORTCUT, "");
 		if (shortcut.trim().length() == 0) {
 			mList.add(new SettingChooseObject(SETTING_ITEM_SHORTCUT,
-					"Shortcut", "None", true, false, 0));
+					getResources().getString(R.string.setting_shortcut),
+					"None", true, false, 0));
 		} else {
 			mList.add(new SettingChooseObject(SETTING_ITEM_SHORTCUT,
-					"Shortcut", shortcut, true, false, 0));
+					getResources().getString(R.string.setting_shortcut),
+					shortcut, true, false, 0));
 		}
-		mList.add(new SettingSectionItemObject("SHARE"));
-		mList.add(new SettingChooseObject(SETTING_ITEM_MESSAGE, "Message", "",
-				false, true, R.drawable.ic_setting_sms));
-		mList.add(new SettingChooseObject(SETTING_ITEM_MAIL, "Mail", "", false,
-				true, R.drawable.ic_setting_mail));
-		mList.add(new SettingChooseObject(SETTING_ITEM_TWITTER, "Twitter", "",
-				false, true, R.drawable.ic_setting_twitter));
-		mList.add(new SettingChooseObject(SETTING_ITEM_FACEBOOK, "Facebook",
-				"", false, true, R.drawable.ic_setting_fb));
+		mList.add(new SettingSectionItemObject(getResources().getString(
+				R.string.setting_section_share)));
+		mList.add(new SettingChooseObject(SETTING_ITEM_MESSAGE, getResources()
+				.getString(R.string.setting_message), "", false, true,
+				R.drawable.ic_setting_sms));
+		mList.add(new SettingChooseObject(SETTING_ITEM_MAIL, getResources()
+				.getString(R.string.setting_email), "", false, true,
+				R.drawable.ic_setting_mail));
+		mList.add(new SettingChooseObject(SETTING_ITEM_TWITTER, getResources()
+				.getString(R.string.setting_twitter), "", false, true,
+				R.drawable.ic_setting_twitter));
+		mList.add(new SettingChooseObject(SETTING_ITEM_FACEBOOK, getResources()
+				.getString(R.string.setting_facebook), "", false, true,
+				R.drawable.ic_setting_fb));
 
 		SettingListAdapter adapter = new SettingListAdapter(getActivity(),
 				mList);
@@ -195,40 +213,84 @@ public class SettingsFragment extends Fragment implements OnItemClickListener,
 
 	@SuppressWarnings("deprecation")
 	private void setUpShareFacebook() {
-		Facebook fb = new Facebook(FACEBOOK_APP_API);
-		Bundle parameters = new Bundle();
-		parameters.putString("message",
-				getActivity().getResources()
+		mFacebobk = new Facebook(FACEBOOK_APP_API);
+		mFacebobk.authorize(getActivity(), new String[] { "publish_stream",
+				"read_stream", "offline_access" },
+				new FacebookWallPostListener());
+	}
+
+	public class FacebookWallPostListener implements DialogListener {
+
+		@Override
+		public void onComplete(Bundle values) {
+			new FacebookWallPost().execute();
+		}
+
+		@Override
+		public void onFacebookError(FacebookError e) {
+
+		}
+
+		@Override
+		public void onError(DialogError e) {
+
+		}
+
+		@Override
+		public void onCancel() {
+
+		}
+
+	}
+
+	private class FacebookWallPost extends AsyncTask<String, Void, Boolean> {
+		ProgressDialog mDialog;
+		@SuppressWarnings("deprecation")
+		@Override
+		protected Boolean doInBackground(String... params) {
+			boolean result = true;
+			try {
+				Bundle parameters = new Bundle();
+				parameters.putString("message", getActivity().getResources()
 						.getString(R.string.share_mail_body));
-		parameters.putString("caption", "this is Caption");
-		parameters.putString("decription", "this is Dicription");
-		parameters.putString("link", "http://www.google.com/");
-		parameters
-				.putString(
-						"picture",
-						"http://4.bp.blogspot.com/-99S_TJiEvSQ/U6-559gN6sI/AAAAAAAAF5k/CQzEswdibW0/s1600/android-icon.png");
-		fb.dialog(getActivity(), "feed", parameters, new DialogListener() {
+				Bitmap bitmap = BitmapFactory.decodeResource(getResources(),
+						R.drawable.logo);
+				byte[] data = null;
+				ByteArrayOutputStream baos = new ByteArrayOutputStream();
+				bitmap.compress(Bitmap.CompressFormat.PNG, 100, baos);
+				data = baos.toByteArray();
+				if (data != null) {
+					parameters.putByteArray("picture", data);
+				}
+				parameters
+						.putString(Facebook.TOKEN, mFacebobk.getAccessToken());
+				mFacebobk.request("me");
+				mFacebobk.request("me/photos", parameters, "POST");
 
-			@Override
-			public void onFacebookError(final FacebookError e) {
-				showToast("Failed");
+			} catch (Exception e) {
+				result = false;
+			}
+			return result;
+		}
+
+		@Override
+		protected void onPostExecute(Boolean result) {
+			mDialog.dismiss();
+			if (result) {
+
+			} else {
+
 			}
 
-			@Override
-			public void onError(final DialogError e) {
+		}
 
-			}
+		@Override
+		protected void onPreExecute() {
+			mDialog = new ProgressDialog(getActivity());
+			mDialog.setMessage("Processing");
+			mDialog.show();
+		}
 
-			@Override
-			public void onComplete(final Bundle values) {
-				showToast("Done");
-			}
-
-			@Override
-			public void onCancel() {
-
-			}
-		});
 	}
 
 	private void setUpShareEmail() {
@@ -305,7 +367,7 @@ public class SettingsFragment extends Fragment implements OnItemClickListener,
 		dialog.setTitle(R.string.dialog_picker_title);
 		ArrayList<String> listValue = new ArrayList<String>();
 		for (int i = 5; i <= 90; i += 5) {
-			listValue.add("" + i + " seconds");
+			listValue.add("" + i + " s");
 		}
 		listValue.add("Never");
 		final String[] menuWheel = listValue.toArray(new String[listValue
@@ -314,13 +376,13 @@ public class SettingsFragment extends Fragment implements OnItemClickListener,
 		final WheelView wheel = (WheelView) dialog
 				.findViewById(R.id.dialog_picker_wheelview);
 		ArrayWheelAdapter<String> adapter = new ArrayWheelAdapter<String>(
-				menuWheel);
-		wheel.setAdapter(adapter);
-		wheel.setVisibleItems(2);
+				getActivity(), menuWheel);
+		wheel.setViewAdapter(adapter);
+		wheel.setVisibleItems(5);
 		wheel.setCurrentItem(0);
 		int index = sp.getInt(SHARE_AUTO_CLOSE_URL, 0);
-//		if (index > 0) {
-			wheel.setCurrentItem(index);
+		// if (index > 0) {
+		wheel.setCurrentItem(index);
 		// } else {
 		// wheel.setCurrentItem(menuWheel.length - 1);
 		// }
@@ -339,15 +401,15 @@ public class SettingsFragment extends Fragment implements OnItemClickListener,
 			@Override
 			public void onClick(View v) {
 				int index = wheel.getCurrentItem();
-//				if (index < menuWheel.length && index > 0) {
-					Editor editor = sp.edit();
-					editor.putInt(SHARE_AUTO_CLOSE_URL, index);
-					editor.commit();
-//				} else {
-//					Editor editor = sp.edit();
-//					editor.putInt(SHARE_AUTO_CLOSE_URL, 0);
-//					editor.commit();
-//				}
+				// if (index < menuWheel.length && index > 0) {
+				Editor editor = sp.edit();
+				editor.putInt(SHARE_AUTO_CLOSE_URL, index);
+				editor.commit();
+				// } else {
+				// Editor editor = sp.edit();
+				// editor.putInt(SHARE_AUTO_CLOSE_URL, 0);
+				// editor.commit();
+				// }
 				setupList();
 				dialog.dismiss();
 			}
@@ -418,5 +480,4 @@ public class SettingsFragment extends Fragment implements OnItemClickListener,
 			mToast.show();
 		}
 	}
-
 }

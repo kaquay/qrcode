@@ -22,4 +22,9 @@
         <item name="android:windowIsFloating">false</item>
     </style>
 
+    <style name="switchTextAppearance">
+        <item name="android:textColor">#FFFFFF</item>
+        <item name="android:textSize">15dp</item>
+    </style>
+
 </resources>

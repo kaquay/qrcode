@@ -113,12 +113,11 @@ public class Database extends SQLiteOpenHelper {
 	}
 
 	public boolean isHaveValues() {
-		boolean result = true;
+		boolean result = false;
 		SQLiteDatabase db = this.getReadableDatabase();
 		Cursor cursor = db.rawQuery("SELECT * FROM " + TABLE_NAME, null);
 		if (cursor.moveToFirst())
-			result = false;
-
+			result = true;
 		return result;
 	}
 

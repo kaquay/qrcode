@@ -1,8 +1,6 @@
 <resources>
 
-    <string name="app_name">QRCodeScanner</string>
-    <string name="setting_scanner">SCANNER</string>
-    <string name="setting_share">SHARE</string>
+    <string name="app_name">QRCode Scanner</string>
     <string name="menu_title_open">Menu</string>
     <string name="menu_title_close"></string>
     <string name="dialog_insert_bt_cancel">Cancel</string>
@@ -27,12 +25,33 @@
         <item>Settings</item>
         <item>About</item>
     </string-array>
-	<string name="backpress_to_exit">Press again to exit\!</string>
-	<string name="shortcut_url_null">You must insert shortcut url first \!</string>
-	<string name="null_database_value">You don\'t have any value to delete\!</string>
-	<string name="dialog_title_warning">Warning \!</string>
-	<string name="dialog_message_delete_all_value">Are you sure to delete all \?</string>
-	<string name="yes">Yes</string>
-	<string name="no">No</string>
+
+    <string name="backpress_to_exit">Press again to exit\!</string>
+    <string name="shortcut_url_null">You must insert shortcut url first \!</string>
+    <string name="null_database_value">You don\'t have any value to delete\!</string>
+    <string name="dialog_title_warning">Warning \!</string>
+    <string name="dialog_message_delete_all_value">Are you sure to delete all \?</string>
+    <string name="yes">Yes</string>
+    <string name="no">No</string>
+    <string name="dialog_title">Captix Scan</string>
+    <string name="dialog_disconnect_camera_message">Sorry, the Android camera encountered a problem. You may need to restart the device</string>
+    <string name="ok">OK</string>
+    <string name="dialog_open_url_message">Would you like to connect to open URL \?</string>
+	<string name="can_not_recognize_camera">Can\'t recognize camera</string>
+	
+	<!--Settings Fragment -->
+	<string name="setting_section_scanner">SCANNER</string>
+	<string name="setting_section_share">SHARE</string>
+	<string name="setting_sound">Sound</string>
+	<string name="setting_auto_open_url">Auto Open URL</string>
+	<string name="setting_url_profile">URL Profile</string>
+	<string name="setting_auto_close_url">Auto close URL view after</string>
+	<string name="setting_shortcut">Shortcut</string>
+	<string name="setting_message">Message</string>
+	<string name="setting_email">Email</string>
+	<string name="setting_facebook">Facebook</string>
+	<string name="setting_twitter">Twitter</string>
+	<string name="second">seconds</string>
+		
 	
 </resources>

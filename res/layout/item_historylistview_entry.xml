@@ -69,7 +69,7 @@
         android:id="@+id/historylistview_entry_front"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@android:color/white" >
+        android:background="@drawable/historylistview_style" >
 
         <ImageView
             android:id="@+id/historylistview_entry_iv_qrcode"
@@ -77,8 +77,8 @@
             android:layout_height="wrap_content"
             android:layout_alignParentLeft="true"
             android:layout_centerVertical="true"
-            android:layout_marginLeft="3sp"
-            android:layout_weight="1"
+            android:layout_marginLeft="5sp"
+            android:layout_marginTop="3dp"
             android:src="@drawable/ic_qrcode" />
 
         <ImageView
@@ -86,9 +86,9 @@
             android:layout_height="wrap_content"
             android:layout_alignParentRight="true"
             android:layout_centerVertical="true"
-            android:layout_marginRight="3sp"
-            android:layout_weight="1"
-            android:src="@drawable/ic_arrow" />
+            android:layout_marginRight="8dp"
+            android:src="@drawable/ic_arrow"
+             />
 
         <TextView
             android:id="@+id/historylistview_entry_tv_title"
@@ -96,7 +96,10 @@
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"
             android:layout_toRightOf="@+id/historylistview_entry_iv_qrcode"
-            android:text="zzzz" />
+            android:text="zzzz"
+            android:layout_marginLeft="8dp"
+            android:textSize="15dp"
+            android:textColor="#000000" />
     </RelativeLayout>
 
 </FrameLayout>

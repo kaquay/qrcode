@@ -8,6 +8,9 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.Editor;
+import android.content.res.Configuration;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.os.StrictMode;
 import android.view.View;
@@ -15,7 +18,6 @@ import android.view.View.OnClickListener;
 import android.view.Window;
 import android.widget.Button;
 import android.widget.ImageButton;
-import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -47,9 +49,7 @@ public class MainActivity extends SlidingActivity implements Constants,
 
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
-		if (savedInstanceState != null)
-			super.onCreate(savedInstanceState);
-		else super.onCreate(null);
+		super.onCreate(savedInstanceState);
 		getWindow().requestFeature(Window.FEATURE_ACTION_BAR);
 		getActionBar().hide();
 		setContentView(R.layout.activity_main);
@@ -59,11 +59,16 @@ public class MainActivity extends SlidingActivity implements Constants,
 				.replace(R.id.frame_slidingmenu, new SlidingMenuFragment(this))
 				.commit();
 		/*
-		 * Set Width of SlidingMenu : 30 per cents of Screen width
+		 * Set Width of SlidingMenu : 30 per cents of Screen width for Portrait
+		 * or 10 per cents for Landscape
 		 */
-		int width = getResources().getDisplayMetrics().widthPixels * 70 / 100;
-		getSlidingMenu().setBehindOffset(width);
-
+		if (getResources().getConfiguration().orientation == Configuration.ORIENTATION_PORTRAIT) {
+			int width = getResources().getDisplayMetrics().widthPixels * 70 / 100;
+			getSlidingMenu().setBehindOffset(width);
+		} else {
+			int width = getResources().getDisplayMetrics().widthPixels * 90 / 100;
+			getSlidingMenu().setBehindOffset(width);
+		}
 		/*
 		 * Have 4 Fragment with them name : Scan, History, Settings, About
 		 * strings.xml
@@ -76,17 +81,15 @@ public class MainActivity extends SlidingActivity implements Constants,
 		mBtDeleteAll = (Button) findViewById(R.id.main_history_bt_delete);
 		mRlActionBar = (RelativeLayout) findViewById(R.id.main_rl_actionbar);
 
-		/*
-		 * set ActionBar height : 10 per cents of Screen height
-		 */
-		int height = getResources().getDisplayMetrics().heightPixels / 10;
-		mRlActionBar.getLayoutParams().height = height;
-		mRlActionBar.requestLayout();
+		// int height = getResources().getDisplayMetrics().heightPixels / 10;
+		// mRlActionBar.getLayoutParams().height = height;
+		// mRlActionBar.requestLayout();
 		mIbShortcut.setOnClickListener(this);
 		mIbMenu.setOnClickListener(this);
 		mBtDeleteAll.setOnClickListener(this);
 		getActionBar().setDisplayHomeAsUpEnabled(false);
 		getActionBar().setHomeButtonEnabled(false);
+
 		/*
 		 * Open ScanFragment (0) when App start
 		 */
@@ -105,7 +108,7 @@ public class MainActivity extends SlidingActivity implements Constants,
 			editor.putBoolean(SHARE_SW_SOUND, true);
 			editor.putBoolean(SHARE_SW_AUTO_OPEN, true);
 			editor.putString(SHARE_URL_PROFILE, null);
-			editor.putInt(SHARE_AUTO_CLOSE_URL, 0);
+			editor.putInt(SHARE_AUTO_CLOSE_URL, 18);
 			editor.putString(SHARE_SHORTCUT, "");
 			editor.commit();
 		}
@@ -121,31 +124,38 @@ public class MainActivity extends SlidingActivity implements Constants,
 	@Override
 	protected void onResume() {
 		super.onResume();
+		Bitmap bmMenu = BitmapFactory.decodeResource(getResources(),
+				R.drawable.ic_btn_menu);
+		mIbMenu.setImageBitmap(Bitmap.createScaledBitmap(bmMenu, 55, 55, true));
+		Bitmap bmFavorite = BitmapFactory.decodeResource(getResources(),
+				R.drawable.ic_favourite_browser);
+		mIbShortcut.setImageBitmap(Bitmap.createScaledBitmap(bmFavorite, 55,
+				55, true));
 	}
 
 	private void setTitleBar(int index) {
 		mIndex = index;
 		switch (index) {
 		case 0:
-			mTvTitle.setText("" + titles[index]);
+			mTvTitle.setText(titles[index]);
 			break;
 		case 1:
-			mTvTitle.setText("" + titles[index]);
+			mTvTitle.setText(titles[index]);
 			break;
 		case 2:
-			mTvTitle.setText("" + titles[index]);
+			mTvTitle.setText(titles[index]);
 			break;
 		case 3:
-			mTvTitle.setText("" + titles[index]);
+			mTvTitle.setText(titles[index]);
 			break;
 		}
 	}
 
-	/*
+	/**
 	 * (non-Javadoc)
 	 * 
 	 * @see android.app.Activity#onBackPressed() Double backPressed to close
-	 * App.
+	 *      App.
 	 */
 	@Override
 	public void onBackPressed() {
@@ -170,6 +180,9 @@ public class MainActivity extends SlidingActivity implements Constants,
 		}
 	}
 
+	/**
+	 * 
+	 */
 	@Override
 	public void onClick(View view) {
 		switch (view.getId()) {
@@ -229,7 +242,9 @@ public class MainActivity extends SlidingActivity implements Constants,
 			showToast(getResources().getString(R.string.null_database_value));
 	}
 
-	/*
+	/**
+	 * 
+	 * @param index
 	 */
 	private void showFragment(int index) {
 		FragmentManager fragmentManager = getFragmentManager();
@@ -264,8 +279,10 @@ public class MainActivity extends SlidingActivity implements Constants,
 
 	@Override
 	public void onChangFragmentListener(int position) {
-		showFragment(position);
-		setTitleBar(position);
+		if (mIndex != position) {
+			showFragment(position);
+			setTitleBar(position);
+		}
 		toggle();
 	}
 }

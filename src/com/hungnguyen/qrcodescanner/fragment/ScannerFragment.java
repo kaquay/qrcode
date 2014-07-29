@@ -71,7 +71,6 @@ public class ScannerFragment extends Fragment implements
 				mScanner.setConfig(symbol, Config.ENABLE, 1);
 			}
 		}
-		Log.d("QRCODE", "setupScanner");
 	}
 
 	@Override
@@ -82,7 +81,6 @@ public class ScannerFragment extends Fragment implements
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 			Bundle savedInstanceState) {
-		Log.d("QRCODE", "onCreateView");
 		View view = inflater.inflate(R.layout.fragment_scanner, container,
 				false);
 
@@ -99,9 +97,9 @@ public class ScannerFragment extends Fragment implements
 	@Override
 	public void onStart() {
 		super.onStart();
-		Log.d("QRCODE", "onStart");
 		if (!isCameraAvailable()) {
-			showToast("Can't recognize Camera");
+			showToast(getActivity().getResources().getString(
+					R.string.can_not_recognize_camera));
 			return;
 		}
 		setupScanner();
@@ -119,7 +117,8 @@ public class ScannerFragment extends Fragment implements
 			// Open the default i.e. the first rear facing camera.
 			mCamera = Camera.open();
 			// mCamera.unlock();
-			mCamera.setDisplayOrientation(90);
+			// TODO
+			// mCamera.setDisplayOrientation(90);
 			if (mCamera == null) {
 				// Cancel request if mCamera is null.
 				cancelRequest();
@@ -128,21 +127,23 @@ public class ScannerFragment extends Fragment implements
 
 			mCameraPreview.setCamera(mCamera);
 			mCameraPreview.showSurfaceView();
-			Log.d("QRCODE", "bot of TRY");
 			mPreviewing = true;
 		} catch (Exception e) {
-			Log.d("QRCODE", "CATCH");
 			AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
 			builder.setCancelable(false);
-			builder.setTitle("Captix Scan");
-			builder.setMessage("Sorry, the Android camera encountered a problem. You may need to restart the device");
-			builder.setPositiveButton("OK", new OnClickListener() {
+			builder.setTitle(getActivity().getResources().getString(
+					R.string.dialog_title));
+			builder.setMessage(getActivity().getResources().getString(
+					R.string.dialog_disconnect_camera_message));
+			builder.setPositiveButton(
+					getActivity().getResources().getString(R.string.ok),
+					new OnClickListener() {
 
-				@Override
-				public void onClick(DialogInterface dialog, int which) {
-					getActivity().finish();
-				}
-			});
+						@Override
+						public void onClick(DialogInterface dialog, int which) {
+							getActivity().finish();
+						}
+					});
 			AlertDialog dialog = builder.create();
 			dialog.show();
 		}
@@ -244,9 +245,12 @@ public class ScannerFragment extends Fragment implements
 				if (!autoOpenURL) {
 					AlertDialog.Builder builder = new AlertDialog.Builder(
 							getActivity());
-					builder.setTitle("Captix Scan");
-					builder.setMessage("Would you like to connect to " + url);
-					builder.setPositiveButton("YES",
+					builder.setTitle(getActivity().getResources().getString(
+							R.string.dialog_title));
+					builder.setMessage(getActivity().getResources().getString(
+							R.string.dialog_open_url_message));
+					builder.setPositiveButton(getActivity().getResources()
+							.getString(R.string.yes),
 							new DialogInterface.OnClickListener() {
 
 								@Override
@@ -261,7 +265,8 @@ public class ScannerFragment extends Fragment implements
 									dialog.dismiss();
 								}
 							});
-					builder.setNegativeButton("NO", new OnClickListener() {
+					builder.setNegativeButton(getActivity().getResources()
+							.getString(R.string.no), new OnClickListener() {
 
 						@Override
 						public void onClick(DialogInterface dialog, int which) {
@@ -290,10 +295,12 @@ public class ScannerFragment extends Fragment implements
 						final String url = symData;
 						AlertDialog.Builder builder = new AlertDialog.Builder(
 								getActivity());
-						builder.setTitle("Captix Scan");
-						builder.setMessage("Would you like to connect to "
-								+ symData);
-						builder.setPositiveButton("YES",
+						builder.setTitle(getActivity().getResources()
+								.getString(R.string.dialog_title));
+						builder.setMessage(getActivity().getResources()
+								.getString(R.string.dialog_open_url_message));
+						builder.setPositiveButton(getActivity().getResources()
+								.getString(R.string.yes),
 								new DialogInterface.OnClickListener() {
 
 									@Override
@@ -308,7 +315,8 @@ public class ScannerFragment extends Fragment implements
 										getActivity().startActivity(intent);
 									}
 								});
-						builder.setNegativeButton("NO", new OnClickListener() {
+						builder.setNegativeButton(getActivity().getResources()
+								.getString(R.string.no), new OnClickListener() {
 
 							@Override
 							public void onClick(DialogInterface dialog,
@@ -351,6 +359,11 @@ public class ScannerFragment extends Fragment implements
 		Date date = Calendar.getInstance().getTime();
 		SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy");
 		return formatter.format(date);
+	}
+
+	@Override
+	public void onDestroy() {
+		super.onDestroy();
 	}
 
 }

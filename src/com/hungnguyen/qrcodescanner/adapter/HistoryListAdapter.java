@@ -223,7 +223,13 @@ public class HistoryListAdapter extends ArrayAdapter<HistoryItemEnity>
 							listener.onDeleteItemHistoryComplete();
 						}
 					});
-					holder.tvTitle.setText("" + entryItem.getTitle());
+					if (entryItem.getTitle().length() < 30)
+						holder.tvTitle.setText("" + entryItem.getTitle());
+					else {
+						String st = entryItem.getTitle().substring(0, 27);
+						st = st + "...";
+						holder.tvTitle.setText(st);
+					}
 					holder.tvId.setText("" + entryItem.getId());
 					int screenHeight = mContext.getResources()
 							.getDisplayMetrics().widthPixels;

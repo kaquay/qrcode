@@ -7,15 +7,15 @@
         android:id="@+id/main_container"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:orientation="vertical"
-        android:clickable="true" >
+        android:clickable="true"
+        android:orientation="vertical" >
 
         <!-- Action Bar -->
 
         <RelativeLayout
             android:id="@+id/main_rl_actionbar"
             android:layout_width="match_parent"
-            android:layout_height="55dp"
+            android:layout_height="65dp"
             android:background="@color/actionbarcolor" >
 
             <ImageButton
@@ -38,7 +38,8 @@
                 android:layout_marginTop="5sp"
                 android:gravity="center_horizontal"
                 android:text="zzz"
-                android:textColor="#FFFFFF" />
+                android:textColor="#FFFFFF"
+                android:textSize="20dp" />
 
             <ImageButton
                 android:id="@+id/main_ib_shortcut"
@@ -46,20 +47,20 @@
                 android:layout_height="wrap_content"
                 android:layout_alignParentRight="true"
                 android:layout_centerVertical="true"
+                android:layout_marginRight="10dp"
                 android:background="#00000000"
-                android:src="@drawable/ic_favourite_browser"
-                android:layout_marginRight="10dp" />
+                android:src="@drawable/ic_favourite_browser" />
 
             <Button
                 android:id="@+id/main_history_bt_delete"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_centerVertical="true"
                 android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:layout_marginRight="3sp"
                 android:background="#00000000"
                 android:text="Delete all"
-                android:textSize="10sp"
-                android:layout_marginRight="3sp" />
+                android:textSize="20sp" />
         </RelativeLayout>
 
         <FrameLayout

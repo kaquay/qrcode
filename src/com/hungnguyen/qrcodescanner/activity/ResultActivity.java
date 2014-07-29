@@ -1,8 +1,10 @@
 package com.hungnguyen.qrcodescanner.activity;
 
 import android.app.Activity;
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.os.Handler;
 import android.util.Log;
@@ -45,9 +47,18 @@ public class ResultActivity extends Activity implements OnClickListener,
 		mWebView.setWebViewClient(new WebViewClient() {
 
 			@Override
+			public void onPageStarted(WebView view, String url, Bitmap favicon) {
+				super.onPageStarted(view, url, favicon);
+			}
+
+			@Override
 			public void onPageFinished(WebView view, String url) {
 				super.onPageFinished(view, url);
-				mTvTitle.setText("" + view.getTitle());
+				String st = view.getTitle();
+				if (st != null)
+					mTvTitle.setText("" + view.getTitle());
+				else
+					mTvTitle.setText("Processing");
 				autoClose();
 			}
 
@@ -77,7 +88,7 @@ public class ResultActivity extends Activity implements OnClickListener,
 		// txparams.width = screenWidth - btBackWidth - btShareWidth;
 		// mTvTitle.setLayoutParams(txparams);
 		//
-		
+
 		Bundle extras = getIntent().getExtras();
 		url = extras.getString("url");
 		mWebView.loadUrl(url);
