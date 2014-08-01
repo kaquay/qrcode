@@ -14,6 +14,7 @@ import android.app.AlertDialog;
 import android.app.Fragment;
 import android.app.FragmentManager;
 import android.app.FragmentTransaction;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.DialogInterface.OnClickListener;
 import android.content.Intent;
@@ -28,8 +29,10 @@ import android.provider.MediaStore.Audio.Media;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.Surface;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.WindowManager;
 import android.widget.FrameLayout;
 import android.widget.Toast;
 
@@ -118,7 +121,23 @@ public class ScannerFragment extends Fragment implements
 			mCamera = Camera.open();
 			// mCamera.unlock();
 			// TODO
-			// mCamera.setDisplayOrientation(90);
+			final int rotation = ((WindowManager) getActivity()
+					.getSystemService(Context.WINDOW_SERVICE))
+					.getDefaultDisplay().getOrientation();
+			switch (rotation) {
+			case 3:
+				mCamera.setDisplayOrientation(90);
+				break;
+			case Surface.ROTATION_90:
+				mCamera.setDisplayOrientation(270);
+				break;
+			case Surface.ROTATION_180:
+				mCamera.setDisplayOrientation(180);
+				break;
+			default:
+				mCamera.setDisplayOrientation(0);
+				break;
+			}
 			if (mCamera == null) {
 				// Cancel request if mCamera is null.
 				cancelRequest();

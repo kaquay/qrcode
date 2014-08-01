@@ -6,7 +6,7 @@ import java.util.HashSet;
 import java.util.Set;
 
 public class Util {
-
+	public static int index = 0;
 	final static Set<String> protocols, protocolsWithHost;
 
 	static {

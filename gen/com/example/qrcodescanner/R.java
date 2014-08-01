@@ -363,6 +363,9 @@ or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>na
          */
         public static final int viewBehind=0x7f01000e;
     }
+    public static final class bool {
+        public static final int istablet=0x7f0a0000;
+    }
     public static final class color {
         public static final int actionbarcolor=0x7f070007;
         public static final int com_facebook_blue=0x7f070002;
@@ -703,7 +706,7 @@ or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>na
         public static final int slidingmenumain=0x7f030023;
     }
     public static final class menu {
-        public static final int main=0x7f0a0000;
+        public static final int main=0x7f0b0000;
     }
     public static final class string {
         public static final int about=0x7f05002b;

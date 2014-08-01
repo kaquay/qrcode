@@ -17,6 +17,7 @@ public class Database extends SQLiteOpenHelper {
 	static String COLUMN_1 = "id";
 	static String COLUMN_2 = "name";
 	static String COLUMN_3 = "date";
+
 	static String CREATE_TABLE = "CREATE TABLE " + TABLE_NAME + "( " + COLUMN_1
 			+ " INTEGER PRIMARY KEY, " + COLUMN_2 + " TEXT, " + COLUMN_3
 			+ " DATETIME )";
@@ -68,9 +69,9 @@ public class Database extends SQLiteOpenHelper {
 	}
 
 	/**
-	 * Get all date DISTINTC
+	 * Get all date DISTINTC DESC
 	 * 
-	 * @return
+	 * @return ArrayList<String>
 	 */
 	public ArrayList<String> getAllDate() {
 		ArrayList<String> listValues = new ArrayList<String>();
@@ -112,15 +113,23 @@ public class Database extends SQLiteOpenHelper {
 		return listValues;
 	}
 
+	/**
+	 * 
+	 * @return
+	 */
 	public boolean isHaveValues() {
 		boolean result = false;
 		SQLiteDatabase db = this.getReadableDatabase();
 		Cursor cursor = db.rawQuery("SELECT * FROM " + TABLE_NAME, null);
 		if (cursor.moveToFirst())
 			result = true;
+		db.close();
 		return result;
 	}
 
+	/**
+	 * 
+	 */
 	public void DeleteAllItem() {
 		SQLiteDatabase db = this.getWritableDatabase();
 		String query = "DELETE FROM " + TABLE_NAME;

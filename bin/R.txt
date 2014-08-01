@@ -43,6 +43,7 @@ int attr touchModeAbove 0x7f010012
 int attr touchModeBehind 0x7f010013
 int attr viewAbove 0x7f01000d
 int attr viewBehind 0x7f01000e
+int bool istablet 0x7f0a0000
 int color actionbarcolor 0x7f070007
 int color com_facebook_blue 0x7f070002
 int color com_facebook_loginview_text_color 0x7f070006
@@ -372,7 +373,7 @@ int layout item_settinglistview_section 0x7f030020
 int layout item_slidinglist 0x7f030021
 int layout menu 0x7f030022
 int layout slidingmenumain 0x7f030023
-int menu main 0x7f0a0000
+int menu main 0x7f0b0000
 int string about 0x7f05002b
 int string app_name 0x7f050000
 int string backpress_to_exit 0x7f05002c

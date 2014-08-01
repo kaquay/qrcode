@@ -44,6 +44,7 @@ public class ResultActivity extends Activity implements OnClickListener,
 		mLayoutActionBar = (RelativeLayout) findViewById(R.id.result_rl_actionbar);
 		mBtBack.setOnClickListener(this);
 		mIbShare.setOnClickListener(this);
+		
 		mWebView.setWebViewClient(new WebViewClient() {
 
 			@Override

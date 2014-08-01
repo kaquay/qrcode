@@ -13,6 +13,7 @@ import android.app.ProgressDialog;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.Editor;
+import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.net.Uri;
@@ -123,9 +124,11 @@ public class SettingsFragment extends Fragment implements OnItemClickListener,
 		}
 		mList.add(new SettingSectionItemObject(getResources().getString(
 				R.string.setting_section_share)));
+
 		mList.add(new SettingChooseObject(SETTING_ITEM_MESSAGE, getResources()
 				.getString(R.string.setting_message), "", false, true,
 				R.drawable.ic_setting_sms));
+
 		mList.add(new SettingChooseObject(SETTING_ITEM_MAIL, getResources()
 				.getString(R.string.setting_email), "", false, true,
 				R.drawable.ic_setting_mail));
@@ -154,7 +157,13 @@ public class SettingsFragment extends Fragment implements OnItemClickListener,
 			setUpAutoCloseURL();
 			break;
 		case SETTING_ITEM_MESSAGE:
-			setUpShareMessage();
+			if (getActivity().getPackageManager().hasSystemFeature(
+					PackageManager.FEATURE_TELEPHONY)) {
+				setUpShareMessage();
+			} else {
+				showToast("This device can not send sms");
+			}
+
 			break;
 		case SETTING_ITEM_MAIL:
 			setUpShareEmail();
@@ -245,6 +254,7 @@ public class SettingsFragment extends Fragment implements OnItemClickListener,
 
 	private class FacebookWallPost extends AsyncTask<String, Void, Boolean> {
 		ProgressDialog mDialog;
+
 		@SuppressWarnings("deprecation")
 		@Override
 		protected Boolean doInBackground(String... params) {

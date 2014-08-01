@@ -48,24 +48,41 @@ public class SlidingListAdapter extends ArrayAdapter<SlidingListItemObject> {
 		}
 		holder.iv.setImageResource(getItem(position).getImage());
 		//
-
-		int height = mContext.getResources().getDisplayMetrics().heightPixels
-				- getStatusBarHeight();
-		int width = mContext.getResources().getDisplayMetrics().widthPixels * 30 / 100;
-		BitmapFactory.Options dimensions = new BitmapFactory.Options();
-		dimensions.inJustDecodeBounds = false;
-		Bitmap mBitmap = BitmapFactory.decodeResource(mContext.getResources(),
-				R.drawable.ic_bt_scan, dimensions);
-		int imageHeight = dimensions.outHeight;
-		int imageWidth = dimensions.outWidth;
-		int marginHoz = (width - imageWidth) / 2;
-		int marginVer = (height - (4 * imageHeight)) / 8;
-		//
-		LinearLayout.LayoutParams ll = new LinearLayout.LayoutParams(
-				LinearLayout.LayoutParams.WRAP_CONTENT,
-				LinearLayout.LayoutParams.WRAP_CONTENT);
-		ll.setMargins(marginHoz, marginVer, marginHoz, marginVer);
-		holder.iv.setLayoutParams(ll);
+		boolean isTablet = mContext.getResources().getBoolean(R.bool.istablet);
+		if (!isTablet) {
+			int height = mContext.getResources().getDisplayMetrics().heightPixels
+					- getStatusBarHeight();
+			int width = mContext.getResources().getDisplayMetrics().widthPixels * 30 / 100;
+			BitmapFactory.Options dimensions = new BitmapFactory.Options();
+			dimensions.inJustDecodeBounds = false;
+			Bitmap mBitmap = BitmapFactory.decodeResource(
+					mContext.getResources(), R.drawable.ic_bt_scan, dimensions);
+			int imageHeight = dimensions.outHeight;
+			int imageWidth = dimensions.outWidth;
+			int marginHoz = (width - imageWidth) / 2;
+			int marginVer = (height - (4 * imageHeight)) / 8;
+			LinearLayout.LayoutParams ll = new LinearLayout.LayoutParams(
+					LinearLayout.LayoutParams.WRAP_CONTENT,
+					LinearLayout.LayoutParams.WRAP_CONTENT);
+			ll.setMargins(marginHoz, marginVer, marginHoz, marginVer);
+			holder.iv.setLayoutParams(ll);
+		} else {
+			int height = mContext.getResources().getDisplayMetrics().heightPixels
+					- getStatusBarHeight();
+			int width = mContext.getResources().getDisplayMetrics().widthPixels * 30 / 100;
+			Bitmap bmp = BitmapFactory.decodeResource(mContext.getResources(),
+					R.drawable.ic_bt_scan);
+			bmp = Bitmap.createScaledBitmap(bmp, 150, 150, true);
+			int imageHeight = 150;
+			int imageWidth = 150;
+			int marginHoz = (width - imageWidth) / 2;
+			int marginVer = (height - (4 * imageHeight)) / 8;
+			LinearLayout.LayoutParams ll = new LinearLayout.LayoutParams(
+					LinearLayout.LayoutParams.WRAP_CONTENT,
+					LinearLayout.LayoutParams.WRAP_CONTENT);
+			ll.setMargins(marginHoz, marginVer, marginHoz, marginVer);
+			holder.iv.setLayoutParams(ll);
+		}
 		return convertView;
 	}
 

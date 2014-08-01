@@ -20,6 +20,10 @@ import com.hungnguyen.qrcodescanner.utility.ChangeFragmentListener;
 
 public class SlidingMenuFragment extends Fragment implements
 		OnItemClickListener {
+	public SlidingMenuFragment() {
+		super();
+	}
+
 	public SlidingMenuFragment(ChangeFragmentListener listener) {
 		super();
 		this.mListener = listener;

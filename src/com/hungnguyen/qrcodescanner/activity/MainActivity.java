@@ -31,6 +31,7 @@ import com.hungnguyen.qrcodescanner.fragment.SettingsFragment;
 import com.hungnguyen.qrcodescanner.fragment.SlidingMenuFragment;
 import com.hungnguyen.qrcodescanner.utility.ChangeFragmentListener;
 import com.hungnguyen.qrcodescanner.utility.Constants;
+import com.hungnguyen.qrcodescanner.utility.Util;
 import com.jeremyfeinstein.slidingmenu.lib.app.SlidingActivity;
 
 public class MainActivity extends SlidingActivity implements Constants,
@@ -53,28 +54,18 @@ public class MainActivity extends SlidingActivity implements Constants,
 		getWindow().requestFeature(Window.FEATURE_ACTION_BAR);
 		getActionBar().hide();
 		setContentView(R.layout.activity_main);
-
 		setBehindContentView(R.layout.menu);
-		getFragmentManager().beginTransaction()
-				.replace(R.id.frame_slidingmenu, new SlidingMenuFragment(this))
-				.commit();
 		/*
 		 * Set Width of SlidingMenu : 30 per cents of Screen width for Portrait
 		 * or 10 per cents for Landscape
 		 */
-		if (getResources().getConfiguration().orientation == Configuration.ORIENTATION_PORTRAIT) {
 			int width = getResources().getDisplayMetrics().widthPixels * 70 / 100;
 			getSlidingMenu().setBehindOffset(width);
-		} else {
-			int width = getResources().getDisplayMetrics().widthPixels * 90 / 100;
-			getSlidingMenu().setBehindOffset(width);
-		}
 		/*
 		 * Have 4 Fragment with them name : Scan, History, Settings, About
 		 * strings.xml
 		 */
 		titles = getResources().getStringArray(R.array.title);
-
 		mTvTitle = (TextView) findViewById(R.id.main_tv_titlebar);
 		mIbMenu = (ImageButton) findViewById(R.id.main_ib_menu);
 		mIbShortcut = (ImageButton) findViewById(R.id.main_ib_shortcut);
@@ -90,13 +81,6 @@ public class MainActivity extends SlidingActivity implements Constants,
 		getActionBar().setDisplayHomeAsUpEnabled(false);
 		getActionBar().setHomeButtonEnabled(false);
 
-		/*
-		 * Open ScanFragment (0) when App start
-		 */
-		if (savedInstanceState == null) {
-			setTitleBar(0);
-			showFragment(0);
-		}
 		/*
 		 * Config app when the first use.
 		 */
@@ -129,8 +113,14 @@ public class MainActivity extends SlidingActivity implements Constants,
 		mIbMenu.setImageBitmap(Bitmap.createScaledBitmap(bmMenu, 55, 55, true));
 		Bitmap bmFavorite = BitmapFactory.decodeResource(getResources(),
 				R.drawable.ic_favourite_browser);
-		mIbShortcut.setImageBitmap(Bitmap.createScaledBitmap(bmFavorite, 55,
-				55, true));
+		mIbShortcut.setImageBitmap(Bitmap.createScaledBitmap(bmFavorite, 50,
+				50, true));
+
+		getFragmentManager().beginTransaction()
+				.replace(R.id.frame_slidingmenu, new SlidingMenuFragment(this))
+				.commit();
+		setTitleBar(Util.index);
+		showFragment(Util.index);
 	}
 
 	private void setTitleBar(int index) {
@@ -275,6 +265,7 @@ public class MainActivity extends SlidingActivity implements Constants,
 		}
 		fragmentTransaction.replace(R.id.main_frame_container, fragment)
 				.commit();
+		Util.index = index;
 	}
 
 	@Override
