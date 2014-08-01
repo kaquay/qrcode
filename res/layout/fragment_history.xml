@@ -16,8 +16,9 @@
         android:listSelector="@drawable/list_selector"
         app:swipeBackView="@+id/historylistview_entry_back"
         app:swipeFrontView="@+id/historylistview_entry_front"
+        swipe:swipeActionLeft="reveal"
+        swipe:swipeActionRight="reveal"
         swipe:swipeCloseAllItemsWhenMoveList="true"
-        swipe:swipeMode="both"
-         />
+        swipe:swipeMode="both" />
 
 </LinearLayout>

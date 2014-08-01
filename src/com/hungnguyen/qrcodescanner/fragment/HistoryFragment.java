@@ -2,6 +2,7 @@ package com.hungnguyen.qrcodescanner.fragment;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.List;
 
 import android.annotation.SuppressLint;
 import android.annotation.TargetApi;
@@ -17,6 +18,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
+import android.widget.ImageButton;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.Toast;
 
@@ -25,11 +27,14 @@ import com.fortysevendeg.swipelistview.BaseSwipeListViewListener;
 import com.fortysevendeg.swipelistview.SwipeListView;
 import com.hungnguyen.qrcodescanner.activity.ResultActivity;
 import com.hungnguyen.qrcodescanner.adapter.HistoryListAdapter;
+import com.hungnguyen.qrcodescanner.adapter.HistoryListAdapter.Holder;
 import com.hungnguyen.qrcodescanner.database.Database;
 import com.hungnguyen.qrcodescanner.model.HistoryItemEnity;
 import com.hungnguyen.qrcodescanner.model.HistoryItemObject;
 import com.hungnguyen.qrcodescanner.model.HistorySectionItemObject;
 import com.hungnguyen.qrcodescanner.utility.DeleteItemHistoryListener;
+import com.hungnguyen.qrcodescanner.utility.Util;
+import com.hungnguyen.qrcodescanner.utility.Util.isSwipe;
 
 @SuppressLint("SimpleDateFormat")
 @TargetApi(Build.VERSION_CODES.HONEYCOMB)
@@ -69,7 +74,23 @@ public class HistoryFragment extends Fragment implements
 		mListHistory.setOffsetRight(rightOffset);
 		mListHistory.setSwipeListViewListener(new BaseSwipeListViewListener() {
 
-			
+			@Override
+			public void onOpened(int position, boolean toRight) {
+				if (toRight) {
+					Util.listSwipe.get(position).isRight = false;
+					Util.listSwipe.get(position).isLeft = true;
+				} else {
+					Util.listSwipe.get(position).isRight = true;
+					Util.listSwipe.get(position).isLeft = false;
+				}
+			}
+
+			@Override
+			public void onClosed(int position, boolean fromRight) {
+				Util.listSwipe.get(position).isRight = false;
+				Util.listSwipe.get(position).isLeft = false;
+			}
+
 			@Override
 			public void onClickFrontView(int position) {
 				Intent intent = new Intent(getActivity(), ResultActivity.class);
@@ -89,10 +110,10 @@ public class HistoryFragment extends Fragment implements
 		Database db = new Database(getActivity());
 		ArrayList<String> listSection = new ArrayList<String>();
 		listSection = db.getAllDate();
+		ArrayList<isSwipe> list = new ArrayList<isSwipe>();
 		if (listSection != null) {
 			for (String item : listSection) {
 				try {
-					Log.d("History", "" + item);
 					SimpleDateFormat format = new SimpleDateFormat("dd/MM/yyyy");
 					SimpleDateFormat sdf = new SimpleDateFormat(
 							"EEEE MMMM dd,yyyy");
@@ -107,20 +128,30 @@ public class HistoryFragment extends Fragment implements
 
 				}
 			}
+
+			int listLength = mList.size();
+			for (int i = 0; i < listLength; i++) {
+				list.add(new isSwipe());
+			}
+			Util.listSwipe = list;
 		}
-		if (mList.isEmpty()) {
-		} else {
+		// if (mList.isEmpty()) {
+		// mListHistory.invalidate();
+		// } else {
+		try {
 			HistoryListAdapter adapter = new HistoryListAdapter(getActivity(),
 					mList, this);
 			mListHistory.setAdapter(adapter);
+		} finally {
+
 		}
+		// }
 	}
 
 	@Override
 	public void onDeleteItemHistoryComplete() {
 		SetupList();
+		Toast.makeText(getActivity(), "Deleted !", Toast.LENGTH_SHORT).show();
 	}
-	
-	
-	
+
 }

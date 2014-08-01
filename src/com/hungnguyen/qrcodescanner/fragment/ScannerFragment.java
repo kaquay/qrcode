@@ -120,23 +120,27 @@ public class ScannerFragment extends Fragment implements
 			// Open the default i.e. the first rear facing camera.
 			mCamera = Camera.open();
 			// mCamera.unlock();
-			// TODO
-			final int rotation = ((WindowManager) getActivity()
-					.getSystemService(Context.WINDOW_SERVICE))
-					.getDefaultDisplay().getOrientation();
-			switch (rotation) {
-			case 3:
+			boolean isTablet = getResources().getBoolean(R.bool.istablet);
+			if (isTablet) {
+				final int rotation = ((WindowManager) getActivity()
+						.getSystemService(Context.WINDOW_SERVICE))
+						.getDefaultDisplay().getOrientation();
+				switch (rotation) {
+				case 3:
+					mCamera.setDisplayOrientation(90);
+					break;
+				case Surface.ROTATION_90:
+					mCamera.setDisplayOrientation(270);
+					break;
+				case Surface.ROTATION_180:
+					mCamera.setDisplayOrientation(180);
+					break;
+				default:
+					mCamera.setDisplayOrientation(0);
+					break;
+				}
+			} else {
 				mCamera.setDisplayOrientation(90);
-				break;
-			case Surface.ROTATION_90:
-				mCamera.setDisplayOrientation(270);
-				break;
-			case Surface.ROTATION_180:
-				mCamera.setDisplayOrientation(180);
-				break;
-			default:
-				mCamera.setDisplayOrientation(0);
-				break;
 			}
 			if (mCamera == null) {
 				// Cancel request if mCamera is null.
@@ -305,7 +309,7 @@ public class ScannerFragment extends Fragment implements
 					getActivity().startActivity(intent);
 				}
 			} else {
-				if (Util.isURI(symData)) {
+				if (Util.isURL(symData)) {
 					Database db = new Database(getActivity());
 					String today = now();
 					db.insert(symData, today);
@@ -357,8 +361,15 @@ public class ScannerFragment extends Fragment implements
 					}
 
 				} else {
-					showToast(symData);
-					showScannerFragment();
+					Database db = new Database(getActivity());
+					String today = now();
+					db.insert(symData, today);
+					Intent intent = new Intent(getActivity(),
+							ResultActivity.class);
+					Bundle extras = new Bundle();
+					extras.putString("url", symData);
+					intent.putExtras(extras);
+					getActivity().startActivity(intent);
 				}
 			}
 		}

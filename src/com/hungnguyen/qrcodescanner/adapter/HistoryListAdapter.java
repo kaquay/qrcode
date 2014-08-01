@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import twitter4j.Twitter;
 import android.app.Activity;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.net.Uri;
@@ -18,6 +19,7 @@ import android.widget.FrameLayout;
 import android.widget.ImageButton;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.qrcodescanner.R;
 import com.facebook.android.DialogError;
@@ -34,12 +36,12 @@ import com.hungnguyen.qrcodescanner.ownerlibs.TwitterAPI.TwitterLoginListener;
 import com.hungnguyen.qrcodescanner.ownerlibs.TwitterAPI.TwitterPostStatusListener;
 import com.hungnguyen.qrcodescanner.utility.Constants;
 import com.hungnguyen.qrcodescanner.utility.DeleteItemHistoryListener;
+import com.hungnguyen.qrcodescanner.utility.Util;
 
 public class HistoryListAdapter extends ArrayAdapter<HistoryItemEnity>
 		implements Constants {
 	private int IMAGE_SIZE;
 	Activity mContext;
-	ArrayList<HistoryItemEnity> mList;
 	LayoutInflater mInflater;
 	DeleteItemHistoryListener mListener;
 
@@ -47,15 +49,14 @@ public class HistoryListAdapter extends ArrayAdapter<HistoryItemEnity>
 			ArrayList<HistoryItemEnity> list, DeleteItemHistoryListener listener) {
 		super(context, 0, list);
 		this.mContext = context;
-		this.mList = list;
 		this.mInflater = LayoutInflater.from(context);
 		this.mListener = listener;
 	}
 
 	@Override
-	public View getView(int position, View convertView, ViewGroup parent) {
+	public View getView(final int position, View convertView, ViewGroup parent) {
 		final Holder holder;
-		HistoryItemEnity item = mList.get(position);
+		HistoryItemEnity item = getItem(position);
 		if (convertView == null) {
 			if (item != null) {
 				if (item.isSection()) {
@@ -100,73 +101,94 @@ public class HistoryListAdapter extends ArrayAdapter<HistoryItemEnity>
 
 						@Override
 						public void onClick(View v) {
-							Intent smsIntent = new Intent(Intent.ACTION_VIEW);
-							smsIntent.setData(Uri.parse("smsto:"));
-							smsIntent.setType("vnd.android-dir/mms-sms");
-							smsIntent.putExtra("sms_body", entryItem.getTitle());
-							mContext.startActivity(smsIntent);
+							if (Util.listSwipe.get(position).isLeft) {
+								if (mContext
+										.getPackageManager()
+										.hasSystemFeature(
+												PackageManager.FEATURE_TELEPHONY)) {
+									Intent smsIntent = new Intent(
+											Intent.ACTION_VIEW);
+									smsIntent.setData(Uri.parse("smsto:"));
+									smsIntent
+											.setType("vnd.android-dir/mms-sms");
+									smsIntent.putExtra("sms_body",
+											entryItem.getTitle());
+									mContext.startActivity(smsIntent);
+								} else {
+									Toast.makeText(mContext,
+											"This device can not send sms",
+											Toast.LENGTH_SHORT);
+								}
+							}
 						}
 					});
 					holder.ibEmail.setOnClickListener(new OnClickListener() {
 
 						@Override
 						public void onClick(View v) {
-							Intent email = new Intent(Intent.ACTION_SEND);
-							email.putExtra(
-									Intent.EXTRA_SUBJECT,
-									mContext.getResources().getString(
-											R.string.share_mail_title));
-							email.putExtra(Intent.EXTRA_TEXT,
-									entryItem.getTitle());
-							email.setType("message/rfc822");
-							mContext.startActivity(Intent.createChooser(email,
-									"Choose an Email client :"));
+							if (Util.listSwipe.get(position).isLeft) {
+								Intent email = new Intent(Intent.ACTION_SEND);
+								email.putExtra(
+										Intent.EXTRA_SUBJECT,
+										mContext.getResources().getString(
+												R.string.share_mail_title));
+								email.putExtra(Intent.EXTRA_TEXT,
+										entryItem.getTitle());
+								email.setType("message/rfc822");
+								mContext.startActivity(Intent.createChooser(
+										email, "Choose an Email client :"));
+							}
 						}
 					});
 					holder.ibTwitter.setOnClickListener(new OnClickListener() {
 
 						@Override
 						public void onClick(View v) {
-							final TwitterAPI twitterAPI = new TwitterAPI(
-									mContext);
-							twitterAPI.setCALLBACK_URL(TWITTER_CALLBACK_URL);
-							twitterAPI.setCONSUMER_KEY(TWITTER_CONSUMER_KEY);
-							twitterAPI
-									.setCONSUMER_SECRET(TWITTER_CONSUMER_SECRET);
-							if (!twitterAPI.isAlreadyLogin()) {
-
+							if (Util.listSwipe.get(position).isLeft) {
+								final TwitterAPI twitterAPI = new TwitterAPI(
+										mContext);
 								twitterAPI
-										.showDialogLogin(new TwitterLoginListener() {
+										.setCALLBACK_URL(TWITTER_CALLBACK_URL);
+								twitterAPI
+										.setCONSUMER_KEY(TWITTER_CONSUMER_KEY);
+								twitterAPI
+										.setCONSUMER_SECRET(TWITTER_CONSUMER_SECRET);
+								if (!twitterAPI.isAlreadyLogin()) {
 
-											@Override
-											public void onTwitterLoginFailed() {
+									twitterAPI
+											.showDialogLogin(new TwitterLoginListener() {
 
-											}
+												@Override
+												public void onTwitterLoginFailed() {
 
-											@Override
-											public void onTwitterLoginComplete(
-													Twitter twitter) {
-												twitterAPI.postStatus(
-														entryItem.getTitle(),
-														null);
-											}
-										});
-							} else {
-								twitterAPI.postStatus(entryItem.getTitle(),
-										new TwitterPostStatusListener() {
+												}
 
-											@Override
-											public void onPostStatusSuccess() {
+												@Override
+												public void onTwitterLoginComplete(
+														Twitter twitter) {
+													twitterAPI.postStatus(
+															entryItem
+																	.getTitle(),
+															null);
+												}
+											});
+								} else {
+									twitterAPI.postStatus(entryItem.getTitle(),
+											new TwitterPostStatusListener() {
 
-											}
+												@Override
+												public void onPostStatusSuccess() {
 
-											@Override
-											public void onPostStatusFail() {
+												}
 
-											}
-										});
+												@Override
+												public void onPostStatusFail() {
+
+												}
+											});
+								}
+
 							}
-
 						}
 					});
 					holder.ibFacebook.setOnClickListener(new OnClickListener() {
@@ -174,53 +196,58 @@ public class HistoryListAdapter extends ArrayAdapter<HistoryItemEnity>
 						@SuppressWarnings("deprecation")
 						@Override
 						public void onClick(View v) {
-							Facebook fb = new Facebook(FACEBOOK_APP_API);
-							Bundle parameters = new Bundle();
-							parameters.putString("link",
-									"" + entryItem.getTitle());
-							/*
-							 * parameters.putString("caption","this is Caption");
-							 * parameters
-							 * .putString("decription","this is Dicription");
-							 * parameters.putString("link",
-							 * "http://www.google.com/"); parameters .putString(
-							 * "picture",
-							 * "http://4.bp.blogspot.com/-99S_TJiEvSQ/U6-559gN6sI/AAAAAAAAF5k/CQzEswdibW0/s1600/android-icon.png"
-							 * );
-							 */
-							fb.dialog(mContext, "feed", parameters,
-									new DialogListener() {
+							if (Util.listSwipe.get(position).isLeft) {
+								Facebook fb = new Facebook(FACEBOOK_APP_API);
+								Bundle parameters = new Bundle();
+								parameters.putString("link",
+										"" + entryItem.getTitle());
+								/*
+								 * parameters.putString("caption","this is Caption"
+								 * ); parameters
+								 * .putString("decription","this is Dicription"
+								 * ); parameters.putString("link",
+								 * "http://www.google.com/"); parameters
+								 * .putString( "picture",
+								 * "http://4.bp.blogspot.com/-99S_TJiEvSQ/U6-559gN6sI/AAAAAAAAF5k/CQzEswdibW0/s1600/android-icon.png"
+								 * );
+								 */
+								fb.dialog(mContext, "feed", parameters,
+										new DialogListener() {
 
-										@Override
-										public void onFacebookError(
-												final FacebookError e) {
-										}
+											@Override
+											public void onFacebookError(
+													final FacebookError e) {
+											}
 
-										@Override
-										public void onError(final DialogError e) {
+											@Override
+											public void onError(
+													final DialogError e) {
 
-										}
+											}
 
-										@Override
-										public void onComplete(
-												final Bundle values) {
-										}
+											@Override
+											public void onComplete(
+													final Bundle values) {
+											}
 
-										@Override
-										public void onCancel() {
+											@Override
+											public void onCancel() {
 
-										}
-									});
+											}
+										});
+							}
 						}
 					});
 					holder.ibDelete.setOnClickListener(new OnClickListener() {
 
 						@Override
 						public void onClick(View v) {
-							Database db = new Database(mContext);
-							db.delete("" + entryItem.getId());
-							DeleteItemHistoryListener listener = mListener;
-							listener.onDeleteItemHistoryComplete();
+							if (Util.listSwipe.get(position).isRight) {
+								Database db = new Database(mContext);
+								db.delete(entryItem.getId());
+								DeleteItemHistoryListener listener = mListener;
+								listener.onDeleteItemHistoryComplete();
+							}
 						}
 					});
 					if (entryItem.getTitle().length() < 30)
@@ -261,7 +288,6 @@ public class HistoryListAdapter extends ArrayAdapter<HistoryItemEnity>
 							bmDelete, IMAGE_SIZE, IMAGE_SIZE, true));
 
 					// int imageHeight = bmsms.getHeight();
-
 					FrameLayout.LayoutParams params = (FrameLayout.LayoutParams) holder.relativeLayout
 							.getLayoutParams();
 					params.height = IMAGE_SIZE;
@@ -277,8 +303,14 @@ public class HistoryListAdapter extends ArrayAdapter<HistoryItemEnity>
 
 	@Override
 	public int getViewTypeCount() {
-
+		if (isEmpty())
+			return 1;
 		return getCount();
+	}
+
+	@Override
+	public int getCount() {
+		return super.getCount();
 	}
 
 	/*
@@ -290,10 +322,15 @@ public class HistoryListAdapter extends ArrayAdapter<HistoryItemEnity>
 	 */
 	@Override
 	public int getItemViewType(int position) {
-		HistoryItemEnity item = mList.get(position);
+		HistoryItemEnity item = getItem(position);
 		if (item.isSection())
 			return -1;
 		return position;
+	}
+
+	@Override
+	public boolean isEmpty() {
+		return getCount() == 0;
 	}
 
 	public class Holder {

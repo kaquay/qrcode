@@ -5,6 +5,7 @@ import android.app.ProgressDialog;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.os.Handler;
 import android.util.Log;
@@ -44,7 +45,7 @@ public class ResultActivity extends Activity implements OnClickListener,
 		mLayoutActionBar = (RelativeLayout) findViewById(R.id.result_rl_actionbar);
 		mBtBack.setOnClickListener(this);
 		mIbShare.setOnClickListener(this);
-		
+
 		mWebView.setWebViewClient(new WebViewClient() {
 
 			@Override
@@ -94,6 +95,18 @@ public class ResultActivity extends Activity implements OnClickListener,
 		url = extras.getString("url");
 		mWebView.loadUrl(url);
 
+	}
+
+	@Override
+	protected void onResume() {
+		super.onResume();
+		boolean isTablet = getResources().getBoolean(R.bool.istablet);
+		if (isTablet) {
+			Bitmap bmShare = BitmapFactory.decodeResource(getResources(),
+					R.drawable.ic_history);
+			mIbShare.setImageBitmap(Bitmap.createScaledBitmap(bmShare, 45, 45,
+					true));
+		}
 	}
 
 	@Override

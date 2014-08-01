@@ -353,7 +353,7 @@ public class SettingsFragment extends Fragment implements OnItemClickListener,
 			@Override
 			public void onClick(View v) {
 				String url = "" + etValue.getText().toString().trim();
-				if (!Util.isURI(url)) {
+				if (!Util.isURL(url)) {
 
 				} else {
 					Editor editor = sp.edit();

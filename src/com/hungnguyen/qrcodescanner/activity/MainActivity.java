@@ -48,6 +48,11 @@ public class MainActivity extends SlidingActivity implements Constants,
 	float lastTranslate = 0.0f;
 	RelativeLayout mRlActionBar;
 
+	HistoryFragment mHistoryFragment;
+	IntroduceFragment mIntroduceFragment;
+	ScannerFragment mScannerFragment;
+	SettingsFragment mSettingsFragment;
+
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -59,8 +64,8 @@ public class MainActivity extends SlidingActivity implements Constants,
 		 * Set Width of SlidingMenu : 30 per cents of Screen width for Portrait
 		 * or 10 per cents for Landscape
 		 */
-			int width = getResources().getDisplayMetrics().widthPixels * 70 / 100;
-			getSlidingMenu().setBehindOffset(width);
+		int width = getResources().getDisplayMetrics().widthPixels * 70 / 100;
+		getSlidingMenu().setBehindOffset(width);
 		/*
 		 * Have 4 Fragment with them name : Scan, History, Settings, About
 		 * strings.xml
@@ -108,14 +113,31 @@ public class MainActivity extends SlidingActivity implements Constants,
 	@Override
 	protected void onResume() {
 		super.onResume();
-		Bitmap bmMenu = BitmapFactory.decodeResource(getResources(),
-				R.drawable.ic_btn_menu);
-		mIbMenu.setImageBitmap(Bitmap.createScaledBitmap(bmMenu, 55, 55, true));
-		Bitmap bmFavorite = BitmapFactory.decodeResource(getResources(),
-				R.drawable.ic_favourite_browser);
-		mIbShortcut.setImageBitmap(Bitmap.createScaledBitmap(bmFavorite, 50,
-				50, true));
+		boolean isTablet = getResources().getBoolean(R.bool.istablet);
+		if (isTablet) {
+			Bitmap bmMenu = BitmapFactory.decodeResource(getResources(),
+					R.drawable.ic_btn_menu);
+			mIbMenu.setImageBitmap(Bitmap.createScaledBitmap(bmMenu, 55, 55,
+					true));
+			Bitmap bmFavorite = BitmapFactory.decodeResource(getResources(),
+					R.drawable.ic_favourite_browser);
+			mIbShortcut.setImageBitmap(Bitmap.createScaledBitmap(bmFavorite,
+					50, 50, true));
+		} else {
+			Bitmap bmMenu = BitmapFactory.decodeResource(getResources(),
+					R.drawable.ic_btn_menu);
+			mIbMenu.setImageBitmap(Bitmap.createScaledBitmap(bmMenu, 35, 35,
+					true));
+			// Bitmap bmFavorite = BitmapFactory.decodeResource(getResources(),
+			// R.drawable.ic_favourite_browser);
+			// mIbShortcut.setImageBitmap(Bitmap.createScaledBitmap(bmFavorite,
+			// 40, 40, true));
+		}
 
+		mHistoryFragment = new HistoryFragment();
+		mIntroduceFragment = new IntroduceFragment();
+		mScannerFragment = new ScannerFragment();
+		mSettingsFragment = new SettingsFragment();
 		getFragmentManager().beginTransaction()
 				.replace(R.id.frame_slidingmenu, new SlidingMenuFragment(this))
 				.commit();
@@ -240,31 +262,36 @@ public class MainActivity extends SlidingActivity implements Constants,
 		FragmentManager fragmentManager = getFragmentManager();
 		FragmentTransaction fragmentTransaction = fragmentManager
 				.beginTransaction();
-		Fragment fragment = null;
 		switch (index) {
 		case 0:
-			fragment = new ScannerFragment();
+			fragmentTransaction.replace(R.id.main_frame_container,
+					mScannerFragment).commit();
 			mBtDeleteAll.setVisibility(View.GONE);
 			mIbShortcut.setVisibility(View.VISIBLE);
 			break;
 		case 1:
-			fragment = new HistoryFragment();
-			mBtDeleteAll.setVisibility(View.VISIBLE);
+
+			fragmentTransaction.replace(R.id.main_frame_container,
+					mHistoryFragment).commit();
+			Database db = new Database(MainActivity.this);
+			if (db.isHaveValues())
+				mBtDeleteAll.setVisibility(View.VISIBLE);
 			mIbShortcut.setVisibility(View.GONE);
 			break;
 		case 2:
-			fragment = new SettingsFragment();
+			fragmentTransaction.replace(R.id.main_frame_container,
+					mSettingsFragment).commit();
 			mBtDeleteAll.setVisibility(View.GONE);
 			mIbShortcut.setVisibility(View.GONE);
 			break;
 		case 3:
-			fragment = new IntroduceFragment();
+			fragmentTransaction.replace(R.id.main_frame_container,
+					mIntroduceFragment).commit();
 			mBtDeleteAll.setVisibility(View.GONE);
 			mIbShortcut.setVisibility(View.GONE);
 			break;
 		}
-		fragmentTransaction.replace(R.id.main_frame_container, fragment)
-				.commit();
+
 		Util.index = index;
 	}
 

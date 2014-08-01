@@ -44,7 +44,8 @@
             android:layout_toRightOf="@+id/result_bt_back"
             android:gravity="center_horizontal"
             android:text=""
-            android:textColor="#FFFFFF" />
+            android:textColor="#FFFFFF" 
+            android:textSize="15dp"/>
     </RelativeLayout>
 
     <WebView

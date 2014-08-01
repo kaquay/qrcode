@@ -2,6 +2,8 @@ package com.hungnguyen.qrcodescanner.fragment;
 
 import android.annotation.TargetApi;
 import android.app.Fragment;
+import android.app.ProgressDialog;
+import android.graphics.Bitmap;
 import android.os.Build;
 import android.os.Bundle;
 import android.view.KeyEvent;
@@ -42,6 +44,20 @@ public class IntroduceFragment extends Fragment {
 				false);
 		mWebView = (WebView) view.findViewById(R.id.introduce_webview);
 		mWebView.setWebViewClient(new WebViewClient() {
+			ProgressDialog mDialog;
+			@Override
+			public void onPageStarted(WebView view, String url, Bitmap favicon) {
+				super.onPageStarted(view, url, favicon);
+				mDialog = new ProgressDialog(getActivity());
+				mDialog.setMessage("Loading");
+				mDialog.show();
+			}
+
+			@Override
+			public void onPageFinished(WebView view, String url) {
+				super.onPageFinished(view, url);
+				mDialog.dismiss();
+			}
 
 			@Override
 			public boolean shouldOverrideUrlLoading(WebView view, String url) {
